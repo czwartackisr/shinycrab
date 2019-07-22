@@ -1,11 +1,19 @@
 library(shiny)
 library(dplyr)
+library(DataCombine)
+library(PerformanceAnalytics)
 crab <- read.csv("data.csv", stringsAsFactors = FALSE)
 
 ui <- fluidPage(
     titlePanel("Crab Bivariate Modeling (Czwartacki)"),
     sidebarLayout(
         sidebarPanel(
+          
+          
+            selectInput("SpeciesCode", label = h3("Species Code Selector"),
+                      choices = list("D003", "D004", "D005", "D130", "F001"), 
+                      selected = 3, multiple = TRUE),
+          
             selectInput("outcome", label = h3("Abundance (Dependent Variable)"),
                         choices = list("Harbor Trawl Juvenile CPUE" = "B90_JuvCPUE",
                                        "Harbor Trawl Subadult CPUE" = "B90_SubadultCPUE",
@@ -38,11 +46,11 @@ ui <- fluidPage(
                                        "Charleston Harbor Landings CPUE" = "ChsHarborLandingsCPUE", 
                                        "Charleston Harbor (all systems) Mean Annual CPUE" = "MeanLandingsCPUE"), selected = 1),
             
-            selectInput("offset", label = h4("Dependent Variable Lead (+ years)"), 0:2, 0),
+            #selectInput("outcomelead", label = h4("Dependent Variable Lead (+ years)"), 0:1, multiple = FALSE),
+            
             
             selectInput("indepvar", label = h3("Abiotic (Independent Variable)"),
-                        choices = list("Cooper CSI (MA Water Year)" = "CooperCSI_WaterYear",
-                                       "Winter Precip (City of Chas)" = "ChasCity_WinterPrecip",
+                        choices = list("Winter Precip (City of Chas)" = "ChasCity_WinterPrecip",
                                        "Spring Precip (City of Chas)" = "ChasCity_SpringPrecip",
                                        "Summer Precip (City of Chas)" = "ChasCity_SummerPrecip",
                                        "Fall Precip (City of Chas)" = "ChasCity_FallPrecip",
@@ -107,14 +115,21 @@ ui <- fluidPage(
         mainPanel(
             
             tabsetPanel(type = "tabs",
-                        
-                        tabPanel("Scatterplot", plotOutput("scatterplot")), # Plot
                         tabPanel("Distribution", # Plots of distributions
                                  fluidRow(
                                      column(6, plotOutput("distribution1")),
-                                     column(6, plotOutput("distribution2")))
-                        ),
-                        tabPanel("Model Summary", verbatimTextOutput("summary")), # Regression output
+                                     column(6, plotOutput("distribution2")))),
+                        tabPanel("Scatterplot", 
+                                 fluidRow(
+                                   column(12, h4("Lag o (No Lag)"), plotOutput("scatterplot0")),
+                                   column(12, h4("Lag 1 (Dep Var +1 yr)"), plotOutput("scatterplot1")),
+                                   column(12, h4("Lag 2 (Dep Var +1 yr, Ind Var -1 yr)"), plotOutput("scatterplot2")))),
+                        tabPanel("Model Summary",
+                                 fluidRow(
+                                   column(12, h4("Lag 0 (No Lag)"), verbatimTextOutput("summary0")),
+                                   column(12, h4("Lag 1 (Dep Var +1 yr)"), verbatimTextOutput("summary1")),
+                                   column(12, h4("Lag 2 (Dep Var +1 yr, Ind Var -1 yr)"), verbatimTextOutput("summary2")))), # Regression output
+                        tabPanel("Abundance Correlation", plotOutput("corrAbun")),
                         tabPanel("Data", DT::dataTableOutput('tbl')) # Data as datatable
                         
             )
@@ -126,12 +141,37 @@ ui <- fluidPage(
 # SERVER
 server <- function(input, output) {
     
+    # list of data sets from--rich.shinyyapps.io/regression/--Still need to tie into DBs for switch
+    leadlagInput <- reactive({
+      switch(input$dataset,
+           "D003" = mtcars,
+           "D004" = longley,
+           "D005" = mlb11,    
+           "D130" = rock,
+           "F001" = df())
+    })
+    
     # Regression output
-    output$summary <- renderPrint({
+    output$summary0 <- renderPrint({
         fit <- lm(crab[,input$outcome] ~ crab[,input$indepvar])
         names(fit$coefficients) <- c("Intercept", input$var2)
         summary(fit)
     })
+    
+    # Regression w/ lead output
+    output$summary1 <- renderPrint({
+      fit1 <- lm(lead(crab[,input$outcome]) ~ crab[,input$indepvar])
+      names(fit1$coefficients) <- c("Intercept", input$var3)
+      summary(fit1)
+    })
+    
+    # Regression w/ lead and lag output
+    output$summary2 <- renderPrint({
+      fit2 <- lm(lead(crab[,input$outcome]) ~ lag(crab[,input$indepvar]))
+      names(fit2$coefficients) <- c("Intercept", input$var4)
+      summary(fit2)
+    })
+    
     
     # Data output
     output$tbl = DT::renderDataTable({
@@ -140,22 +180,43 @@ server <- function(input, output) {
     
     
     # Scatterplot output
-    output$scatterplot <- renderPlot({
-        plot(crab[,input$indepvar], crab[,input$outcome], main="Scatterplot",
+    output$scatterplot0 <- renderPlot({
+        plot(crab[,input$indepvar], crab[,input$outcome], main="Lag 0",
              xlab=input$indepvar, ylab=input$outcome, pch=19)
         abline(lm(crab[,input$outcome] ~ crab[,input$indepvar]), col="red")
         }, height=400)
+    
+    # Scatterplot output w/ lead
+    output$scatterplot1 <- renderPlot({
+      plot(lead(crab[,input$indepvar]), crab[,input$outcome], main="Lag 1",
+           xlab=input$indepvar, ylab=input$outcome, pch=19)
+      abline(lm(lead(crab[,input$outcome]) ~ crab[,input$indepvar]), col="red")
+    }, height=400)
+    
+    # Scatterplot output w/ lead and lag
+    output$scatterplot2 <- renderPlot({
+      plot(lead(crab[,input$indepvar]), lag(crab[,input$outcome]), main="Lag 2",
+           xlab=input$indepvar, ylab=input$outcome, pch=19)
+      abline(lm(crab[,input$outcome] ~ crab[,input$indepvar]), col="red")
+    }, height=400)
     
     
     # Histogram output var 1
     output$distribution1 <- renderPlot({
         hist(crab[,input$outcome], main="", xlab=input$outcome)
-    }, height=300, width=300)
+        }, height=300, width=300)
     
     # Histogram output var 2
     output$distribution2 <- renderPlot({
         hist(crab[,input$indepvar], main="", xlab=input$indepvar)
-    }, height=300, width=300)
+        }, height=300, width=300)
+    
+    # correlation matrix
+    output$corrAbun <- renderPlot({
+        d <- select(crab, c(28:31, 33:36))
+        chart.Correlation(d, histogram = FALSE, pch=19) 
+        })
+    
 }
 
 shinyApp(ui = ui, server = server)
