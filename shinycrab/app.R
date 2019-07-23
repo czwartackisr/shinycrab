@@ -109,7 +109,6 @@ ui <- fluidPage(
                                        "ONI (Sep-Nov)" = "ONI_SON",
                                        "ONI (Oct-Dec)" = "ONI_OND",
                                        "ONI (Nov-Jan)" = "ONI_NDJ"), selected = 1)
-            
         ),
         
         mainPanel(
@@ -124,12 +123,16 @@ ui <- fluidPage(
                                    column(12, h4("Lag o (No Lag)"), plotOutput("scatterplot0")),
                                    column(12, h4("Lag 1 (Dep Var +1 yr)"), plotOutput("scatterplot1")),
                                    column(12, h4("Lag 2 (Dep Var +1 yr, Ind Var -1 yr)"), plotOutput("scatterplot2")))),
-                        tabPanel("Model Summary",
+                        tabPanel("Regression Summary",
                                  fluidRow(
                                    column(12, h4("Lag 0 (No Lag)"), verbatimTextOutput("summary0")),
                                    column(12, h4("Lag 1 (Dep Var +1 yr)"), verbatimTextOutput("summary1")),
                                    column(12, h4("Lag 2 (Dep Var +1 yr, Ind Var -1 yr)"), verbatimTextOutput("summary2")))), # Regression output
-                        tabPanel("Abundance Correlation", plotOutput("corrAbun")),
+                        tabPanel("Abundance Correlations", 
+                                 fluidRow(
+                                   column(12, h4("Harbor Trawl - Creek Trawl Abundance Correlations"), plotOutput("corrAbun1")),
+                                   column(12, h4("Creek Trawl - Chas Harbor Landings"), plotOutput("corrAbun2")),
+                                   column(12, h4("Harbor Trawl - Chas Harbor Landings"), plotOutput("corrAbun3")))),
                         tabPanel("Data", DT::dataTableOutput('tbl')) # Data as datatable
                         
             )
@@ -150,6 +153,8 @@ server <- function(input, output) {
            "D130" = rock,
            "F001" = df())
     })
+    
+    
     
     # Regression output
     output$summary0 <- renderPrint({
@@ -173,10 +178,14 @@ server <- function(input, output) {
     })
     
     
+    
+    
     # Data output
     output$tbl = DT::renderDataTable({
         DT::datatable(crab, options = list(lengthChange = FALSE))
     })
+    
+    
     
     
     # Scatterplot output
@@ -184,7 +193,7 @@ server <- function(input, output) {
         plot(crab[,input$indepvar], crab[,input$outcome], main="Lag 0",
              xlab=input$indepvar, ylab=input$outcome, pch=19)
         abline(lm(crab[,input$outcome] ~ crab[,input$indepvar]), col="red")
-        }, height=400)
+    }, height=400)
     
     # Scatterplot output w/ lead
     output$scatterplot1 <- renderPlot({
@@ -201,6 +210,7 @@ server <- function(input, output) {
     }, height=400)
     
     
+    
     # Histogram output var 1
     output$distribution1 <- renderPlot({
         hist(crab[,input$outcome], main="", xlab=input$outcome)
@@ -210,12 +220,34 @@ server <- function(input, output) {
     output$distribution2 <- renderPlot({
         hist(crab[,input$indepvar], main="", xlab=input$indepvar)
         }, height=300, width=300)
+   
     
-    # correlation matrix
+    
+    
+    # correlation matrix B90 T38
+    output$corrAbun1 <- renderPlot({
+      juvcorr <- select(crab, c(28:31, 28:31))
+      chart.Correlation(juvcorr, histogram = FALSE, pch=19) 
+    })
+    
+    # correlation matrix B90 T38
     output$corrAbun <- renderPlot({
-        d <- select(crab, c(28:31, 33:36))
-        chart.Correlation(d, histogram = FALSE, pch=19) 
+        juvcorr <- select(crab, c(28:31, 44:47))
+        chart.Correlation(juvcorr, histogram = FALSE, pch=19) 
         })
+    
+    # correlation matrix B90 Landings
+    output$corrAbun2 <- renderPlot({
+      juvcorr <- select(crab, c(44:47, 57:62))
+      chart.Correlation(juvcorr, histogram = FALSE, pch=19) 
+    })
+    
+    # correlation matrix T38 Landings
+    output$corrAbun3 <- renderPlot({
+      juvcorr <- select(crab, c(28:31, 57:62))
+      chart.Correlation(juvcorr, histogram = FALSE, pch=19) 
+    })
+    
     
 }
 
