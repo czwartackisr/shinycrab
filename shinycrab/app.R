@@ -3,6 +3,8 @@ library(dplyr)
 library(ggplot2)
 library(DataCombine)
 library(PerformanceAnalytics)
+library(knitr)
+library(rmarkdown)
 crab <- read.csv("data.csv", stringsAsFactors = FALSE)
 
 ui <- fluidPage(
@@ -14,18 +16,22 @@ ui <- fluidPage(
                       choices = list("D003", "D004", "D005", "D130", "F001"), 
                       selected = 3, multiple = TRUE),
           
-            selectInput("crabdataset", h3("Dependent Variable (Group)"), choices = c("Abundance")),        
+            selectInput("dataset2", h3("Dependent Variable (Group)"), choices = c("Abundance")),        
             HTML('</br>'),
-            uiOutput('outcome'),
+            uiOutput('dv'),
             
             
             selectInput("dataset", h3("Independent Variable (Group)"), choices = c("Abundance",
-                                                                          "Salinity",
-                                                                          "Temperature",
-                                                                          "Precipitation",
-                                                                          "Climate")),        
+                                                                                   "Salinity",
+                                                                                   "Temperature",
+                                                                                   "Precipitation",
+                                                                                   "Climate")),        
             HTML('</br>'),
-            uiOutput('iv')
+            uiOutput('iv'),
+            
+            
+            radioButtons('format', h5('Document format'), c('PDF', 'HTML', 'Word'), inline = TRUE),
+            downloadButton('downloadReport')
             
             
         ),
@@ -47,16 +53,22 @@ ui <- fluidPage(
                                    column(12, h4("Lag 0 (No Lag)"), verbatimTextOutput("summary0")),
                                    column(12, h4("Lag 1 (Dep Var +1 yr)"), verbatimTextOutput("summary1")),
                                    column(12, h4("Lag 2 (Dep Var +1 yr, Ind Var -1 yr)"), verbatimTextOutput("summary2")))), # Regression output
+                        tabPanel("Residuals",                   
+                                 column(12, h4("Lag o (No Lag)"), plotOutput("residuals_hist0")),
+                                 column(12, h4("Lag o (No Lag)"), plotOutput("residuals_scatter0")),
+                                 column(12, h4("Lag o (No Lag)"), plotOutput("residuals_qqline0")),
+                                 column(12, h4("Lag 1 (Dep Var +1 yr)"), plotOutput("residuals_hist1")),
+                                 column(12, h4("Lag 1 (Dep Var +1 yr)"), plotOutput("residuals_scatter1")),
+                                 column(12, h4("Lag 1 (Dep Var +1 yr)"), plotOutput("residuals_qqline1")),
+                                 column(12, h4("Lag 2 (Dep Var +1 yr, Ind Var -1 yr)"), plotOutput("residuals_hist2")),
+                                 column(12, h4("Lag 2 (Dep Var +1 yr, Ind Var -1 yr)"), plotOutput("residuals_scatter2")),
+                                 column(12, h4("Lag 2 (Dep Var +1 yr, Ind Var -1 yr)"), plotOutput("residuals_qqline2"))),
                         tabPanel("Abundance Correlations", 
                                  fluidRow(
-                                   column(6, h6("Method = Kendall's"), verbatimTextOutput("currentCorr")),
+                                   #column(6, h6("Method = Kendall's"), plotOutput("currentCorr")),
                                    column(12, h4("Harbor Trawl - Creek Trawl Abundance Correlations"), plotOutput("corrAbun1")),
                                    column(12, h4("Creek Trawl - Chas Harbor Landings"), plotOutput("corrAbun2")),
                                    column(12, h4("Harbor Trawl - Chas Harbor Landings"), plotOutput("corrAbun3")))),
-                        tabPanel("Residuals",                   
-                                 plotOutput("residuals_hist"),
-                                 plotOutput("residuals_scatter"),
-                                 plotOutput("residuals_qqline")),
                         tabPanel("Data", DT::dataTableOutput('tbl')) # Data as datatable
                         
             )
@@ -68,6 +80,12 @@ ui <- fluidPage(
 # SERVER
 server <- function(input, output) {
     
+    # Dependent Variable Input
+    dataset2Input <- reactive({
+      switch(input$dataset2,
+             "Abundance" = select(crab, 28:31, 33:36, 38:41, 44:47, 50, 53, 56, 57:68))
+    })
+    
     # Infependent variable Input
     datasetInput <- reactive({
       switch(input$dataset,
@@ -78,122 +96,119 @@ server <- function(input, output) {
            "Climate" = select(crab, 70:93))
     })
     
+    # Dependent variable Output
+    output$dv = renderUI({
+      selectInput('dv', h5('Choose an Dep Var from Group'), choices = names(dataset2Input()))
+    })
+    
+    
     # independent variable Output
     output$iv = renderUI({
       selectInput('iv', h5('Choose an Ind Var from Group'), choices = names(datasetInput()))
     })
-    
-    
-    # dependent variable Input
-    outcomeInput <- reactive({
-      switch(input$crabdataset,
-           "Abundance" = select(crab, 28:31, 33:36, 38:41, 44:47, 50, 53, 56, 57:68),
-           "Abundance Lag 1" = lead("Abundance"))
-    })
      
       
-    # Dependent variable Output
-    output$outcome = renderUI({
-      selectInput('outcome', h5('Choose an Ind Var from Group'), choices = names(outcomeInput()))
-    })
-    
     
      
     # regression formula
     regFormula <- reactive({
-      as.formula(paste(input$outcome, '~', input$iv))
+      as.formula(paste(input$dv, '~', input$iv))
     })
     
-    # bivariate model
-    reg.model <- reactive({
-      lm(regFormula(), data = datasetInput())
+    # bivariate model 
+    reg.model0 <- reactive({
+      lm(crab[,input$dv] ~ crab[,input$iv])
     })
+    
+    # bivariate model 
+    reg.model1 <- reactive({
+      lm(lead(crab[,input$dv]) ~ crab[,input$iv])
+    })
+    
+    # bivariate model 
+    reg.model2 <- reactive({
+      lm(lead(crab[,input$dv]) ~ lag(crab[,input$iv]))
+    })
+    
+    
     
     
     
     ## GRAPHICS
+ 
+    
+    
+    
+    
+    # residuals
+    output$residuals_hist0 <- renderPlot({
+      hist(reg.model0()$residuals, main = paste(input$dv, '~', input$iv), xlab = 'Residuals') 
+    })
+    
+    output$residuals_scatter0 <- renderPlot({
+      res <- qplot(fitted(reg.model0()), residuals(reg.model0()))
+      res + geom_hline(yintercept = 0, col="red")
+    })
+    
+    output$residuals_qqline0 <- renderPlot({
+      qqnorm(reg.model0()$residuals)
+      qqline(reg.model0()$residuals) 
+    })   
+    
+    # residuals lead
+    output$residuals_hist1 <- renderPlot({
+      hist(reg.model1()$residuals, main = paste(input$dv, '~', input$iv), xlab = 'Residuals') 
+    })
+    
+    output$residuals_scatter1 <- renderPlot({
+      res <- qplot(fitted(reg.model1()), residuals(reg.model1()))
+      res + geom_hline(yintercept = 0, col="red")
+    })
+    
+    output$residuals_qqline1 <- renderPlot({
+      qqnorm(reg.model1()$residuals)
+      qqline(reg.model1()$residuals) 
+    })   
+    
+    # residuals lead/lag
+    output$residuals_hist2 <- renderPlot({
+      hist(reg.model2()$residuals, main = paste(input$dv, '~', input$iv), xlab = 'Residuals') 
+    })
+    
+    output$residuals_scatter2 <- renderPlot({
+      res <- qplot(fitted(reg.model2()), residuals(reg.model2()))
+      res + geom_hline(yintercept = 0, col="red")
+    })
+    
+    output$residuals_qqline2 <- renderPlot({
+      qqnorm(reg.model2()$residuals)
+      qqline(reg.model2()$residuals) 
+    })   
+    
+    
     
     
     
     # Regression output
     output$summary0 <- renderPrint({
-      fit0 <- lm(crab[,input$outcome] ~ crab[,input$iv])
+      fit0 <- lm(crab[,input$dv] ~ crab[,input$iv])
       names(fit0$coefficients) <- c("Intercept", input$var2)
       summary(fit0)
     })
     
     # Regression w/ lead output
     output$summary1 <- renderPrint({
-      fit1 <- lm(lead(crab[,input$outcome]) ~ crab[,input$iv])
+      fit1 <- lm(lead(crab[,input$dv]) ~ crab[,input$iv])
       names(fit1$coefficients) <- c("Intercept", input$var2)
       summary(fit1)
     })
     
     # Regression w/ lead and lag output
     output$summary2 <- renderPrint({
-      fit2 <- lm(lead(crab[,input$outcome]) ~ lag(crab[,input$iv]))
+      fit2 <- lm(lead(crab[,input$dv]) ~ lag(crab[,input$iv]))
       names(fit2$coefficients) <- c("Intercept", input$var2)
       summary(fit2)
     })
-
-    
-    
-    
-    
-    # Scatterplot output
-    
-    output$scatterplot0 <- renderPlot({
-        plot(crab[,input$iv], crab[,input$outcome], main="Lag 0",
-             xlab=input$iv, ylab=input$outcome, pch=19)
-        abline(lm(crab[,input$outcome] ~ crab[,input$iv]), col="red")
-        
-    }, height=350, width=350)
-    
-    # Scatterplot output w/ lead
-    output$scatterplot1 <- renderPlot({
-      plot(lead(crab[,input$iv]), crab[,input$outcome], main="Lag 1",
-           xlab=input$iv, ylab=input$outcome, pch=19)
-      abline(lm(lead(crab[,input$outcome]) ~ crab[,input$iv]), col="red")
-    }, height=350, width=350)
-    
-    # Scatterplot output w/ lead and lag
-    output$scatterplot2 <- renderPlot({
-      plot(lead(crab[,input$iv]), lag(crab[,input$outcome]), main="Lag 2",
-           xlab=input$iv, ylab=input$outcome, pch=19)
-      abline(lm(crab[,input$outcome] ~ crab[,input$iv]), col="red")
-    }, height=350, width=350)
-   
-    
-    
-    
-    
-    # residuals
-    output$residuals_hist <- renderPlot({
-      hist(reg.model()$residuals, main = paste(input$outcome, '~', input$iv), xlab = 'Residuals') 
-    })
-    
-    output$residuals_scatter <- renderPlot({
-      plot(reg.model()$residuals ~ crabdatasetInput()[,input$iv], na.rm = TRUE, xlab = input$iv, ylab = 'Residuals')
-      abline(h = 0, lty = 3) 
-    })
-    
-    output$residuals_qqline <- renderPlot({
-      qqnorm(reg.model()$residuals)
-      qqline(reg.model()$residuals) 
-    })    
-    
-    
-    
-    
-    # Histogram output var 1
-    output$distribution1 <- renderPlot({
-        hist(crab[,input$outcome], main="", xlab=input$outcome)
-        }, height=300, width=300)
-    
-    # Histogram output var 2
-    output$distribution2 <- renderPlot({
-        hist(crab[,input$iv], main="", xlab=input$iv)
-        }, height=300, width=300)
 
     
     
@@ -204,7 +219,7 @@ server <- function(input, output) {
     output$corrAbun1 <- renderPlot({
         juvcorr2 <- select(crab, 28:31, 44:47)
         chart.Correlation(juvcorr2, histogram = FALSE, pch=19, method = "kendall") 
-        })
+    })
     
     # correlation matrix B90 Landings
     output$corrAbun2 <- renderPlot({
@@ -224,7 +239,74 @@ server <- function(input, output) {
     # Data output
     output$tbl = DT::renderDataTable({
         DT::datatable(crab, options = list(lengthChange = FALSE))
-    })    
+    }) 
+
+    
+    
+    
+    
+    # Scatterplot output
+    
+    output$scatterplot0 <- renderPlot({
+        plot(crab[,input$iv], crab[,input$dv], main="Lag 0",
+             xlab=input$iv, ylab=input$dv, pch=19)
+        abline(lm(crab[,input$dv] ~ crab[,input$iv]), col="red")
+        
+    }, height=400, width = 500)
+    
+    # Scatterplot output w/ lead
+    output$scatterplot1 <- renderPlot({
+      plot(lead(crab[,input$iv]), crab[,input$dv], main="Lag 1",
+           xlab=input$iv, ylab=input$dv, pch=19)
+      abline(lm(lead(crab[,input$dv]) ~ crab[,input$iv]), col="red")
+    }, height=400, width = 500)
+    
+    # Scatterplot output w/ lead and lag
+    output$scatterplot2 <- renderPlot({
+      plot(lead(crab[,input$iv]), lag(crab[,input$dv]), main="Lag 2",
+           xlab=input$iv, ylab=input$dv, pch=19)
+      abline(lm(crab[,input$dv] ~ crab[,input$iv]), col="red")
+    }, height=400, width = 500)
+
+    
+    
+    
+    
+    # Histogram output var 1
+    output$distribution1 <- renderPlot({
+        hist(crab[,input$dv], main="", xlab=input$dv)
+        }, height=300, width=300)
+    
+    # Histogram output var 2
+    output$distribution2 <- renderPlot({
+        hist(crab[,input$iv], main="", xlab=input$iv)
+        }, height=300, width=300)
+    
+    
+    
+    
+    
+    # download report
+    output$downloadReport <- downloadHandler(
+      filename = function() {
+        paste('my-report', sep = '.', switch(
+          input$format, PDF = 'pdf', HTML = 'html', Word = 'docx'
+        ))
+      },
+      
+      content = function(file) {
+        src <- normalizePath('report.Rmd')
+        owd <- setwd(tempdir())
+        on.exit(setwd(owd))
+        file.copy(src, 'report.Rmd')
+        
+        library(rmarkdown)
+        out <- render('report.Rmd', switch(
+          input$format,
+          PDF = pdf_document(), HTML = html_document(), Word = word_document()
+        ))
+        file.rename(out, file)
+      })
     
 }
 
