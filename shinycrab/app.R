@@ -14,37 +14,9 @@ ui <- fluidPage(
                       choices = list("D003", "D004", "D005", "D130", "F001"), 
                       selected = 3, multiple = TRUE),
           
-            selectInput("outcome", label = h3("Dependent Variable (Abundance)"),
-                        choices = list("Harbor Trawl Juvenile CPUE" = "B90_JuvCPUE",
-                                       "Harbor Trawl Subadult CPUE" = "B90_SubadultCPUE",
-                                       "Harbor Trawl Adult CPUE" = "B90_AdultCPUE", 
-                                       "Harbor Trawl CPUE" = "B90_CPUE",
-                                       "Creek Trawl Juvenile CPUE" = "T38_JuvCPUE",
-                                       "Creek Trawl Subadult CPUE" = "T38_SubadultCPUE",
-                                       "Creek Trawl Adult CPUE" = "T38_AdultCPUE",
-                                       "Creek Trawl CPUE" = "T38_CPUE",
-                                       "SCECAP Creek Juvenile CPUE" = "E98_JuvCPUE",
-                                       "SCECAP Creek Subadult CPUE" = "E98_SubadultCPUE",
-                                       "SCECAP Creek Adult CPUE" = "E98_AdultCPUE",
-                                       "SCECAP Creek CPUE" = "E98_CPUE",
-                                       "SCECAP Open Water Juvenile CPUE" = "E99_JuvCPUE",
-                                       "SCECAP Open Water Subadult CPUE" = "E99_SubadultCPUE",
-                                       "SCECAP Open Water Adult CPUE" = "E99_AdultCPUE",
-                                       "SCECAP Open Water CPUE" = "E99_CPUE",
-                                       "4-hr potting Survey CPUE" = "P88_CPUE",
-                                       "24-hr potting Survey CPUE" = "S16_CPUE",
-                                       "Trammel Survey CPUE" = "T06_CPUE",
-                                       "Ashley River Landings" = "AshleyLandings",
-                                       "Cooper River Landings" = "CooperLandings",
-                                       "Wando River Landings" = "WandoLandings",
-                                       "Charleston Harbor Landings" = "ChsHarborLandings",
-                                       "Charleston Harbor (all systems) Sum Landings" = "SumLandings",
-                                       "Charleston Harbor (all systems) Mean Annual Landings" = "MeanLandings",
-                                       "Ashley River Landings CPUE" = "AshleyLandingsCPUE", 
-                                       "Cooper River Landings CPUE" = "CooperLandingsCPUE", 
-                                       "Wando River Landings CPUE" = "WandoLandingsCPUE", 
-                                       "Charleston Harbor Landings CPUE" = "ChsHarborLandingsCPUE", 
-                                       "Charleston Harbor (all systems) Mean Annual CPUE" = "MeanLandingsCPUE"), selected = 1),
+            selectInput("crabdataset", h3("Dependent Variable (Group)"), choices = c("Abundance")),        
+            HTML('</br>'),
+            uiOutput('outcome'),
             
             
             selectInput("dataset", h3("Independent Variable (Group)"), choices = c("Abundance",
@@ -77,10 +49,14 @@ ui <- fluidPage(
                                    column(12, h4("Lag 2 (Dep Var +1 yr, Ind Var -1 yr)"), verbatimTextOutput("summary2")))), # Regression output
                         tabPanel("Abundance Correlations", 
                                  fluidRow(
-                                   column(6, h4("Current Variable Kendall's Correlation"), verbatimTextOutput("currentCorr")),
+                                   column(6, h6("Method = Kendall's"), verbatimTextOutput("currentCorr")),
                                    column(12, h4("Harbor Trawl - Creek Trawl Abundance Correlations"), plotOutput("corrAbun1")),
                                    column(12, h4("Creek Trawl - Chas Harbor Landings"), plotOutput("corrAbun2")),
                                    column(12, h4("Harbor Trawl - Chas Harbor Landings"), plotOutput("corrAbun3")))),
+                        tabPanel("Residuals",                   
+                                 plotOutput("residuals_hist"),
+                                 plotOutput("residuals_scatter"),
+                                 plotOutput("residuals_qqline")),
                         tabPanel("Data", DT::dataTableOutput('tbl')) # Data as datatable
                         
             )
@@ -92,7 +68,7 @@ ui <- fluidPage(
 # SERVER
 server <- function(input, output) {
     
-    # list of data sets from--rich.shinyyapps.io/regression/--Still need to tie into DBs for switch
+    # Infependent variable Input
     datasetInput <- reactive({
       switch(input$dataset,
            "Abundance" = select(crab, 28:31, 33:36, 38:41, 44:47, 50, 53, 56, 57:68),
@@ -102,11 +78,27 @@ server <- function(input, output) {
            "Climate" = select(crab, 70:93))
     })
     
-    # independent variable
+    # independent variable Output
     output$iv = renderUI({
       selectInput('iv', h5('Choose an Ind Var from Group'), choices = names(datasetInput()))
     })
     
+    
+    # dependent variable Input
+    outcomeInput <- reactive({
+      switch(input$crabdataset,
+           "Abundance" = select(crab, 28:31, 33:36, 38:41, 44:47, 50, 53, 56, 57:68),
+           "Abundance Lag 1" = lead("Abundance"))
+    })
+     
+      
+    # Dependent variable Output
+    output$outcome = renderUI({
+      selectInput('outcome', h5('Choose an Ind Var from Group'), choices = names(outcomeInput()))
+    })
+    
+    
+     
     # regression formula
     regFormula <- reactive({
       as.formula(paste(input$outcome, '~', input$iv))
@@ -125,32 +117,25 @@ server <- function(input, output) {
     
     # Regression output
     output$summary0 <- renderPrint({
-      fit1 <- lm(crab[,input$outcome] ~ crab[,input$iv])
-      names(fit1$coefficients) <- c("Intercept", input$var2)
-      summary(fit1)
+      fit0 <- lm(crab[,input$outcome] ~ crab[,input$iv])
+      names(fit0$coefficients) <- c("Intercept", input$var2)
+      summary(fit0)
     })
     
     # Regression w/ lead output
     output$summary1 <- renderPrint({
-      fit2 <- lm(lead(crab[,input$outcome]) ~ crab[,input$iv])
-      names(fit2$coefficients) <- c("Intercept", input$var2)
-      summary(fit2)
+      fit1 <- lm(lead(crab[,input$outcome]) ~ crab[,input$iv])
+      names(fit1$coefficients) <- c("Intercept", input$var2)
+      summary(fit1)
     })
     
     # Regression w/ lead and lag output
     output$summary2 <- renderPrint({
-      fit3 <- lm(lead(crab[,input$outcome]) ~ lag(crab[,input$iv]))
-      names(fit3$coefficients) <- c("Intercept", input$var2)
-      summary(fit3)
+      fit2 <- lm(lead(crab[,input$outcome]) ~ lag(crab[,input$iv]))
+      names(fit2$coefficients) <- c("Intercept", input$var2)
+      summary(fit2)
     })
-    
-    
-    
-    
-    # Data output
-    output$tbl = DT::renderDataTable({
-        DT::datatable(crab, options = list(lengthChange = FALSE))
-    })
+
     
     
     
@@ -162,21 +147,41 @@ server <- function(input, output) {
              xlab=input$iv, ylab=input$outcome, pch=19)
         abline(lm(crab[,input$outcome] ~ crab[,input$iv]), col="red")
         
-    }, height=400)
+    }, height=350, width=350)
     
     # Scatterplot output w/ lead
     output$scatterplot1 <- renderPlot({
       plot(lead(crab[,input$iv]), crab[,input$outcome], main="Lag 1",
            xlab=input$iv, ylab=input$outcome, pch=19)
       abline(lm(lead(crab[,input$outcome]) ~ crab[,input$iv]), col="red")
-    }, height=400)
+    }, height=350, width=350)
     
     # Scatterplot output w/ lead and lag
     output$scatterplot2 <- renderPlot({
       plot(lead(crab[,input$iv]), lag(crab[,input$outcome]), main="Lag 2",
            xlab=input$iv, ylab=input$outcome, pch=19)
       abline(lm(crab[,input$outcome] ~ crab[,input$iv]), col="red")
-    }, height=400)
+    }, height=350, width=350)
+   
+    
+    
+    
+    
+    # residuals
+    output$residuals_hist <- renderPlot({
+      hist(reg.model()$residuals, main = paste(input$outcome, '~', input$iv), xlab = 'Residuals') 
+    })
+    
+    output$residuals_scatter <- renderPlot({
+      plot(reg.model()$residuals ~ crabdatasetInput()[,input$iv], na.rm = TRUE, xlab = input$iv, ylab = 'Residuals')
+      abline(h = 0, lty = 3) 
+    })
+    
+    output$residuals_qqline <- renderPlot({
+      qqnorm(reg.model()$residuals)
+      qqline(reg.model()$residuals) 
+    })    
+    
     
     
     
@@ -189,28 +194,37 @@ server <- function(input, output) {
     output$distribution2 <- renderPlot({
         hist(crab[,input$iv], main="", xlab=input$iv)
         }, height=300, width=300)
-   
+
+    
+    
     
     
     
     # correlation matrix B90 T38
     output$corrAbun1 <- renderPlot({
         juvcorr2 <- select(crab, 28:31, 44:47)
-        chart.Correlation(juvcorr2, histogram = FALSE, pch=19) 
+        chart.Correlation(juvcorr2, histogram = FALSE, pch=19, method = "kendall") 
         })
     
     # correlation matrix B90 Landings
     output$corrAbun2 <- renderPlot({
       juvcorr3 <- select(crab, c(44:47, 57:62))
-      chart.Correlation(juvcorr3, histogram = FALSE, pch=19) 
+      chart.Correlation(juvcorr3, histogram = FALSE, pch=19, method = "kendall") 
     })
     
     # correlation matrix T38 Landings
     output$corrAbun3 <- renderPlot({
       juvcorr4 <- select(crab, 28:31, 57:62)
-      chart.Correlation(juvcorr4, histogram = FALSE, pch=19) 
+      chart.Correlation(juvcorr4, histogram = FALSE, pch=19, method = "kendall") 
     })
     
+    
+    
+    
+    # Data output
+    output$tbl = DT::renderDataTable({
+        DT::datatable(crab, options = list(lengthChange = FALSE))
+    })    
     
 }
 
