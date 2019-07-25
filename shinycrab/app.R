@@ -20,7 +20,6 @@ ui <- fluidPage(
             HTML('</br>'),
             uiOutput('dv'),
             
-            
             selectInput("dataset", h3("Independent Variable (Group)"), choices = c("Abundance",
                                                                                    "Salinity",
                                                                                    "Temperature",
@@ -28,7 +27,6 @@ ui <- fluidPage(
                                                                                    "Climate")),        
             HTML('</br>'),
             uiOutput('iv'),
-            
             
             radioButtons('format', h5('Document format'), c('PDF', 'HTML', 'Word'), inline = TRUE),
             downloadButton('downloadReport')
@@ -41,8 +39,11 @@ ui <- fluidPage(
             tabsetPanel(type = "tabs",
                         tabPanel("Distribution", # Plots of distributions
                                  fluidRow(
-                                     column(6, plotOutput("distribution1")),
-                                     column(6, plotOutput("distribution2")))),
+                                   column(6, plotOutput("distribution1")),
+                                   column(6, plotOutput("dvTime"))),
+                                 fluidRow(
+                                   column(6, plotOutput("distribution2")),
+                                   column(6, plotOutput("ivTime")))),
                         tabPanel("Scatterplot", 
                                  fluidRow(
                                    column(12, h4("Lag o (No Lag)"), plotOutput("scatterplot0")),
@@ -63,12 +64,13 @@ ui <- fluidPage(
                                  column(12, h4("Lag 2 (Dep Var +1 yr, Ind Var -1 yr)"), plotOutput("residuals_hist2")),
                                  column(12, h4("Lag 2 (Dep Var +1 yr, Ind Var -1 yr)"), plotOutput("residuals_scatter2")),
                                  column(12, h4("Lag 2 (Dep Var +1 yr, Ind Var -1 yr)"), plotOutput("residuals_qqline2"))),
-                        tabPanel("Abundance Correlations", 
+                        tabPanel("Select Correlations", 
                                  fluidRow(
                                    #column(6, h6("Method = Kendall's"), plotOutput("currentCorr")),
                                    column(12, h4("Harbor Trawl - Creek Trawl Abundance Correlations"), plotOutput("corrAbun1")),
                                    column(12, h4("Creek Trawl - Chas Harbor Landings"), plotOutput("corrAbun2")),
-                                   column(12, h4("Harbor Trawl - Chas Harbor Landings"), plotOutput("corrAbun3")))),
+                                   column(12, h4("Harbor Trawl - Chas Harbor Landings"), plotOutput("corrAbun3")),
+                                   column(12, h4("Salinity Correlations"), plotOutput("corrAbun4")))),
                         tabPanel("Data", DT::dataTableOutput('tbl')) # Data as datatable
                         
             )
@@ -217,21 +219,28 @@ server <- function(input, output) {
     
     # correlation matrix B90 T38
     output$corrAbun1 <- renderPlot({
-        juvcorr2 <- select(crab, 28:31, 44:47)
-        chart.Correlation(juvcorr2, histogram = FALSE, pch=19, method = "kendall") 
+        juvcorr1 <- select(crab, 28:31, 44:47)
+        chart.Correlation(juvcorr1, histogram = FALSE, pch=19, method = "kendall") 
     })
     
     # correlation matrix B90 Landings
     output$corrAbun2 <- renderPlot({
-      juvcorr3 <- select(crab, c(44:47, 57:62))
-      chart.Correlation(juvcorr3, histogram = FALSE, pch=19, method = "kendall") 
+      juvcorr2 <- select(crab, c(44:47, 57:62))
+      chart.Correlation(juvcorr2, histogram = FALSE, pch=19, method = "kendall") 
     })
     
     # correlation matrix T38 Landings
     output$corrAbun3 <- renderPlot({
-      juvcorr4 <- select(crab, 28:31, 57:62)
-      chart.Correlation(juvcorr4, histogram = FALSE, pch=19, method = "kendall") 
+      juvcorr3 <- select(crab, 28:31, 57:62)
+      chart.Correlation(juvcorr3, histogram = FALSE, pch=19, method = "kendall") 
     })
+    
+    # correlation matrix Salinity
+    output$corrAbun4 <- renderPlot({
+      juvcorr4 <- select(crab, 11:26, 42, 51)
+      chart.Correlation(juvcorr4, histogram = FALSE, pch=19, method = "kendall") 
+    }, height = 700)
+    
     
     
     
@@ -274,13 +283,27 @@ server <- function(input, output) {
     
     # Histogram output var 1
     output$distribution1 <- renderPlot({
-        hist(crab[,input$dv], main="", xlab=input$dv)
-        }, height=300, width=300)
+        hist(crab[,input$dv], main="Dependent Variable Distribution", xlab=input$dv)
+        })
     
     # Histogram output var 2
     output$distribution2 <- renderPlot({
-        hist(crab[,input$iv], main="", xlab=input$iv)
-        }, height=300, width=300)
+        hist(crab[,input$iv], main="Independent Variable Distribution", xlab=input$iv)
+        })
+    
+   # Time series output iv
+    output$ivTime <- renderPlot({
+      plot(crab$Year,crab[,input$iv], main = "Independent Variable Time Series",
+           type = "l", lty = "twodash",
+           xlab = "Year", ylab = "Indep Var Metric (Abundance, PSU, Degrees Celsius, etc.)") 
+      })
+    
+    # Time series output dv
+    output$dvTime <- renderPlot({
+      plot(crab$Year,crab[,input$dv], main = "Dependent Variable Time Series",
+           type = "l", lty = "twodash",
+           xlab = "Year", ylab = "Abundance Metric")
+      })
     
     
     
