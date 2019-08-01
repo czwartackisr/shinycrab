@@ -85,17 +85,17 @@ server <- function(input, output) {
     # Dependent Variable Input
     dataset2Input <- reactive({
       switch(input$dataset2,
-             "Abundance" = select(crab, 28:31, 33:36, 38:41, 44:47, 50, 53, 56, 57:68))
+             "Abundance" = select(crab, 28:33, 35:38, 40:43, 46:51, 54, 57, 60, 61:72))
     })
     
     # Infependent variable Input
     datasetInput <- reactive({
       switch(input$dataset,
-           "Abundance" = select(crab, 28:31, 33:36, 38:41, 44:47, 50, 53, 56, 57:68),
-           "Salinity" = select(crab, 11:26, 32, 37, 42, 48, 51, 54),
-           "Temperature" = select(crab, 9, 10, 27, 43, 49, 52, 55),    
+           "Abundance" = select(crab, 28:33, 35:38, 40:43, 46:51, 54, 57, 60, 61:72),
+           "Salinity" = select(crab, 11:26, 34, 39, 44, 52, 55, 58),
+           "Temperature" = select(crab, 9, 10, 27, 45, 53, 56, 59),    
            "Precipitation" = select(crab, 2:8),
-           "Climate" = select(crab, 70:93))
+           "Climate" = select(crab, 73:96))
     })
     
     # Dependent variable Output
@@ -219,25 +219,25 @@ server <- function(input, output) {
     
     # correlation matrix B90 T38
     output$corrAbun1 <- renderPlot({
-        juvcorr1 <- select(crab, 28:31, 44:47)
+        juvcorr1 <- select(crab, 28:33, 46:51)
         chart.Correlation(juvcorr1, histogram = FALSE, pch=19, method = "kendall") 
     })
     
     # correlation matrix B90 Landings
     output$corrAbun2 <- renderPlot({
-      juvcorr2 <- select(crab, c(44:47, 57:62))
+      juvcorr2 <- select(crab, c(46:51, 61:72))
       chart.Correlation(juvcorr2, histogram = FALSE, pch=19, method = "kendall") 
     })
     
     # correlation matrix T38 Landings
     output$corrAbun3 <- renderPlot({
-      juvcorr3 <- select(crab, 28:31, 57:62)
+      juvcorr3 <- select(crab, 28:33, 61:72)
       chart.Correlation(juvcorr3, histogram = FALSE, pch=19, method = "kendall") 
     })
     
     # correlation matrix Salinity
     output$corrAbun4 <- renderPlot({
-      juvcorr4 <- select(crab, 11:26, 42, 51)
+      juvcorr4 <- select(crab, 11:26, 44, 55)
       chart.Correlation(juvcorr4, histogram = FALSE, pch=19, method = "kendall") 
     }, height = 700)
     
