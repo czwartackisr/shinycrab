@@ -95,7 +95,7 @@ server <- function(input, output) {
            "Salinity" = select(crab, 11:26, 34, 39, 44, 52, 55, 58),
            "Temperature" = select(crab, 9, 10, 27, 45, 53, 56, 59),    
            "Precipitation" = select(crab, 2:8),
-           "Climate" = select(crab, 73:96))
+           "Climate" = select(crab, 73:98))
     })
     
     # Dependent variable Output
