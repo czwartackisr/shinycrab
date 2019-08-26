@@ -16,7 +16,11 @@ ui <- fluidPage(
                       choices = list("D003", "D004", "D005", "D130", "F001"), 
                       selected = 3, multiple = TRUE),
           
-            selectInput("dataset2", h3("Dependent Variable (Group)"), choices = c("Abundance")),        
+            selectInput("dataset2", h3("Dependent Variable (Group)"), choices = c("Abundance",
+                                                                                  "Salinity",
+                                                                                  "Temperature",
+                                                                                  "Precipitation",
+                                                                                  "Climate")),        
             HTML('</br>'),
             uiOutput('dv'),
             
@@ -85,7 +89,11 @@ server <- function(input, output) {
     # Dependent Variable Input
     dataset2Input <- reactive({
       switch(input$dataset2,
-             "Abundance" = select(crab, 28:33, 35:38, 40:43, 46:51, 54, 57, 60, 61:72))
+             "Abundance" = select(crab, 28:33, 35:38, 40:43, 46:51, 54, 57, 60, 61:72),
+             "Salinity" = select(crab, 11:26, 34, 39, 44, 52, 55, 58),
+             "Temperature" = select(crab, 9, 10, 27, 45, 53, 56, 59),    
+             "Precipitation" = select(crab, 2:8),
+             "Climate" = select(crab, 73:98))
     })
     
     # Infependent variable Input
