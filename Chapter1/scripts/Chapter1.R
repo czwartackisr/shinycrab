@@ -34,6 +34,14 @@ summary(B90_lm)
 T06_lm <- lm(MeanLandingsCPUE ~ T06_CPUE, data = crab)
 summary(T06_lm)
 
+#B90/T06 combined regression
+B90T06_lm <- lm(MeanLandingsCPUE ~ T06B90_CPUE, data = crab)
+summary(B90T06_lm)
+
+#B90/T38 lag subadult combined regression
+B90T38_lm <- lm(MeanLandingsCPUE ~ lag(T38B90_Subadult), data = crab)
+summary(B90T38_lm)
+
 #Additive
 NoLagAdd_lm <- lm(MeanLandingsCPUE ~ T06_CPUE + B90_CPUE, data = crab)
 summary(NoLagAdd_lm)
@@ -67,8 +75,9 @@ summary(LagMulti_lm)
 
 
 
-# Multiple (all iv) variable regression -----------------------------------
+# Mixed lag (all iv) variable regression ----------------------------------
 
+#Additive model with 2 lagged subadult Harbor and Creek Trawl variables, and no lagged 
 land_lm <- lm(MeanLandingsCPUE ~ lag(B90_SubadultCPUE) + lag(T38_SubadultCPUE) + T06_CPUE + B90_CPUE, data = crab)
 summary(land_lm)
 
@@ -112,10 +121,25 @@ dredge(T38Dredge)
 #Landings ~ relevant T38, B90, T06
 T06crab <- filter(dredgeCrab, Year > 2005) %>%
   select(1, 4, 8, 11, 15:19)
+
 T06Dredge <- lm(MeanLandingsCPUE ~ ., data = T06crab, na.action = "na.fail")
 dredge(T06Dredge)
 
+
 ##Results = 3 models with <2 D - 1) LandingsCPUE ~ B90 Mature Females, lag(B90 Subadults); 2) ~ B90 Adult, lag(B90 Subadult); 3) ~ B90 Immature Females
 
-# Ash/Cooper Landings -----------------------------------------------------
 
+
+# Additional regressions based-on dredge -----------------------------------
+
+#lag(Subadults) * CPUE
+B90_lm1 <- lm(MeanLandingsCPUE ~ lag(B90_SubadultCPUE) * B90_CPUE, data = B90crab)
+summary((B90_lm1))
+
+#lag(Subadults) * Adult
+B90_lm2 <- lm(MeanLandingsCPUE ~ lag(B90_SubadultCPUE) * B90_AdultCPUE, data = B90crab)
+summary((B90_lm2))
+
+#Immature Females
+B90_lm3 <- lm(MeanLandingsCPUE ~ B90_ImmatureFemaleCPUE, data = B90crab)
+summary((B90_lm3))
