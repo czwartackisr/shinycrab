@@ -1,12 +1,7 @@
-library(shiny)
 library(dplyr)
 library(ggplot2)
-library(DataCombine)
 library(PerformanceAnalytics)
-library(knitr)
-library(rmarkdown)
 library(MuMIn)
-
 
 # Read in data ------------------------------------------------------------
 
@@ -99,7 +94,6 @@ crab_T06 <- filter(dredgeCrab, Year > 2005)
 crab2 <- filter(dredgeCrab, Year > 2003) %>%
   select(-c(18, 17, 20))
 
-
 #LandingsCPUE ~ lag(T38 subadult) + lag(B90 subadult) + B90
 subadultB90Total_dredge <- lm(MeanLandingsCPUE ~ T38_SubadultLAG + B90_SubadultLAG + B90_CPUE, 
                 data = crab2, na.action = "na.fail")
@@ -114,13 +108,13 @@ dredge(B90Dredge)
 
 #Landings ~ all T38
 T38crab <- filter(dredgeCrab, Year > 2003) %>%
-  select(1, 9:16, 19)
+  select(1, 9:15, 19)
 T38Dredge <- lm(MeanLandingsCPUE ~ ., data = T38crab, na.action = "na.fail")
 dredge(T38Dredge)
 
 #Landings ~ relevant T38, B90, T06
 T06crab <- filter(dredgeCrab, Year > 2005) %>%
-  select(1, 4, 8, 11, 15:19)
+  select(1, 4, 8, 11, 15:20)
 
 T06Dredge <- lm(MeanLandingsCPUE ~ ., data = T06crab, na.action = "na.fail")
 dredge(T06Dredge)
@@ -143,3 +137,11 @@ summary((B90_lm2))
 #Immature Females
 B90_lm3 <- lm(MeanLandingsCPUE ~ B90_ImmatureFemaleCPUE, data = B90crab)
 summary((B90_lm3))
+
+#Immature Females
+T38_lm1 <- lm(MeanLandingsCPUE ~ T38_SubadultLAG, data = T38crab)
+summary((T38_lm1))
+
+T06_lm1 <- lm(MeanLandingsCPUE ~ T38_CPUE, data = T38crab)
+summary((T38_lm1))
+
