@@ -1,0 +1,120 @@
+---
+title: "Chapter2"
+author: "Stephen Czwartacki"
+date: "10/10/2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(lubridate)
+library(tidyr)
+library(dplyr)
+library(Hmisc)
+library(nlme)
+library(cowplot)
+library(knitr)
+library(readxl)
+library(rmarkdown)
+
+theme_set(theme_classic(base_size = 12)+
+           theme(panel.grid.major = element_blank(), 
+                 panel.grid.minor = element_blank(),
+                 panel.background = element_rect(colour = "black", size=0.5))+
+           theme(text=element_text(size=12,  family="serif", colour = "black"))+
+          theme(axis.text = element_text(colour = "black"))+
+          theme(axis.ticks = element_line(colour = "black"))
+          )
+update_geom_defaults("point",   list(colour = "black"))
+update_geom_defaults("line",   list(colour = "black"))
+theme_update(plot.title = element_text(hjust = 0.5))
+```
+
+```{r data, include=FALSE}
+crab = read.csv("dataGather2.csv")
+```
+
+
+```{r Figure 1, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Mean Annual Blue Crab CPUE ~ Cooper River and Survey Salinity metrics"}
+
+cooper <- ggplot(aes(PSU, CPUE), data = subset(crab, 
+                                               Watershed == "Cooper" &
+                                               Lifestage == "Total" &
+                                               ProjID == c("B90", "T38", "T06"))) +
+  ggtitle("Survey CPUEs ~ Cooper River Salinities") +
+  geom_point() +
+  geom_smooth(method="lm") +
+  facet_grid(ProjID ~ Salinity, scales = "free")
+
+cooper
+```
+
+```{r Figure 2, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Mean Annual Blue Crab CPUE ~ Ashley River and Survey Salinity metrics"}
+
+Ashley <- ggplot(aes(PSU, CPUE), data = subset(crab, 
+                                               Watershed == "Ashley" &
+                                               Lifestage == "Total")) +
+  ggtitle("Survey CPUEs ~ Cooper River Salinities") +
+  geom_point() +
+  geom_smooth(method="lm") +
+  facet_grid(ProjID ~ Salinity, scales = "free")
+
+Ashley
+```
+
+```{r Figure 3, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Mean Annual Blue Crab CPUE ~ Wando River and Survey Salinity metrics"}
+
+Wando <- ggplot(aes(PSU, CPUE), data = subset(crab, 
+                                               Watershed == "Wando" &
+                                               Lifestage == "Total" &
+                                               ProjID == c("B90", "T38", "T06"))) +
+  ggtitle("Survey CPUEs ~ Wando River Salinities") +
+  geom_point() +
+  geom_smooth(method="lm") +
+  facet_grid(ProjID ~ Salinity, scales = "free")
+
+Wando
+```
+
+```{r Figure 4, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Mean Annual Blue Crab CPUE ~ Cooper River and Survey Salinity metrics"}
+
+CooperT38 <- ggplot(aes(PSU, CPUE), data = subset(crab, 
+                                               Watershed == "Cooper" &
+                                               Lifestage == "Total" &
+                                               ProjID == "T38")) +
+  ggtitle("T38 CPUEs ~ Cooper River Salinities") +
+  geom_point() +
+  geom_smooth(method="lm") +
+  facet_wrap(~Salinity, scales = "free")
+
+CooperT38
+```
+
+```{r Figure 5, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Mean Annual Blue Crab CPUE ~ Cooper River and Survey Salinity metrics"}
+
+CooperB90 <- ggplot(aes(PSU, CPUE), data = subset(crab, 
+                                               Watershed == "Cooper" &
+                                               Lifestage == "Total" &
+                                               ProjID == "B90")) +
+  ggtitle("B90 CPUEs ~ Cooper River Salinities") +
+  geom_point() +
+  geom_smooth(method="lm") +
+  facet_wrap(~Salinity, scales = "free")
+
+CooperB90
+```
+
+```{r Figure 6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Mean Annual Blue Crab CPUE ~ Cooper River and Survey Salinity metrics"}
+
+AshleyT06 <- ggplot(aes(PSU, CPUE), data = subset(crab, 
+                                               Watershed == "Ashley" &
+                                               Lifestage == "Total" &
+                                               ProjID == "T06")) +
+  ggtitle("T06 CPUEs ~ Ashley River Salinities") +
+  geom_point() +
+  geom_smooth(method="lm") +
+  facet_wrap(~Salinity, scales = "free")
+
+AshleyT06
+```
