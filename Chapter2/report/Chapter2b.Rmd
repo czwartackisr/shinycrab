@@ -1,0 +1,49 @@
+---
+title: "Chapter2b"
+author: "Stephen Czwartacki"
+date: "October 11, 2019"
+output: pdf_document
+classoption: landscape
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(lubridate)
+library(tidyr)
+library(dplyr)
+library(Hmisc)
+library(nlme)
+library(cowplot)
+library(gridExtra)
+library(knitr)
+library(readxl)
+library(rmarkdown)
+
+theme_set(theme_classic(base_size = 12)+
+           theme(panel.grid.major = element_blank(), 
+                 panel.grid.minor = element_blank(),
+                 panel.background = element_rect(colour = "black", size=0.5))+
+           theme(text=element_text(size=12,  family="serif", colour = "black"))+
+          theme(axis.text = element_text(colour = "black"))+
+          theme(axis.ticks = element_line(colour = "black"))
+          )
+update_geom_defaults("point",   list(colour = "black"))
+update_geom_defaults("line",   list(colour = "black"))
+theme_update(plot.title = element_text(hjust = 0.5))
+```
+
+```{r data, include=FALSE}
+crab = read.csv("dataGather2.csv")
+```
+
+```{r Figure 4b, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Mean Annual Blue Crab CPUE ~ Cooper River and Survey Salinity metrics"}
+
+CooperT38plot <- ggplot(aes(PSU, CPUE), data = subset(crab, Lifestage == "Total")) +
+  ggtitle("Creek Trawl Blue Crab Abundance by USGS Cooper River CSI") +
+  geom_point() +
+  geom_smooth(method="lm", se=FALSE, color="gray25") +
+  facet_grid(ProjID~Salinity, scales = "free")
+CooperT38plot
+
+```

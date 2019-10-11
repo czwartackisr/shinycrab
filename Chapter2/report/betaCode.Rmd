@@ -1,0 +1,73 @@
+---
+title: "betaCode"
+author: "Stephen Czwartacki"
+date: "October 11, 2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(lubridate)
+library(tidyr)
+library(dplyr)
+library(Hmisc)
+library(nlme)
+library(cowplot)
+library(gridExtra)
+library(knitr)
+library(readxl)
+library(rmarkdown)
+
+theme_set(theme_classic(base_size = 12)+
+           theme(panel.grid.major = element_blank(), 
+                 panel.grid.minor = element_blank(),
+                 panel.background = element_rect(colour = "black", size=0.5))+
+           theme(text=element_text(size=12,  family="serif", colour = "black"))+
+          theme(axis.text = element_text(colour = "black"))+
+          theme(axis.ticks = element_line(colour = "black"))
+          )
+update_geom_defaults("point",   list(colour = "black"))
+update_geom_defaults("line",   list(colour = "black"))
+theme_update(plot.title = element_text(hjust = 0.5))
+```
+
+```{r data, include=FALSE}
+crab = read.csv("dataGather2.csv")
+```
+
+```{r Figure 4, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Trying to have regression lines for only relevant p values"}
+CooperT38 = subset(crab, 
+                   Watershed == "Cooper" &
+                     Lifestage == "Total" &
+                     ProjID == "T38")
+xx <- range(CooperT38$PSU)
+yy <- range(CooperT38$CPUE)
+
+lm_eqn = function(crab){
+    m = lm(CPUE ~ PSU, crab);
+    eq <- substitute(italic(y) == a + b %.% italic(x)*","~~italic(r)^2~"="~r2, 
+         list(a = format(coef(m)[1], digits = 2), 
+              b = format(coef(m)[2], digits = 2), 
+             r2 = format(summary(m)$r.squared, digits = 3)))
+    as.character(as.expression(eq));                 
+}
+
+ll <- by(crab, crab$Salinity, function(crab){
+  x.eq <- max(xx)-mean(xx)/2
+  y.eq <- max(yy)*0.95
+  p <- ggplot(crab, aes(PSU, CPUE)) +
+    geom_point() +
+    geom_smooth(method = "lm", se=FALSE) +
+    annotate(x=x.eq, y=y.eq, geom = 'text',
+             label = lm_eqn(crab), size=2,parse=TRUE) +
+    xlim(xx[1],xx[2])+ylim(yy[1],yy[2])
+})
+CooperT38plot <- ggplot(aes(PSU, CPUE), data = CooperT38) +
+  ggtitle("Creek Trawl Blue Crab Abundance by USGS Cooper River CSI") +
+  geom_point() +
+  geom_smooth(method="lm", se=FALSE, color="gray25") +
+  facet_wrap(~Salinity, scales = "free") 
+
+do.call(grid.arrange,ll)
+```
