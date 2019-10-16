@@ -1,4 +1,5 @@
 library(ggplot2)
+library(ggpubr)
 library(lubridate)
 library(tidyr)
 library(dplyr)
@@ -29,11 +30,21 @@ crab = read.csv("./Chapter2/data/dataGather2.csv")
 crab = crab %>%
   mutate(ProjID = recode(ProjID,
                          'B90' = "Harbor Trawl",
-                         'T38' = "CreekTrawl",
+                         'T38' = "Creek Trawl",
                          'T06' = "Trammel Net",
                          'P88' = "Ashley Potting")) 
 crab$Salinity <- factor(crab$Salinity, levels = 
                           c("Spot", "CSI_Raw", "CSI_12", "CSI_24"))
+
+crab2 = crab %>% #No CSI_12
+  mutate(Salinity = recode(Salinity,
+                           'Spot' = "YSI",
+                           'CSI_Raw' = "Raw CSI",
+                           'CSI_12' = "12mo CSI",
+                           'CSI_24' = "24mo CSI")) %>%
+  filter(Salinity != "12mo CSI") 
+crab2$Salinity <- factor(crab$Salinity, levels = 
+                           c("YSI", "Raw CSI", "24mo CSI"))
 
 
 
@@ -232,4 +243,6 @@ MatureFemaleAshleyplot + facet_grid(ProjID ~ Salinity, scales = "free")
 
 
 
+
+# FOR USGS CSI WEBINAR ----------------------------------------------------
 
