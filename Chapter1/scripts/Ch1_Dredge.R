@@ -54,6 +54,11 @@ subset(dredge(T06RelevantCrabDredge), delta < 5)
 ##Results = 3 models with <2 D - 1) LandingsCPUE ~ B90 Mature Females, lag(B90 Subadults); 2) ~ B90 Adult, lag(B90 Subadult); 3) ~ B90 Immature Females
 
 
+#Landings ~ relevant T38, B90, T06
+laggedCrab <- dplyr::select(dredgeCPUE_T06, 4, 11, 16, 19)
+laggedCrabDredge <- lm(MeanLandingsCPUE ~ ., data = laggedCrab, na.action = "na.fail")
+dredge(laggedCrabDredge)
+
 
 
 # Additional regressions based-on dredge -----------------------------------
@@ -148,3 +153,9 @@ summary(lag_lm1)
 
 lag_lm2 <- lm(MeanLandingsCPUE ~ T38_SubadultLAG + B90_SubadultLAG, data = dredgeCPUE)
 summary(lag_lm2)
+
+lag_lm3 <- lm(MeanLandingsCPUE ~ B90_SubadultLAG, data = dredgeCPUE)
+summary(lag_lm3)
+
+lag_lm4 <- lm(MeanLandingsCPUE ~ T38_SubadultLAG, data = dredgeCPUE)
+summary(lag_lm4)
