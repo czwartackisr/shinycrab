@@ -5,15 +5,13 @@ library(dplyr)
 library(Hmisc)
 library(nlme)
 library(cowplot)
-library(knitr)
-library(readxl)
-library(rmarkdown)
+library(gridExtra)
 
-theme_set(theme_classic(base_size = 12)+
+theme_set(theme_classic(base_size = 9)+
             theme(panel.grid.major = element_blank(), 
                   panel.grid.minor = element_blank(),
                   panel.background = element_rect(colour = "black", size=0.5))+
-            theme(text=element_text(size=12,  family="serif", colour = "black"))+
+            theme(text=element_text(size=9,  family="serif", colour = "black"))+
             theme(axis.text = element_text(colour = "black"))+
             theme(axis.ticks = element_line(colour = "black"))
 )
@@ -26,11 +24,11 @@ theme_update(plot.title = element_text(hjust = 0.5))
 
 
 # Data Read-In ------------------------------------------------------------
-crab <- read.csv("./Chapter1/data/SizeClassAbun.csv", stringsAsFactors = FALSE) 
+crabdata <- read.csv("./Chapter1/data/SizeClassAbun.csv", stringsAsFactors = FALSE) 
 #Source = "R.Project$crab - size - classSize - cleandata"
 #This data is cleandata from the crab project with abundance information for both size and class of crab
 
-crab1 = crab %>%
+crab1 = crabdata %>%
   select(1:3, 5, 6, 12, 13, 22:24) %>%
   filter(ProjID == c("B90", "T38")) %>%
   rename(Total = CPUE,
@@ -61,7 +59,8 @@ depend <- read.csv("./Chapter1/data/hardCrabsByArea_04252019_CH.csv")
 
 #Joining Independent and Dependent 
 crab3 = full_join(crab2, depend,
-                  by = c("ProjID", "StationCode", "Year", "Month", "Lifestage", "CPUE")) %>%
+                  by = c("ProjID", "StationCode", "Year", 
+                         "Month", "Lifestage", "CPUE")) %>%
   mutate(ProjID = as.factor(ProjID)) %>%
   mutate(Coll = as.factor(Coll)) %>%
   mutate(StationCode = as.factor(StationCode)) %>%
@@ -69,7 +68,7 @@ crab3 = full_join(crab2, depend,
   mutate(Year = as.numeric(Year)) %>%
   mutate(Month = as.factor(Month)) %>%
   mutate(Lifestage = as.factor(Lifestage)) %>%
-  group_by(ProjID, StationCode, Month) %>%
+  group_by(ProjID, StationCode, Lifestage, Month) %>%
   mutate(Means = mean(CPUE, na.rm=TRUE),
          SDs = sd(CPUE, na.rm=TRUE),
          Zs = (CPUE-Means)/ifelse(SDs>0,SDs, 0.00000001)) %>%
@@ -82,24 +81,62 @@ crab = crab3 %>%
 
 
 
-# Time Series Plots -------------------------------------------------------
+# Total Abundance Time Series ---------------------------------------------
+
 TotalCrab = crab %>%
   filter(Lifestage == "Total")
 TotalCrab$ProjID <- factor(TotalCrab$ProjID, levels = c("Harbor Trawl",
                                                         "Creek Trawl",
                                                         "Trammel Net"))
 
-TotalCPUE = ggplot(aes(Year, CPUE), data = TotalCrab) +
-  ggtitle("All Surveys Mean Annual Abundance (Total Catch)") +
-  facet_wrap(~ProjID, scales = 'free') +
+#TotalCPUE = ggplot(aes(Year, CPUE), data = TotalCrab) +
+  #ggtitle("All Surveys Mean Annual Abundance (Total Catch)") +
+  #facet_wrap(~ProjID, scales = 'free') +
+  #stat_summary(fun.data = "mean_se", size = .7) +
+  #geom_smooth(method = 'loess', se=FALSE, color="gray20") +
+  #geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
+  #labs(y=expression(Blue~crab~per~tow~or~set^{-1})) +
+  #expand_limits(x=2022)
+#TotalCPUE
+
+B90TotalCPUE = ggplot(aes(Year, CPUE), data = subset(TotalCrab,
+                                                     ProjID == "Harbor Trawl")) +
+  ggtitle("Harbor Trawl") + 
   stat_summary(fun.data = "mean_se", size = .7) +
   geom_smooth(method = 'loess', se=FALSE, color="gray20") +
   geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
   labs(y=expression(Blue~crab~per~tow~or~set^{-1})) +
-  expand_limits(x=2022)
-TotalCPUE
+  expand_limits(x=2020)
+#B90TotalCPUE
+
+T38TotalCPUE = ggplot(aes(Year, CPUE), data = subset(TotalCrab,
+                                                     ProjID == "Creek Trawl")) +
+  ggtitle("Creek Trawl") +
+  stat_summary(fun.data = "mean_se", size = .7) +
+  geom_smooth(method = 'loess', se=FALSE, color="gray20") +
+  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
+  labs(y=expression(Blue~crab~per~tow~or~set^{-1})) +
+  expand_limits(x=2020)
+#T38TotalCPUE
+
+T06TotalCPUE = ggplot(aes(Year, CPUE), data = subset(TotalCrab,
+                                                     ProjID == "Trammel Net")) +
+  ggtitle("Trammel Net") +
+  stat_summary(fun.data = "mean_se", size = .7) +
+  geom_smooth(method = 'loess', se=FALSE, color="gray20") +
+  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
+  labs(y=expression(Blue~crab~per~tow~or~set^{-1})) +
+  expand_limits(x=c(2005,2020))
+#T06TotalCPUE
 
 
+grid.arrange(B90TotalCPUE, T38TotalCPUE, T06TotalCPUE, nrow = 1,
+             top = "All Surveys Mean Annual Abundance (Total Catch)") 
+
+
+
+
+# Harbor Trawl Size/Class Time Series -------------------------------------
 
 B90crab = crab %>%
   filter(ProjID == "Harbor Trawl") %>%
@@ -117,7 +154,27 @@ B90CPUEs = ggplot(aes(Year, CPUE), data = B90crab) +
   expand_limits(x=2022)
 B90CPUEs
 
+B90JuvCPUEs = ggplot(aes(Year, CPUE), data = subset(B90crab, 
+                                                    Lifestage == "Juvenile")) +
+  ggtitle("Juveniles (<61mm)") +
+ stat_summary(fun.data = "mean_se", size = .7) +
+  geom_smooth(method = 'loess', se=FALSE, color="gray20") +
+  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
+  labs(y=expression(Blue~crab~per~tow~or~set^{-1})) +
+  expand_limits(x=2020)
+B90JuvCPUEs
 
+B90sub = subset(B90crab, 
+                Lifestage == "Subadult")
+B90SubCPUEs = ggplot(aes(Year, CPUE), data = subset(B90crab, 
+                                                    Lifestage == "Subadult")) +
+  ggtitle("Subadults (>60mm & <127mm)") +
+  stat_summary(fun.data = "mean_se", size = .7) +
+  geom_smooth(method = 'loess', se=FALSE, color="gray20") +
+  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
+  labs(y=expression(Blue~crab~per~tow~or~set^{-1})) +
+  expand_limits(x=2020)
+B90SubCPUEs
 
 T38crab = crab %>%
   filter(ProjID == "Creek Trawl") %>%
@@ -130,12 +187,12 @@ T38CPUEs = ggplot(aes(Year, CPUE), data = T38crab) +
   facet_wrap(~Lifestage, scales = 'free') +
   stat_summary(fun.data = "mean_se", size = .7) +
   geom_smooth(method = 'loess', se=FALSE, color="gray20") +
-  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
+  geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
   labs(y=expression(Blue~crab~per~tow~or~set^{-1})) +
   expand_limits(x=2022)
 T38CPUEs
 
-
+#####FIX NAS in SIZE CLASS DATA 
 
 LandingsCrab = crab %>%
   filter(ProjID == c("Landings", "LandingsCPUE")) %>%
