@@ -5,7 +5,7 @@ library(DataCombine)
 library(PerformanceAnalytics)
 library(knitr)
 library(rmarkdown)
-crab <- read.csv("data.csv", stringsAsFactors = FALSE)
+crab <- read.csv("MyData.csv", stringsAsFactors = FALSE)
 
 ui <- fluidPage(
     titlePanel("Crab Bivariate Modeling (Czwartacki)"),
@@ -17,6 +17,7 @@ ui <- fluidPage(
                       selected = 3, multiple = TRUE),
           
             selectInput("dataset2", h3("Dependent Variable (Group)"), choices = c("Abundance",
+                                                                                  "Landings", 
                                                                                   "Salinity",
                                                                                   "Temperature",
                                                                                   "Precipitation",
@@ -25,6 +26,7 @@ ui <- fluidPage(
             uiOutput('dv'),
             
             selectInput("dataset", h3("Independent Variable (Group)"), choices = c("Abundance",
+                                                                                   "Landings",
                                                                                    "Salinity",
                                                                                    "Temperature",
                                                                                    "Precipitation",
@@ -89,21 +91,23 @@ server <- function(input, output) {
     # Dependent Variable Input
     dataset2Input <- reactive({
       switch(input$dataset2,
-             "Abundance" = select(crab, 28:33, 35:38, 40:43, 46:51, 54, 57, 60, 61:72),
-             "Salinity" = select(crab, 11:26, 34, 39, 44, 52, 55, 58),
-             "Temperature" = select(crab, 9, 10, 27, 45, 53, 56, 59),    
+             "Abundance" = select(crab, 36:72),
+             "Landings" = select(crab, 73:84),
+             "Salinity" = select(crab, 15:35),
+             "Temperature" = select(crab, 9:14),    
              "Precipitation" = select(crab, 2:8),
-             "Climate" = select(crab, 73:98))
+             "Climate" = select(crab, 85:108))
     })
     
     # Infependent variable Input
     datasetInput <- reactive({
       switch(input$dataset,
-           "Abundance" = select(crab, 28:33, 35:38, 40:43, 46:51, 54, 57, 60, 61:72),
-           "Salinity" = select(crab, 11:26, 34, 39, 44, 52, 55, 58),
-           "Temperature" = select(crab, 9, 10, 27, 45, 53, 56, 59),    
+           "Abundance" = select(crab, 36:84),
+           "Landings" = select(crab, 73:84),
+           "Salinity" = select(crab, 15:35),
+           "Temperature" = select(crab, 9:14),    
            "Precipitation" = select(crab, 2:8),
-           "Climate" = select(crab, 73:98))
+           "Climate" = select(crab, 85:108))
     })
     
     # Dependent variable Output
@@ -227,25 +231,25 @@ server <- function(input, output) {
     
     # correlation matrix B90 T38
     output$corrAbun1 <- renderPlot({
-        juvcorr1 <- select(crab, 28:33, 46:51)
+        juvcorr1 <- select(crab, 28:33, 62:71)
         chart.Correlation(juvcorr1, histogram = FALSE, pch=19, method = "kendall") 
     })
     
     # correlation matrix B90 Landings
     output$corrAbun2 <- renderPlot({
-      juvcorr2 <- select(crab, c(46:51, 61:72))
+      juvcorr2 <- select(crab, c(62:71, 73:84))
       chart.Correlation(juvcorr2, histogram = FALSE, pch=19, method = "kendall") 
     })
     
     # correlation matrix T38 Landings
     output$corrAbun3 <- renderPlot({
-      juvcorr3 <- select(crab, 28:33, 61:72)
+      juvcorr3 <- select(crab, 36:45, 73:84)
       chart.Correlation(juvcorr3, histogram = FALSE, pch=19, method = "kendall") 
     })
     
     # correlation matrix Salinity
     output$corrAbun4 <- renderPlot({
-      juvcorr4 <- select(crab, 11:26, 44, 55)
+      juvcorr4 <- select(crab, 15:30, 34, 35)
       chart.Correlation(juvcorr4, histogram = FALSE, pch=19, method = "kendall") 
     }, height = 700)
     
