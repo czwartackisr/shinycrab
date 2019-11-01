@@ -24,23 +24,29 @@ theme_update(plot.title = element_text(hjust = 0.5))
 
 
 # Data Read-In ------------------------------------------------------------
-crabdata <- read.csv("./Chapter1/data/SizeClassAbun.csv", stringsAsFactors = FALSE) 
+crabdata <- read.csv("./Chapter1/data/ClassSizeAbunMANUAL2.csv", stringsAsFactors = FALSE) 
+crabdata = distinct(crabdata, Coll, .keep_all = TRUE)
 #Source = "R.Project$crab - size - classSize - cleandata"
 #This data is cleandata from the crab project with abundance information for both size and class of crab
 
 crab1 = crabdata %>%
-  select(1:3, 5, 6, 12, 13, 22:24) %>%
-  filter(ProjID == c("B90", "T38")) %>%
+  select(1:4, 7:16) %>%
   rename(Total = CPUE,
          Juvenile = JuvCPUE,
          Subadult = SubadultCPUE,
          Adult = AdultCPUE,
          "Immature Female" = ImmatureFemaleCPUE,
-         "Mature Female" = MatureFemaleCPUE) %>%
-  gather("Lifestage", "CPUE", 5:10) %>%
+         "Mature Female" = MatureFemaleCPUE,
+         "Immature Male" = ImmatureMaleCPUE,
+         "Mature Male" = MatureMaleCPUE,
+         Sublegal = SublegalCPUE,
+         Legal = SublegalCPUE) %>%
+  gather("Lifestage", "CPUE", 5:14) %>%
   mutate(Year = year(StartTime)) %>%
   mutate(Month = month(StartTime)) %>%
   select(1,2,4,3,7,8,5,6)
+#############################################################START HERE
+#Cull Lifestage info for Vars with NAs in certain lifestages **hint: Look below***
 
 #Source = "R.Project$crab - flatfile - cleandata - crab.csv"
 #Wrangled in Excel due to time constraints - Chas only sites, date/time variable, Lifestage added
