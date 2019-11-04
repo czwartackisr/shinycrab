@@ -1,0 +1,1357 @@
+Year,Month,ProjID, wholePounds , pots pulled ,CPUE
+1972,1,ChsHarborLandings," 90,840.00 ",,
+1972,2,ChsHarborLandings," 101,362.00 ",,
+1972,3,ChsHarborLandings," 100,100.00 ",,
+1972,4,ChsHarborLandings," 58,060.00 ",,
+1972,5,ChsHarborLandings," 64,720.00 ",,
+1972,6,ChsHarborLandings," 27,120.00 ",,
+1972,7,ChsHarborLandings," 9,599.00 ",,
+1972,8,ChsHarborLandings," 3,412.00 ",,
+1972,9,ChsHarborLandings," 3,526.00 ",,
+1972,11,ChsHarborLandings," 7,842.00 ",,
+1972,12,ChsHarborLandings," 72,369.00 ",,
+1973,1,ChsHarborLandings," 5,468.00 ",,
+1973,2,ChsHarborLandings," 27,330.00 ",,
+1973,3,ChsHarborLandings," 36,360.00 ",,
+1973,4,ChsHarborLandings," 60,500.00 ",,
+1973,5,ChsHarborLandings," 246,824.00 ",,
+1973,6,ChsHarborLandings," 97,050.00 ",,
+1973,7,ChsHarborLandings," 17,971.00 ",,
+1973,8,ChsHarborLandings," 87,566.00 ",,
+1973,9,ChsHarborLandings," 37,297.00 ",,
+1973,10,ChsHarborLandings," 11,571.00 ",,
+1973,11,ChsHarborLandings," 50,151.00 ",,
+1973,12,ChsHarborLandings," 55,755.00 ",,
+1974,1,ChsHarborLandings," 51,269.00 ",,
+1974,2,ChsHarborLandings," 64,687.00 ",,
+1974,3,ChsHarborLandings," 59,850.00 ",,
+1974,4,ChsHarborLandings," 40,424.00 ",,
+1974,4,WandoLandings," 45,800.00 ",,
+1974,5,ChsHarborLandings," 18,123.00 ",,
+1974,6,ChsHarborLandings," 35,929.00 ",,
+1974,7,ChsHarborLandings," 22,660.00 ",,
+1974,8,ChsHarborLandings," 18,052.00 ",,
+1974,9,ChsHarborLandings," 24,739.00 ",,
+1974,10,ChsHarborLandings," 20,240.00 ",,
+1974,11,ChsHarborLandings," 2,455.00 ",,
+1974,12,ChsHarborLandings," 9,710.00 ",,
+1975,1,ChsHarborLandings," 38,574.00 ",,
+1975,2,ChsHarborLandings," 23,553.00 ",,
+1975,3,ChsHarborLandings," 2,585.00 ",,
+1975,4,ChsHarborLandings," 7,940.00 ",,
+1975,5,ChsHarborLandings," 13,580.00 ",,
+1975,6,ChsHarborLandings," 10,515.00 ",,
+1975,7,ChsHarborLandings," 6,950.00 ",,
+1975,8,ChsHarborLandings," 7,810.00 ",,
+1975,9,ChsHarborLandings," 7,840.00 ",,
+1975,10,ChsHarborLandings," 1,398.00 ",,
+1975,11,ChsHarborLandings," 37,244.00 ",,
+1976,2,ChsHarborLandings," 18,783.00 ",,
+1976,4,ChsHarborLandings," 6,953.00 ",,
+1976,5,ChsHarborLandings," 4,310.00 ",,
+1976,6,ChsHarborLandings," 4,237.00 ",,
+1976,7,ChsHarborLandings," 2,909.00 ",,
+1976,8,ChsHarborLandings," 2,407.00 ",,
+1976,9,ChsHarborLandings," 3,976.00 ",,
+1976,10,ChsHarborLandings," 4,281.00 ",,
+1976,11,ChsHarborLandings," 1,320.00 ",,
+1976,12,ChsHarborLandings," 6,075.00 ",,
+1977,3,ChsHarborLandings," 1,940.00 ",,
+1977,4,ChsHarborLandings," 23,606.00 ",,
+1977,5,ChsHarborLandings," 16,272.00 ",,
+1977,6,ChsHarborLandings," 5,654.00 ",,
+1977,7,ChsHarborLandings," 5,804.00 ",,
+1977,8,ChsHarborLandings," 56,837.00 ",,
+1977,9,ChsHarborLandings," 53,132.00 ",,
+1977,10,ChsHarborLandings," 8,766.00 ",,
+1977,11,ChsHarborLandings," 49,840.00 ",,
+1977,12,ChsHarborLandings," 11,053.00 ",,
+1978,1,ChsHarborLandings," 11,304.00 ",,
+1978,2,ChsHarborLandings," 22,569.00 ",,
+1978,3,ChsHarborLandings," 90,515.00 ",,
+1978,4,ChsHarborLandings," 46,240.00 ",,
+1978,5,ChsHarborLandings," 3,966.00 ",,
+1978,6,ChsHarborLandings," 11,652.00 ",,
+1978,7,ChsHarborLandings," 17,155.00 ",,
+1978,8,ChsHarborLandings," 30,611.00 ",,
+1978,9,ChsHarborLandings," 49,758.00 ",,
+1978,9,WandoLandings, 766.00 ,,
+1978,10,ChsHarborLandings," 29,095.00 ",,
+1978,10,WandoLandings," 1,400.00 ",,
+1978,11,ChsHarborLandings," 44,716.00 ",,
+1978,11,WandoLandings," 1,090.00 ",,
+1978,12,ChsHarborLandings," 51,533.00 ",,
+1978,12,WandoLandings, 633.00 ,,
+1979,1,ChsHarborLandings," 46,103.00 ",,
+1979,1,WandoLandings," 8,200.00 ",,
+1979,2,ChsHarborLandings," 11,095.00 ",,
+1979,3,ChsHarborLandings," 36,192.00 ",,
+1979,3,ChsHarborLandings," 2,300.00 ",,
+1979,3,WandoLandings," 8,533.00 ",,
+1979,4,ChsHarborLandings," 33,955.00 ",,
+1979,4,WandoLandings," 1,936.00 ",,
+1979,5,ChsHarborLandings," 60,704.00 ",,
+1979,5,WandoLandings," 3,599.00 ",,
+1979,6,ChsHarborLandings," 31,315.00 ",,
+1979,6,WandoLandings," 52,883.00 ",,
+1979,7,ChsHarborLandings," 94,600.00 ",,
+1979,7,WandoLandings," 2,797.00 ",,
+1979,8,ChsHarborLandings," 31,803.00 ",,
+1979,8,WandoLandings," 112,700.00 ",,
+1979,9,ChsHarborLandings," 32,285.00 ",,
+1979,9,WandoLandings," 41,467.00 ",,
+1979,10,ChsHarborLandings," 18,183.00 ",,
+1979,10,WandoLandings," 12,735.00 ",,
+1979,11,ChsHarborLandings," 37,324.00 ",,
+1979,11,WandoLandings," 2,504.00 ",,
+1979,12,ChsHarborLandings," 21,117.00 ",,
+1979,12,WandoLandings," 1,719.00 ",,
+1980,1,ChsHarborLandings," 24,280.00 ",,
+1980,2,ChsHarborLandings," 1,210.00 ",,
+1980,2,WandoLandings," 14,507.00 ",,
+1980,3,ChsHarborLandings," 11,118.00 ",,
+1980,3,WandoLandings," 24,343.00 ",,
+1980,4,ChsHarborLandings," 7,441.00 ",,
+1980,4,WandoLandings," 13,568.00 ",,
+1980,5,ChsHarborLandings," 9,523.00 ",,
+1980,5,WandoLandings," 45,936.00 ",,
+1980,6,ChsHarborLandings," 19,637.00 ",,
+1980,6,WandoLandings," 60,100.00 ",,
+1980,7,ChsHarborLandings," 19,965.00 ",,
+1980,7,WandoLandings," 23,135.00 ",,
+1980,8,ChsHarborLandings," 23,139.00 ",,
+1980,8,WandoLandings," 58,272.00 ",,
+1980,9,ChsHarborLandings," 19,045.00 ",,
+1980,9,WandoLandings," 38,363.00 ",,
+1980,10,ChsHarborLandings," 7,470.00 ",,
+1980,10,WandoLandings," 12,112.00 ",,
+1980,11,ChsHarborLandings," 11,032.00 ",,
+1980,11,WandoLandings," 24,946.00 ",,
+1980,12,ChsHarborLandings, 405.00 ,,
+1980,12,WandoLandings," 9,444.00 ",,
+1981,1,ChsHarborLandings, 871.00 ,,
+1981,1,WandoLandings, 300.00 ,,
+1981,2,ChsHarborLandings," 3,400.00 ",,
+1981,2,WandoLandings," 21,379.00 ",,
+1981,3,ChsHarborLandings," 3,080.00 ",,
+1981,3,WandoLandings," 30,633.00 ",,
+1981,4,ChsHarborLandings," 11,360.00 ",,
+1981,4,WandoLandings," 25,861.00 ",,
+1981,5,ChsHarborLandings," 23,461.00 ",,
+1981,5,WandoLandings," 60,254.00 ",,
+1981,6,ChsHarborLandings," 22,434.00 ",,
+1981,6,WandoLandings," 70,393.00 ",,
+1981,7,ChsHarborLandings," 23,392.00 ",,
+1981,7,WandoLandings," 37,095.00 ",,
+1981,8,ChsHarborLandings," 20,853.00 ",,
+1981,8,WandoLandings," 25,833.00 ",,
+1981,9,ChsHarborLandings," 22,086.00 ",,
+1981,9,WandoLandings," 27,299.00 ",,
+1981,10,ChsHarborLandings," 18,500.00 ",,
+1981,10,WandoLandings," 16,796.00 ",,
+1981,11,ChsHarborLandings," 4,954.00 ",,
+1981,11,WandoLandings," 21,162.00 ",,
+1981,12,ChsHarborLandings," 1,800.00 ",,
+1981,12,WandoLandings," 17,699.00 ",,
+1982,1,ChsHarborLandings," 1,520.00 ",,
+1982,1,WandoLandings," 18,680.00 ",,
+1982,2,ChsHarborLandings," 2,420.00 ",,
+1982,2,WandoLandings," 70,474.00 ",,
+1982,3,ChsHarborLandings," 6,184.00 ",,
+1982,3,WandoLandings," 52,230.00 ",,
+1982,4,ChsHarborLandings," 5,530.00 ",,
+1982,4,WandoLandings," 26,980.00 ",,
+1982,5,ChsHarborLandings," 8,008.00 ",,
+1982,5,WandoLandings," 32,060.00 ",,
+1982,6,ChsHarborLandings," 8,481.00 ",,
+1982,6,WandoLandings," 13,450.00 ",,
+1982,7,ChsHarborLandings," 18,863.00 ",,
+1982,7,WandoLandings," 7,400.00 ",,
+1982,8,ChsHarborLandings," 7,047.00 ",,
+1982,8,WandoLandings," 9,730.00 ",,
+1982,9,ChsHarborLandings," 13,321.00 ",,
+1982,9,WandoLandings," 7,596.00 ",,
+1982,10,ChsHarborLandings," 11,951.00 ",,
+1982,10,WandoLandings," 3,800.00 ",,
+1982,11,ChsHarborLandings," 8,704.00 ",,
+1982,11,WandoLandings," 2,492.00 ",,
+1982,12,ChsHarborLandings," 2,973.00 ",,
+1982,12,WandoLandings," 1,360.00 ",,
+1983,1,ChsHarborLandings," 1,387.00 ",,
+1983,1,WandoLandings," 6,960.00 ",,
+1983,2,ChsHarborLandings," 35,982.00 ",,
+1983,2,WandoLandings," 11,882.00 ",,
+1983,3,ChsHarborLandings," 23,196.00 ",,
+1983,3,WandoLandings," 2,169.00 ",,
+1983,4,ChsHarborLandings," 3,333.00 ",,
+1983,4,WandoLandings," 12,060.00 ",,
+1983,5,ChsHarborLandings," 11,799.00 ",,
+1983,5,WandoLandings," 20,095.00 ",,
+1983,6,ChsHarborLandings," 35,000.00 ",,
+1983,6,WandoLandings," 9,832.00 ",,
+1983,7,ChsHarborLandings," 20,732.00 ",,
+1983,8,ChsHarborLandings," 24,940.00 ",,
+1983,8,WandoLandings," 7,020.00 ",,
+1983,9,ChsHarborLandings," 25,134.00 ",,
+1983,9,WandoLandings," 6,700.00 ",,
+1983,10,ChsHarborLandings," 27,415.00 ",,
+1983,10,WandoLandings," 2,320.00 ",,
+1983,11,ChsHarborLandings," 51,575.00 ",,
+1983,11,WandoLandings," 62,503.00 ",,
+1983,12,ChsHarborLandings," 79,484.00 ",,
+1983,12,WandoLandings," 10,083.00 ",,
+1984,1,ChsHarborLandings," 4,000.00 ",,
+1984,1,WandoLandings," 14,900.00 ",,
+1984,2,ChsHarborLandings," 24,998.00 ",,
+1984,2,WandoLandings," 30,440.00 ",,
+1984,3,ChsHarborLandings," 21,880.00 ",,
+1984,3,WandoLandings," 38,760.00 ",,
+1984,4,ChsHarborLandings," 18,840.00 ",,
+1984,4,WandoLandings," 14,940.00 ",,
+1984,5,ChsHarborLandings," 21,160.00 ",,
+1984,5,WandoLandings," 27,120.00 ",,
+1984,6,ChsHarborLandings," 20,080.00 ",,
+1984,6,WandoLandings," 33,125.00 ",,
+1984,7,ChsHarborLandings," 29,271.00 ",,
+1984,7,WandoLandings," 1,940.00 ",,
+1984,8,ChsHarborLandings," 21,020.00 ",,
+1984,8,WandoLandings," 2,520.00 ",,
+1984,9,ChsHarborLandings," 18,900.00 ",,
+1984,9,WandoLandings," 2,024.00 ",,
+1984,10,ChsHarborLandings," 24,450.00 ",,
+1984,10,WandoLandings," 4,303.00 ",,
+1984,11,ChsHarborLandings," 30,920.00 ",,
+1984,11,WandoLandings," 2,650.00 ",,
+1984,12,ChsHarborLandings," 26,865.00 ",,
+1984,12,WandoLandings," 38,840.00 ",,
+1985,1,ChsHarborLandings," 51,171.00 ",,
+1985,1,WandoLandings," 2,800.00 ",,
+1985,2,ChsHarborLandings," 24,480.00 ",,
+1985,3,ChsHarborLandings," 33,040.00 ",,
+1985,4,ChsHarborLandings," 8,873.00 ",,
+1985,5,ChsHarborLandings," 15,160.00 ",,
+1985,5,WandoLandings," 48,040.00 ",,
+1985,6,ChsHarborLandings," 40,940.00 ",,
+1985,6,WandoLandings," 5,040.00 ",,
+1985,7,ChsHarborLandings," 10,380.00 ",,
+1985,7,WandoLandings," 4,050.00 ",,
+1985,8,ChsHarborLandings," 8,945.00 ",,
+1985,8,WandoLandings," 4,185.00 ",,
+1985,9,ChsHarborLandings," 7,843.00 ",,
+1985,9,WandoLandings," 4,162.00 ",,
+1985,10,ChsHarborLandings," 5,831.00 ",,
+1985,10,WandoLandings," 4,077.00 ",,
+1985,11,ChsHarborLandings," 13,458.00 ",,
+1985,11,WandoLandings," 1,161.00 ",,
+1985,12,ChsHarborLandings," 32,688.00 ",,
+1985,12,WandoLandings," 1,440.00 ",,
+1986,1,ChsHarborLandings," 9,501.00 ",,
+1986,1,WandoLandings," 1,472.00 ",,
+1986,2,ChsHarborLandings," 7,341.00 ",,
+1986,2,WandoLandings, 963.00 ,,
+1986,3,ChsHarborLandings," 3,030.00 ",,
+1986,3,WandoLandings," 2,070.00 ",,
+1986,4,ChsHarborLandings," 2,927.00 ",,
+1986,4,WandoLandings," 2,030.00 ",,
+1986,5,ChsHarborLandings," 29,503.00 ",,
+1986,5,WandoLandings," 32,746.00 ",,
+1986,6,ChsHarborLandings," 77,770.00 ",,
+1986,6,WandoLandings," 13,791.00 ",,
+1986,7,ChsHarborLandings," 76,838.00 ",,
+1986,7,WandoLandings," 21,037.00 ",,
+1986,8,ChsHarborLandings," 79,170.00 ",,
+1986,8,WandoLandings," 45,226.00 ",,
+1986,9,ChsHarborLandings," 20,623.00 ",,
+1986,9,WandoLandings," 1,703.00 ",,
+1986,10,ChsHarborLandings," 33,484.00 ",,
+1986,10,WandoLandings," 23,924.00 ",,
+1986,11,ChsHarborLandings," 47,727.00 ",,
+1986,11,WandoLandings," 12,208.00 ",,
+1986,12,ChsHarborLandings," 56,784.00 ",,
+1986,12,WandoLandings," 12,991.00 ",,
+1987,1,ChsHarborLandings," 29,239.00 ",,
+1987,1,WandoLandings," 1,268.00 ",,
+1987,2,ChsHarborLandings," 29,640.00 ",,
+1987,2,WandoLandings, 20.00 ,,
+1987,3,ChsHarborLandings," 35,070.00 ",,
+1987,3,WandoLandings," 5,740.00 ",,
+1987,4,ChsHarborLandings," 22,712.00 ",,
+1987,4,WandoLandings," 6,050.00 ",,
+1987,5,ChsHarborLandings," 82,930.00 ",,
+1987,5,WandoLandings," 3,672.00 ",,
+1987,6,ChsHarborLandings," 58,646.00 ",,
+1987,6,WandoLandings, 498.00 ,,
+1987,7,ChsHarborLandings," 54,481.00 ",,
+1987,7,WandoLandings," 3,900.00 ",,
+1987,8,ChsHarborLandings," 58,747.00 ",,
+1987,8,WandoLandings," 10,804.00 ",,
+1987,9,ChsHarborLandings," 41,408.00 ",,
+1987,9,WandoLandings," 12,586.00 ",,
+1987,10,ChsHarborLandings," 81,848.00 ",,
+1987,10,WandoLandings," 14,672.00 ",,
+1987,11,ChsHarborLandings," 106,470.00 ",,
+1987,11,WandoLandings," 9,573.00 ",,
+1987,12,ChsHarborLandings," 93,244.00 ",,
+1987,12,WandoLandings, 666.00 ,,
+1988,1,ChsHarborLandings," 40,035.00 ",,
+1988,1,WandoLandings," 13,210.00 ",,
+1988,2,ChsHarborLandings," 89,708.00 ",,
+1988,3,ChsHarborLandings," 73,406.00 ",,
+1988,3,WandoLandings," 12,343.00 ",,
+1988,4,ChsHarborLandings," 17,043.00 ",,
+1988,4,WandoLandings," 3,061.00 ",,
+1988,5,ChsHarborLandings," 29,025.00 ",,
+1988,5,WandoLandings," 3,135.00 ",,
+1988,6,ChsHarborLandings," 92,420.00 ",,
+1988,6,WandoLandings," 7,786.00 ",,
+1988,7,ChsHarborLandings," 119,843.00 ",,
+1988,7,WandoLandings," 14,581.00 ",,
+1988,8,ChsHarborLandings," 79,959.00 ",,
+1988,8,WandoLandings," 10,572.00 ",,
+1988,9,ChsHarborLandings," 83,567.00 ",,
+1988,9,WandoLandings," 4,762.00 ",,
+1988,10,ChsHarborLandings," 85,877.00 ",,
+1988,10,WandoLandings," 6,618.00 ",,
+1988,11,ChsHarborLandings," 128,207.00 ",,
+1988,11,WandoLandings," 11,955.00 ",,
+1988,12,ChsHarborLandings," 84,569.00 ",,
+1988,12,WandoLandings," 18,615.00 ",,
+1989,1,ChsHarborLandings," 69,075.00 ",,
+1989,1,WandoLandings," 22,554.00 ",,
+1989,2,ChsHarborLandings," 37,495.00 ",,
+1989,2,WandoLandings," 12,694.00 ",,
+1989,3,ChsHarborLandings," 21,599.00 ",,
+1989,3,WandoLandings," 3,503.00 ",,
+1989,4,ChsHarborLandings," 22,111.00 ",,
+1989,4,WandoLandings," 2,421.00 ",,
+1989,5,ChsHarborLandings," 63,749.00 ",,
+1989,5,WandoLandings," 8,765.00 ",,
+1989,6,ChsHarborLandings," 92,113.00 ",,
+1989,6,WandoLandings," 7,056.00 ",,
+1989,7,ChsHarborLandings," 81,252.00 ",,
+1989,7,WandoLandings," 9,782.00 ",,
+1989,8,ChsHarborLandings," 91,177.00 ",,
+1989,8,WandoLandings," 12,597.00 ",,
+1989,9,ChsHarborLandings," 50,412.00 ",,
+1989,9,WandoLandings," 5,104.00 ",,
+1989,10,ChsHarborLandings," 95,782.00 ",,
+1989,10,WandoLandings," 6,598.00 ",,
+1989,11,ChsHarborLandings," 139,826.00 ",,
+1989,11,WandoLandings," 8,284.00 ",,
+1989,12,ChsHarborLandings," 59,312.00 ",,
+1989,12,WandoLandings," 2,332.00 ",,
+1990,1,ChsHarborLandings," 77,276.00 ",,
+1990,2,ChsHarborLandings," 73,512.00 ",,
+1990,3,ChsHarborLandings," 36,906.00 ",,
+1990,4,ChsHarborLandings," 91,905.00 ",,
+1990,5,ChsHarborLandings," 106,464.00 ",,
+1990,5,WandoLandings, 616.00 ,,
+1990,6,ChsHarborLandings," 80,358.00 ",,
+1990,6,WandoLandings," 7,391.00 ",,
+1990,7,ChsHarborLandings," 79,576.00 ",,
+1990,7,WandoLandings," 3,704.00 ",,
+1990,8,ChsHarborLandings," 67,672.00 ",,
+1990,8,WandoLandings," 6,939.00 ",,
+1990,9,ChsHarborLandings," 60,079.00 ",,
+1990,9,WandoLandings," 2,595.00 ",,
+1990,10,ChsHarborLandings," 111,369.00 ",,
+1990,10,WandoLandings," 2,355.00 ",,
+1990,11,ChsHarborLandings," 100,221.00 ",,
+1990,11,WandoLandings, 74.00 ,,
+1990,12,ChsHarborLandings," 95,060.00 ",,
+1990,12,WandoLandings, 140.00 ,,
+1991,1,ChsHarborLandings," 105,190.00 ",,
+1991,1,WandoLandings," 4,548.00 ",,
+1991,2,ChsHarborLandings," 93,719.00 ",,
+1991,2,WandoLandings," 18,293.00 ",,
+1991,3,ChsHarborLandings," 62,321.00 ",,
+1991,3,WandoLandings," 3,987.00 ",,
+1991,4,ChsHarborLandings," 66,357.00 ",,
+1991,4,WandoLandings," 3,472.00 ",,
+1991,5,ChsHarborLandings," 106,649.00 ",,
+1991,5,WandoLandings," 15,830.00 ",,
+1991,6,ChsHarborLandings," 74,286.00 ",,
+1991,6,WandoLandings," 14,053.00 ",,
+1991,7,ChsHarborLandings," 57,151.00 ",,
+1991,7,WandoLandings," 11,689.00 ",,
+1991,8,ChsHarborLandings," 55,636.00 ",,
+1991,8,WandoLandings," 6,755.00 ",,
+1991,9,ChsHarborLandings," 56,677.00 ",,
+1991,9,WandoLandings," 5,494.00 ",,
+1991,10,ChsHarborLandings," 37,291.00 ",,
+1991,10,WandoLandings," 12,996.00 ",,
+1991,11,ChsHarborLandings," 107,866.00 ",,
+1991,11,WandoLandings," 6,520.00 ",,
+1991,12,ChsHarborLandings," 161,276.00 ",,
+1991,12,WandoLandings," 39,187.00 ",,
+1992,1,ChsHarborLandings," 83,530.00 ",,
+1992,1,WandoLandings," 25,476.00 ",,
+1992,2,ChsHarborLandings," 82,605.00 ",,
+1992,2,WandoLandings," 8,160.00 ",,
+1992,3,ChsHarborLandings," 36,452.00 ",,
+1992,3,WandoLandings," 13,094.00 ",,
+1992,4,ChsHarborLandings," 28,577.00 ",,
+1992,4,WandoLandings," 1,080.00 ",,
+1992,5,ChsHarborLandings," 65,469.00 ",,
+1992,5,WandoLandings," 20,315.00 ",,
+1992,6,ChsHarborLandings," 60,893.00 ",,
+1992,6,WandoLandings," 19,195.00 ",,
+1992,7,ChsHarborLandings," 46,565.00 ",,
+1992,7,WandoLandings," 27,785.00 ",,
+1992,8,ChsHarborLandings," 44,291.00 ",,
+1992,8,WandoLandings," 31,483.00 ",,
+1992,9,ChsHarborLandings," 66,281.00 ",,
+1992,9,WandoLandings," 19,921.00 ",,
+1992,10,ChsHarborLandings," 87,149.00 ",,
+1992,10,WandoLandings," 15,726.00 ",,
+1992,11,ChsHarborLandings," 142,509.00 ",,
+1992,11,WandoLandings," 7,594.00 ",,
+1992,12,ChsHarborLandings," 90,468.00 ",,
+1992,12,WandoLandings," 9,756.00 ",,
+1993,1,ChsHarborLandings," 36,698.00 ",,
+1993,1,WandoLandings," 3,652.00 ",,
+1993,2,ChsHarborLandings," 23,804.00 ",,
+1993,2,WandoLandings," 5,889.00 ",,
+1993,3,ChsHarborLandings," 17,473.00 ",,
+1993,3,WandoLandings, 400.00 ,,
+1993,4,ChsHarborLandings," 16,688.00 ",,
+1993,4,WandoLandings," 1,972.00 ",,
+1993,5,ChsHarborLandings," 28,044.00 ",,
+1993,5,WandoLandings," 15,146.00 ",,
+1993,6,ChsHarborLandings," 60,584.00 ",,
+1993,6,WandoLandings," 5,581.00 ",,
+1993,7,ChsHarborLandings," 50,228.00 ",,
+1993,7,WandoLandings," 9,510.00 ",,
+1993,8,ChsHarborLandings," 48,227.00 ",,
+1993,8,WandoLandings," 9,480.00 ",,
+1993,9,ChsHarborLandings," 47,228.00 ",,
+1993,9,WandoLandings," 17,665.00 ",,
+1993,10,ChsHarborLandings," 62,225.00 ",,
+1993,10,WandoLandings," 37,077.00 ",,
+1993,11,ChsHarborLandings," 131,080.00 ",,
+1993,11,WandoLandings," 30,068.00 ",,
+1993,12,ChsHarborLandings," 81,514.00 ",,
+1993,12,WandoLandings," 31,313.00 ",,
+1994,1,ChsHarborLandings," 19,815.00 ",,
+1994,1,WandoLandings," 4,102.00 ",,
+1994,2,ChsHarborLandings," 29,112.00 ",,
+1994,2,WandoLandings," 8,558.00 ",,
+1994,3,ChsHarborLandings," 25,570.00 ",,
+1994,3,WandoLandings," 7,330.00 ",,
+1994,4,ChsHarborLandings," 44,961.00 ",,
+1994,4,WandoLandings," 23,641.00 ",,
+1994,5,ChsHarborLandings," 101,506.00 ",,
+1994,5,WandoLandings," 24,084.00 ",,
+1994,6,ChsHarborLandings," 140,713.00 ",,
+1994,6,WandoLandings," 24,596.00 ",,
+1994,7,ChsHarborLandings," 91,512.00 ",,
+1994,7,WandoLandings," 32,166.00 ",,
+1994,8,ChsHarborLandings," 67,476.00 ",,
+1994,8,WandoLandings," 38,847.00 ",,
+1994,9,ChsHarborLandings," 83,118.00 ",,
+1994,9,WandoLandings," 37,486.00 ",,
+1994,10,ChsHarborLandings," 117,624.00 ",,
+1994,10,WandoLandings," 45,116.00 ",,
+1994,11,ChsHarborLandings," 290,134.00 ",,
+1994,11,WandoLandings," 12,010.00 ",,
+1994,12,ChsHarborLandings," 97,390.00 ",,
+1994,12,WandoLandings," 13,639.00 ",,
+1995,1,ChsHarborLandings," 28,806.00 ",,
+1995,1,WandoLandings," 6,246.00 ",,
+1995,2,ChsHarborLandings," 13,470.00 ",,
+1995,2,WandoLandings," 1,224.00 ",,
+1995,3,ChsHarborLandings," 33,246.00 ",,
+1995,3,WandoLandings," 1,253.00 ",,
+1995,4,ChsHarborLandings," 40,617.00 ",,
+1995,4,WandoLandings," 4,413.00 ",,
+1995,5,ChsHarborLandings," 59,513.00 ",,
+1995,5,WandoLandings," 13,532.00 ",,
+1995,6,ChsHarborLandings," 55,360.00 ",,
+1995,6,WandoLandings," 24,640.00 ",,
+1995,7,ChsHarborLandings," 95,286.00 ",,
+1995,7,WandoLandings," 41,247.00 ",,
+1995,8,ChsHarborLandings," 103,437.00 ",,
+1995,8,WandoLandings," 24,398.00 ",,
+1995,9,ChsHarborLandings," 185,096.00 ",,
+1995,9,WandoLandings," 33,450.00 ",,
+1995,10,ChsHarborLandings," 123,993.00 ",,
+1995,10,WandoLandings," 39,740.00 ",,
+1995,11,ChsHarborLandings," 206,043.00 ",,
+1995,11,WandoLandings," 29,368.00 ",,
+1995,12,ChsHarborLandings," 60,505.00 ",,
+1995,12,WandoLandings," 9,212.00 ",,
+1996,1,ChsHarborLandings," 13,536.00 ",,
+1996,1,WandoLandings," 1,656.00 ",,
+1996,2,ChsHarborLandings," 21,244.00 ",,
+1996,3,ChsHarborLandings," 16,679.00 ",,
+1996,3,WandoLandings, 360.00 ,,
+1996,4,ChsHarborLandings," 14,144.00 ",,
+1996,4,WandoLandings," 1,161.00 ",,
+1996,5,ChsHarborLandings," 67,600.00 ",,
+1996,5,WandoLandings," 13,000.00 ",,
+1996,6,ChsHarborLandings," 60,083.00 ",,
+1996,6,WandoLandings," 36,141.00 ",,
+1996,7,ChsHarborLandings," 76,864.00 ",,
+1996,7,WandoLandings," 36,452.00 ",,
+1996,8,ChsHarborLandings," 101,620.00 ",,
+1996,8,WandoLandings," 25,637.00 ",,
+1996,9,ChsHarborLandings," 67,858.00 ",,
+1996,9,WandoLandings," 19,452.00 ",,
+1996,10,ChsHarborLandings," 87,918.00 ",,
+1996,10,WandoLandings," 24,626.00 ",,
+1996,11,ChsHarborLandings," 116,068.00 ",,
+1996,11,WandoLandings," 24,530.00 ",,
+1996,12,ChsHarborLandings," 48,617.00 ",,
+1996,12,WandoLandings," 6,530.00 ",,
+1997,1,ChsHarborLandings," 55,397.00 ",,
+1997,1,WandoLandings," 3,357.00 ",,
+1997,2,ChsHarborLandings," 35,443.00 ",,
+1997,2,WandoLandings," 2,560.00 ",,
+1997,3,ChsHarborLandings," 22,479.00 ",,
+1997,3,WandoLandings," 4,757.00 ",,
+1997,4,ChsHarborLandings," 49,533.00 ",,
+1997,4,WandoLandings," 9,329.00 ",,
+1997,5,ChsHarborLandings," 68,163.00 ",,
+1997,5,WandoLandings," 16,957.00 ",,
+1997,6,ChsHarborLandings," 76,880.00 ",,
+1997,6,WandoLandings," 20,576.00 ",,
+1997,7,ChsHarborLandings," 84,646.00 ",,
+1997,7,WandoLandings," 17,592.00 ",,
+1997,8,ChsHarborLandings," 79,328.00 ",,
+1997,8,WandoLandings," 36,433.00 ",,
+1997,9,ChsHarborLandings," 75,633.00 ",,
+1997,9,WandoLandings," 31,647.00 ",,
+1997,10,ChsHarborLandings," 103,170.00 ",,
+1997,10,WandoLandings," 36,570.00 ",,
+1997,11,ChsHarborLandings," 82,266.00 ",,
+1997,11,WandoLandings," 12,228.00 ",,
+1997,12,ChsHarborLandings," 54,524.00 ",,
+1998,1,ChsHarborLandings," 65,248.00 ",,
+1998,2,ChsHarborLandings," 45,096.00 ",,
+1998,2,WandoLandings," 2,335.00 ",,
+1998,3,ChsHarborLandings," 24,039.00 ",,
+1998,3,WandoLandings, 600.00 ,,
+1998,4,ChsHarborLandings," 18,816.00 ",,
+1998,4,WandoLandings," 3,600.00 ",,
+1998,5,ChsHarborLandings," 62,004.00 ",,
+1998,5,WandoLandings," 1,400.00 ",,
+1998,6,ChsHarborLandings," 62,724.00 ",,
+1998,6,WandoLandings," 26,070.00 ",,
+1998,7,ChsHarborLandings," 63,257.00 ",,
+1998,7,WandoLandings," 23,360.00 ",,
+1998,8,ChsHarborLandings," 65,145.00 ",,
+1998,8,WandoLandings," 27,240.00 ",,
+1998,9,ChsHarborLandings," 70,288.00 ",,
+1998,9,WandoLandings," 27,400.00 ",,
+1998,10,ChsHarborLandings," 55,697.00 ",,
+1998,10,WandoLandings," 14,680.00 ",,
+1998,11,ChsHarborLandings," 59,644.00 ",,
+1998,11,WandoLandings," 11,000.00 ",,
+1998,12,ChsHarborLandings," 72,073.00 ",,
+1998,12,WandoLandings," 3,700.00 ",,
+1999,1,ChsHarborLandings," 26,849.00 ",,
+1999,2,ChsHarborLandings," 10,840.00 ",,
+1999,3,ChsHarborLandings," 8,196.00 ",,
+1999,4,ChsHarborLandings," 19,767.00 ",,
+1999,4,WandoLandings," 2,800.00 ",,
+1999,5,ChsHarborLandings," 57,415.00 ",,
+1999,5,WandoLandings," 2,200.00 ",,
+1999,6,ChsHarborLandings," 81,411.00 ",,
+1999,6,WandoLandings," 5,147.00 ",,
+1999,7,ChsHarborLandings," 76,522.00 ",,
+1999,7,WandoLandings," 28,346.00 ",,
+1999,8,ChsHarborLandings," 65,191.00 ",,
+1999,8,WandoLandings," 29,765.00 ",,
+1999,9,ChsHarborLandings," 90,985.00 ",,
+1999,9,WandoLandings," 58,263.00 ",,
+1999,10,ChsHarborLandings," 82,176.00 ",,
+1999,10,WandoLandings," 46,995.00 ",,
+1999,11,ChsHarborLandings," 100,584.00 ",,
+1999,11,WandoLandings," 12,068.00 ",,
+1999,12,ChsHarborLandings," 71,794.00 ",,
+2000,1,ChsHarborLandings," 36,016.00 ",,
+2000,1,WandoLandings," 1,696.00 ",,
+2000,2,ChsHarborLandings," 26,632.00 ",,
+2000,2,WandoLandings," 2,464.00 ",,
+2000,3,ChsHarborLandings," 15,406.00 ",,
+2000,4,ChsHarborLandings," 41,490.00 ",,
+2000,4,WandoLandings," 5,416.00 ",,
+2000,5,ChsHarborLandings," 101,800.00 ",,
+2000,5,WandoLandings," 32,401.00 ",,
+2000,6,ChsHarborLandings," 92,058.00 ",,
+2000,6,WandoLandings," 4,022.00 ",,
+2000,7,ChsHarborLandings," 92,059.00 ",,
+2000,7,WandoLandings," 26,312.00 ",,
+2000,8,ChsHarborLandings," 94,856.00 ",,
+2000,8,WandoLandings," 35,440.00 ",,
+2000,9,ChsHarborLandings," 85,046.00 ",,
+2000,9,WandoLandings," 39,018.00 ",,
+2000,10,ChsHarborLandings," 61,190.00 ",,
+2000,10,WandoLandings," 31,048.00 ",,
+2000,11,ChsHarborLandings," 87,226.00 ",,
+2000,11,WandoLandings," 14,966.00 ",,
+2000,12,ChsHarborLandings," 38,925.00 ",,
+2000,12,WandoLandings," 8,167.00 ",,
+2001,1,ChsHarborLandings," 11,300.00 ",,
+2001,1,WandoLandings," 1,040.00 ",,
+2001,2,ChsHarborLandings," 31,917.00 ",,
+2001,2,WandoLandings," 2,200.00 ",,
+2001,3,ChsHarborLandings," 15,728.00 ",,
+2001,3,WandoLandings," 1,440.00 ",,
+2001,4,ChsHarborLandings," 34,590.00 ",,
+2001,4,WandoLandings," 4,248.00 ",,
+2001,5,ChsHarborLandings," 108,647.00 ",,
+2001,5,WandoLandings," 46,065.00 ",,
+2001,6,ChsHarborLandings," 169,602.00 ",,
+2001,6,WandoLandings," 22,900.00 ",,
+2001,7,ChsHarborLandings," 111,234.00 ",,
+2001,7,WandoLandings," 45,569.00 ",,
+2001,8,ChsHarborLandings," 125,142.00 ",,
+2001,8,WandoLandings," 54,593.00 ",,
+2001,9,ChsHarborLandings," 102,590.00 ",,
+2001,9,WandoLandings," 48,620.00 ",,
+2001,10,ChsHarborLandings," 90,406.00 ",,
+2001,10,WandoLandings," 37,672.00 ",,
+2001,11,ChsHarborLandings," 79,056.00 ",,
+2001,11,WandoLandings," 35,539.00 ",,
+2001,12,ChsHarborLandings," 37,997.00 ",,
+2001,12,WandoLandings," 3,732.00 ",,
+2002,1,ChsHarborLandings," 14,935.00 ",,
+2002,1,WandoLandings, 160.00 ,,
+2002,2,ChsHarborLandings," 7,242.00 ",,
+2002,3,ChsHarborLandings," 7,686.00 ",,
+2002,4,ChsHarborLandings," 23,330.00 ",,
+2002,4,WandoLandings, 600.00 ,,
+2002,5,ChsHarborLandings," 57,751.00 ",,
+2002,5,WandoLandings," 9,000.00 ",,
+2002,6,ChsHarborLandings," 99,712.00 ",,
+2002,6,WandoLandings," 28,865.00 ",,
+2002,7,ChsHarborLandings," 124,313.00 ",,
+2002,7,WandoLandings," 11,148.00 ",,
+2002,8,ChsHarborLandings," 134,693.00 ",,
+2002,8,WandoLandings," 30,080.00 ",,
+2002,9,ChsHarborLandings," 123,609.00 ",,
+2002,9,WandoLandings," 44,440.00 ",,
+2002,10,ChsHarborLandings," 67,042.00 ",,
+2002,10,WandoLandings," 30,213.00 ",,
+2002,11,ChsHarborLandings," 66,133.00 ",,
+2002,11,WandoLandings," 5,040.00 ",,
+2002,12,ChsHarborLandings," 37,204.00 ",,
+2002,12,WandoLandings," 14,480.00 ",,
+2003,1,ChsHarborLandings," 9,257.00 ",,
+2003,1,WandoLandings, 360.00 ,,
+2003,2,ChsHarborLandings," 14,376.00 ",,
+2003,2,WandoLandings, 760.00 ,,
+2003,3,ChsHarborLandings," 11,774.00 ",,
+2003,3,WandoLandings," 2,394.00 ",,
+2003,4,ChsHarborLandings," 13,992.00 ",,
+2003,4,WandoLandings," 1,255.00 ",,
+2003,5,ChsHarborLandings," 97,208.00 ",,
+2003,5,WandoLandings," 5,398.00 ",,
+2003,6,ChsHarborLandings," 89,935.00 ",,
+2003,6,WandoLandings," 13,200.00 ",,
+2003,7,ChsHarborLandings," 65,550.00 ",,
+2003,7,WandoLandings," 14,406.00 ",,
+2003,8,ChsHarborLandings," 35,589.00 ",,
+2003,8,WandoLandings," 7,000.00 ",,
+2003,9,AshleyLandings," 3,882.00 ",,
+2003,9,CooperLandings," 12,653.00 ",,
+2003,9,ChsHarborLandings," 3,589.00 ",,
+2003,9,WandoLandings," 4,090.00 ",,
+2003,10,AshleyLandings," 5,269.00 ",,
+2003,10,CooperLandings," 8,528.00 ",,
+2003,10,ChsHarborLandings," 6,128.00 ",,
+2003,10,WandoLandings," 3,797.00 ",,
+2003,11,AshleyLandings," 6,611.00 ",,
+2003,11,CooperLandings," 4,913.00 ",,
+2003,11,ChsHarborLandings," 12,939.00 ",,
+2003,11,WandoLandings," 3,751.00 ",,
+2003,12,AshleyLandings," 1,460.00 ",,
+2003,12,CooperLandings, 380.00 ,,
+2003,12,ChsHarborLandings," 13,220.00 ",,
+2003,12,WandoLandings," 3,292.00 ",,
+2004,1,AshleyLandingsCPUE," 1,016.00 ", 700.00 ,1.451428571
+2004,1,ChsHarborLandingsCPUE," 8,472.00 "," 6,420 ",1.319626168
+2004,1,WandoLandingsCPUE, 220.00 , 120.00 ,1.833333333
+2004,2,AshleyLandingsCPUE," 1,080.00 "," 1,050.00 ",1.028571429
+2004,2,ChsHarborLandingsCPUE," 2,672.00 "," 3,290 ",0.812158055
+2004,3,AshleyLandingsCPUE," 2,248.00 "," 1,405.00 ",1.6
+2004,3,ChsHarborLandingsCPUE," 9,800.00 "," 8,970 ",1.092530658
+2004,4,AshleyLandingsCPUE," 2,327.68 "," 3,240.00 ",0.718419753
+2004,4,CooperLandingsCPUE, 336.00 , 240.00 ,1.4
+2004,4,ChsHarborLandingsCPUE," 5,402.00 "," 6,210 ",0.869887279
+2004,5,AshleyLandingsCPUE," 10,113.24 "," 6,407.00 ",1.578467301
+2004,5,CooperLandingsCPUE," 9,267.00 "," 5,575.00 ",1.662242152
+2004,5,ChsHarborLandingsCPUE," 7,592.00 "," 5,940 ",1.278114478
+2004,5,WandoLandingsCPUE," 1,140.00 ", 800.00 ,1.425
+2004,6,AshleyLandingsCPUE," 18,031.72 "," 6,401.00 ",2.817016091
+2004,6,CooperLandingsCPUE," 25,116.00 "," 11,195.00 ",2.243501563
+2004,6,ChsHarborLandingsCPUE," 7,912.00 "," 4,800 ",1.648333333
+2004,6,WandoLandingsCPUE," 5,060.00 "," 1,595.00 ",3.172413793
+2004,7,AshleyLandingsCPUE," 27,316.68 "," 7,498.00 ",3.643195519
+2004,7,CooperLandingsCPUE," 35,372.00 "," 12,700.00 ",2.78519685
+2004,7,ChsHarborLandingsCPUE," 10,728.00 "," 5,035 ",2.130685204
+2004,7,WandoLandingsCPUE," 9,812.00 "," 2,380.00 ",4.122689076
+2004,8,AshleyLandingsCPUE," 31,591.20 "," 9,300.00 ",3.396903226
+2004,8,CooperLandingsCPUE," 40,384.60 "," 13,487.00 ",2.994335286
+2004,8,ChsHarborLandingsCPUE," 11,388.00 "," 3,485 ",3.267718795
+2004,8,WandoLandingsCPUE," 22,946.60 "," 6,430.00 ",3.568678072
+2004,9,AshleyLandingsCPUE," 17,625.84 "," 5,430.00 ",3.24601105
+2004,9,CooperLandingsCPUE," 27,578.84 "," 10,307.00 ",2.675738818
+2004,9,ChsHarborLandingsCPUE," 11,307.00 "," 3,226 ",3.504959702
+2004,9,WandoLandingsCPUE," 14,558.00 "," 5,100.00 ",2.854509804
+2004,10,AshleyLandingsCPUE," 4,004.16 "," 1,203.00 ",3.328478803
+2004,10,CooperLandingsCPUE," 16,035.28 "," 5,397.00 ",2.971146933
+2004,10,ChsHarborLandingsCPUE," 24,900.66 "," 6,299 ",3.953113193
+2004,10,WandoLandingsCPUE," 4,532.00 ", 850.00 ,5.331764706
+2004,11,AshleyLandingsCPUE," 2,046.45 ", 730.00 ,2.803353425
+2004,11,CooperLandingsCPUE," 12,391.28 "," 4,097.00 ",3.024476446
+2004,11,ChsHarborLandingsCPUE," 28,860.38 "," 6,377 ",4.525698604
+2004,11,WandoLandingsCPUE," 1,560.00 ", 240.00 ,6.5
+2004,12,AshleyLandingsCPUE," 4,948.00 "," 2,100.00 ",2.356190476
+2004,12,CooperLandingsCPUE," 1,988.00 ", 860.00 ,2.311627907
+2004,12,ChsHarborLandingsCPUE," 17,935.98 "," 4,531 ",3.958503642
+2005,1,CooperLandingsCPUE, 484.20 , 130.00 ,3.724615385
+2005,1,ChsHarborLandingsCPUE," 18,098.40 "," 5,845 ",3.096390077
+2005,2,AshleyLandingsCPUE, 200.00 , 90.00 ,2.222222222
+2005,2,CooperLandingsCPUE, 864.00 , 300.00 ,2.88
+2005,2,ChsHarborLandingsCPUE," 4,372.00 "," 1,690 ",2.586982249
+2005,3,AshleyLandingsCPUE, 138.00 , 120.00 ,1.15
+2005,3,CooperLandingsCPUE," 1,984.00 "," 1,345.00 ",1.475092937
+2005,3,ChsHarborLandingsCPUE," 8,217.20 "," 3,435 ",2.392197962
+2005,3,WandoLandingsCPUE, 160.00 , 60.00 ,2.666666667
+2005,4,AshleyLandingsCPUE, 978.00 , 944.00 ,1.036016949
+2005,4,CooperLandingsCPUE," 2,348.40 "," 2,596.00 ",0.904622496
+2005,4,ChsHarborLandingsCPUE," 2,445.20 "," 2,470 ",0.989959514
+2005,4,WandoLandingsCPUE, 186.00 , 200.00 ,0.93
+2005,5,AshleyLandingsCPUE," 5,976.28 "," 4,035.00 ",1.481110285
+2005,5,CooperLandingsCPUE," 21,352.48 "," 8,265.00 ",2.583482154
+2005,5,ChsHarborLandingsCPUE," 11,646.44 "," 4,650 ",2.504610753
+2005,5,WandoLandingsCPUE," 4,688.00 "," 2,430.00 ",1.929218107
+2005,6,AshleyLandingsCPUE," 6,738.25 "," 4,317.00 ",1.560863563
+2005,6,CooperLandingsCPUE," 33,970.24 "," 13,274.00 ",2.559156245
+2005,6,ChsHarborLandingsCPUE," 18,596.00 "," 6,936 ",2.681084198
+2005,6,WandoLandingsCPUE," 11,452.00 "," 3,570.00 ",3.207843137
+2005,7,AshleyLandingsCPUE," 3,826.82 "," 2,162.00 ",1.770037003
+2005,7,CooperLandingsCPUE," 24,493.40 "," 9,060.00 ",2.703465784
+2005,7,ChsHarborLandingsCPUE," 11,927.00 "," 3,810 ",3.130446194
+2005,7,WandoLandingsCPUE," 11,518.00 "," 3,180.00 ",3.622012579
+2005,8,AshleyLandingsCPUE," 6,304.04 "," 2,791.00 ",2.258702974
+2005,8,CooperLandingsCPUE," 21,540.60 "," 8,082.00 ",2.665256125
+2005,8,ChsHarborLandingsCPUE," 18,252.00 "," 5,560 ",3.282733813
+2005,8,WandoLandingsCPUE," 15,124.80 "," 3,630.00 ",4.16661157
+2005,9,AshleyLandingsCPUE," 12,037.79 "," 3,092.00 ",3.893205692
+2005,9,CooperLandingsCPUE," 21,545.40 "," 5,855.00 ",3.679829206
+2005,9,ChsHarborLandingsCPUE," 16,704.00 "," 4,415 ",3.783465459
+2005,9,WandoLandingsCPUE," 18,156.00 "," 2,815.00 ",6.44973357
+2005,10,AshleyLandingsCPUE," 16,660.44 "," 3,615.00 ",4.608697095
+2005,10,CooperLandingsCPUE," 20,692.00 "," 4,145.00 ",4.992038601
+2005,10,ChsHarborLandingsCPUE," 14,356.80 "," 3,070 ",4.676482085
+2005,10,WandoLandingsCPUE," 17,517.20 "," 2,825.00 ",6.200778761
+2005,11,AshleyLandingsCPUE," 11,991.84 "," 2,214.00 ",5.416368564
+2005,11,CooperLandingsCPUE," 15,038.00 "," 2,706.00 ",5.557280118
+2005,11,ChsHarborLandingsCPUE," 21,555.00 "," 3,490 ",6.176217765
+2005,11,WandoLandingsCPUE," 11,823.00 "," 2,150.00 ",5.499069767
+2005,12,AshleyLandingsCPUE," 6,980.00 "," 1,426.00 ",4.894810659
+2005,12,ChsHarborLandingsCPUE," 9,242.24 "," 2,390 ",3.867046025
+2005,12,WandoLandingsCPUE," 5,400.00 "," 1,555.00 ",3.47266881
+2006,1,AshleyLandingsCPUE, 366.98 , 260.00 ,1.411461538
+2006,1,CooperLandingsCPUE," 1,621.20 ", 765.00 ,2.119215686
+2006,1,ChsHarborLandingsCPUE," 16,298.70 "," 4,424 ",3.684154611
+2006,1,WandoLandingsCPUE," 10,261.00 "," 3,330.00 ",3.081381381
+2006,2,AshleyLandingsCPUE," 2,816.58 "," 1,556.00 ",1.810141388
+2006,2,ChsHarborLandingsCPUE," 22,623.89 "," 7,150 ",3.16418042
+2006,2,WandoLandingsCPUE," 6,040.80 "," 2,280.00 ",2.649473684
+2006,3,AshleyLandingsCPUE, 400.98 , 510.00 ,0.786243137
+2006,3,CooperLandingsCPUE," 2,491.40 "," 1,184.00 ",2.104222973
+2006,3,ChsHarborLandingsCPUE," 15,802.00 "," 6,150 ",2.569430894
+2006,3,WandoLandingsCPUE," 2,645.00 "," 1,310.00 ",2.019083969
+2006,4,AshleyLandingsCPUE," 2,694.20 ", 965.00 ,2.791917098
+2006,4,CooperLandingsCPUE," 2,667.20 "," 1,520.00 ",1.754736842
+2006,4,ChsHarborLandingsCPUE," 5,860.84 "," 2,280 ",2.57054386
+2006,4,WandoLandingsCPUE, 790.00 , 530.00 ,1.490566038
+2006,5,AshleyLandingsCPUE," 8,218.24 "," 3,370.00 ",2.438645697
+2006,5,CooperLandingsCPUE," 23,432.20 "," 9,835.00 ",2.382531774
+2006,5,ChsHarborLandingsCPUE," 22,503.00 "," 4,886 ",4.605607859
+2006,5,WandoLandingsCPUE," 2,410.00 ", 740.00 ,3.256756757
+2006,6,AshleyLandingsCPUE," 6,638.76 "," 3,021.00 ",2.197537239
+2006,6,CooperLandingsCPUE," 37,322.20 "," 12,410.00 ",3.007429492
+2006,6,ChsHarborLandingsCPUE," 14,753.00 "," 3,000 ",4.917666667
+2006,6,WandoLandingsCPUE," 2,520.00 ", 780.00 ,3.230769231
+2006,7,AshleyLandingsCPUE," 15,265.06 "," 5,208.00 ",2.931079109
+2006,7,CooperLandingsCPUE," 39,399.00 "," 12,500.00 ",3.15192
+2006,7,ChsHarborLandingsCPUE," 7,736.00 "," 2,276 ",3.398945518
+2006,7,WandoLandingsCPUE," 2,870.00 ", 840.00 ,3.416666667
+2006,8,AshleyLandingsCPUE," 16,154.00 "," 6,829.00 ",2.365500073
+2006,8,CooperLandingsCPUE," 37,368.00 "," 10,160.00 ",3.677952756
+2006,8,ChsHarborLandingsCPUE," 2,732.00 "," 1,005 ",2.71840796
+2006,8,WandoLandingsCPUE," 7,780.00 "," 2,115.00 ",3.678486998
+2006,9,AshleyLandingsCPUE," 19,264.96 "," 5,557.00 ",3.46679129
+2006,9,CooperLandingsCPUE," 33,423.00 "," 9,475.00 ",3.527493404
+2006,9,ChsHarborLandingsCPUE," 2,577.20 ", 720 ,3.579444444
+2006,9,WandoLandingsCPUE," 4,140.00 "," 1,080.00 ",3.833333333
+2006,10,AshleyLandingsCPUE," 19,694.74 "," 6,205.00 ",3.174011281
+2006,10,CooperLandingsCPUE," 24,457.00 "," 7,010.00 ",3.488873039
+2006,10,ChsHarborLandingsCPUE," 1,528.00 ", 430 ,3.553488372
+2006,10,WandoLandingsCPUE," 2,920.00 ", 600.00 ,4.866666667
+2006,11,AshleyLandingsCPUE," 19,026.84 "," 5,523.00 ",3.445019011
+2006,11,CooperLandingsCPUE," 7,482.00 "," 2,245.00 ",3.332739421
+2006,11,ChsHarborLandingsCPUE," 10,338.00 "," 2,212 ",4.673598553
+2006,11,WandoLandingsCPUE," 2,960.00 ", 800.00 ,3.7
+2006,12,AshleyLandingsCPUE," 11,168.02 "," 3,625.00 ",3.080833103
+2006,12,CooperLandingsCPUE, 880.00 , 275.00 ,3.2
+2006,12,ChsHarborLandingsCPUE," 10,764.00 "," 4,249 ",2.533301953
+2006,12,WandoLandingsCPUE," 2,640.00 ", 680.00 ,3.882352941
+2007,1,AshleyLandingsCPUE," 2,882.80 ", 912.00 ,3.160964912
+2007,1,ChsHarborLandingsCPUE," 7,880.00 "," 3,070 ",2.566775244
+2007,1,WandoLandingsCPUE, 760.00 , 280.00 ,2.714285714
+2007,2,AshleyLandingsCPUE, 239.82 , 455.00 ,0.527076923
+2007,2,ChsHarborLandingsCPUE," 3,104.80 "," 2,150 ",1.444093023
+2007,3,AshleyLandingsCPUE, 187.38 , 350.00 ,0.535371429
+2007,3,CooperLandingsCPUE, 580.00 , 450.00 ,1.288888889
+2007,3,ChsHarborLandingsCPUE," 4,330.00 "," 2,120 ",2.04245283
+2007,4,AshleyLandingsCPUE," 2,114.34 "," 1,314.00 ",1.609086758
+2007,4,CooperLandingsCPUE," 1,000.00 ", 720.00 ,1.388888889
+2007,4,ChsHarborLandingsCPUE," 2,960.00 "," 1,340 ",2.208955224
+2007,4,WandoLandingsCPUE, 140.00 , 160.00 ,0.875
+2007,5,AshleyLandingsCPUE," 2,980.84 "," 2,171.00 ",1.373026255
+2007,5,CooperLandingsCPUE," 7,304.00 "," 4,690.00 ",1.557356077
+2007,5,ChsHarborLandingsCPUE," 25,422.00 "," 8,930 ",2.846808511
+2007,5,WandoLandingsCPUE, 760.00 , 310.00 ,2.451612903
+2007,6,AshleyLandingsCPUE," 4,940.90 "," 3,117.00 ",1.585145974
+2007,6,CooperLandingsCPUE," 14,300.00 "," 6,900.00 ",2.072463768
+2007,6,ChsHarborLandingsCPUE," 27,896.00 "," 9,990 ",2.792392392
+2007,6,WandoLandingsCPUE, 920.00 , 750.00 ,1.226666667
+2007,7,AshleyLandingsCPUE," 10,517.42 "," 4,245.00 ",2.477601885
+2007,7,CooperLandingsCPUE," 28,088.00 "," 9,885.00 ",2.841476985
+2007,7,ChsHarborLandingsCPUE," 11,622.00 "," 4,412 ",2.63417951
+2007,7,WandoLandingsCPUE," 5,208.00 "," 1,882.00 ",2.767268863
+2007,8,AshleyLandingsCPUE," 16,609.22 "," 4,762.00 ",3.487866443
+2007,8,CooperLandingsCPUE," 23,341.20 "," 8,175.00 ",2.855192661
+2007,8,ChsHarborLandingsCPUE," 7,212.00 "," 3,150 ",2.28952381
+2007,8,WandoLandingsCPUE," 14,284.00 "," 3,711.00 ",3.849097278
+2007,9,AshleyLandingsCPUE," 12,428.60 "," 3,389.00 ",3.667335497
+2007,9,CooperLandingsCPUE," 22,124.00 "," 6,219.00 ",3.557485126
+2007,9,ChsHarborLandingsCPUE," 4,000.00 "," 1,775 ",2.253521127
+2007,9,WandoLandingsCPUE," 11,968.00 "," 2,705.00 ",4.424399261
+2007,10,AshleyLandingsCPUE," 7,738.20 "," 2,007.00 ",3.855605381
+2007,10,CooperLandingsCPUE," 19,800.00 "," 5,600.00 ",3.535714286
+2007,10,ChsHarborLandingsCPUE," 1,760.00 ", 665 ,2.646616541
+2007,10,WandoLandingsCPUE," 16,112.00 "," 3,685.00 ",4.372320217
+2007,11,AshleyLandingsCPUE," 3,492.09 ", 994.00 ,3.513171026
+2007,11,CooperLandingsCPUE," 19,299.20 "," 4,380.00 ",4.406210046
+2007,11,ChsHarborLandingsCPUE," 21,223.00 "," 3,685 ",5.759294437
+2007,11,WandoLandingsCPUE," 27,810.00 "," 5,550.00 ",5.010810811
+2007,12,AshleyLandingsCPUE," 5,259.68 "," 1,743.00 ",3.017601836
+2007,12,ChsHarborLandingsCPUE," 18,862.00 "," 4,420 ",4.267420814
+2007,12,WandoLandingsCPUE," 6,780.00 "," 1,500.00 ",4.52
+2008,1,AshleyLandingsCPUE, 920.00 , 425.00 ,2.164705882
+2008,1,CooperLandingsCPUE," 2,540.00 "," 1,050.00 ",2.419047619
+2008,1,ChsHarborLandingsCPUE," 17,020.00 "," 6,820 ",2.495601173
+2008,1,WandoLandingsCPUE," 1,320.00 ", 300.00 ,4.4
+2008,2,AshleyLandingsCPUE," 1,940.00 ", 975.00 ,1.98974359
+2008,2,CooperLandingsCPUE," 2,108.00 ", 775.00 ,2.72
+2008,2,ChsHarborLandingsCPUE," 14,526.00 "," 5,940 ",2.445454545
+2008,3,AshleyLandingsCPUE, 560.00 , 495.00 ,1.131313131
+2008,3,CooperLandingsCPUE, 976.00 , 600.00 ,1.626666667
+2008,3,ChsHarborLandingsCPUE," 3,964.00 "," 2,970 ",1.334680135
+2008,3,WandoLandingsCPUE, 332.00 , 630.00 ,0.526984127
+2008,4,AshleyLandingsCPUE, 560.00 , 280.00 ,2
+2008,4,CooperLandingsCPUE," 5,560.00 "," 1,890.00 ",2.941798942
+2008,4,ChsHarborLandingsCPUE," 4,741.00 "," 2,240 ",2.116517857
+2008,4,WandoLandingsCPUE," 1,790.00 "," 1,015.00 ",1.763546798
+2008,5,AshleyLandingsCPUE," 5,685.30 "," 3,006.00 ",1.891317365
+2008,5,CooperLandingsCPUE," 21,504.00 "," 7,630.00 ",2.818348624
+2008,5,ChsHarborLandingsCPUE," 7,056.00 "," 3,075 ",2.294634146
+2008,5,WandoLandingsCPUE," 5,233.26 "," 2,491.00 ",2.100867122
+2008,6,AshleyLandingsCPUE," 6,380.13 "," 3,595.00 ",1.77472267
+2008,6,CooperLandingsCPUE," 46,785.20 "," 12,510.00 ",3.739824141
+2008,6,ChsHarborLandingsCPUE," 4,044.00 "," 2,780 ",1.454676259
+2008,6,WandoLandingsCPUE," 12,818.00 "," 4,700.00 ",2.727234043
+2008,7,AshleyLandingsCPUE," 8,619.96 "," 4,143.00 ",2.080608255
+2008,7,CooperLandingsCPUE," 39,750.00 "," 12,721.00 ",3.124754343
+2008,7,ChsHarborLandingsCPUE," 3,160.00 "," 2,130 ",1.483568075
+2008,7,WandoLandingsCPUE," 16,150.00 "," 6,115.00 ",2.641046607
+2008,8,AshleyLandingsCPUE," 11,945.78 "," 4,923.00 ",2.426524477
+2008,8,CooperLandingsCPUE," 33,666.00 "," 8,051.00 ",4.181592349
+2008,8,ChsHarborLandingsCPUE," 2,550.00 "," 1,710 ",1.49122807
+2008,8,WandoLandingsCPUE," 18,888.00 "," 7,765.00 ",2.432453316
+2008,9,AshleyLandingsCPUE," 13,056.38 "," 4,605.00 ",2.835261672
+2008,9,CooperLandingsCPUE," 26,620.00 "," 6,025.00 ",4.418257261
+2008,9,ChsHarborLandingsCPUE," 10,309.00 "," 3,004 ",3.431757656
+2008,9,WandoLandingsCPUE," 21,660.00 "," 8,950.00 ",2.420111732
+2008,10,AshleyLandingsCPUE," 11,498.76 "," 3,397.00 ",3.384974978
+2008,10,CooperLandingsCPUE," 17,320.00 "," 4,350.00 ",3.981609195
+2008,10,ChsHarborLandingsCPUE," 22,774.92 "," 6,262 ",3.637004152
+2008,10,WandoLandingsCPUE," 15,524.00 "," 6,025.00 ",2.57659751
+2008,11,AshleyLandingsCPUE," 13,903.28 "," 3,496.00 ",3.976910755
+2008,11,ChsHarborLandingsCPUE," 39,400.00 "," 8,941 ",4.406665921
+2008,11,WandoLandingsCPUE," 19,624.00 "," 3,745.00 ",5.240053405
+2008,12,AshleyLandingsCPUE," 4,490.00 "," 1,228.00 ",3.656351792
+2008,12,CooperLandingsCPUE," 2,776.00 ", 575.00 ,4.827826087
+2008,12,ChsHarborLandingsCPUE," 34,874.00 "," 9,785 ",3.564026571
+2008,12,WandoLandingsCPUE," 6,060.00 "," 1,490.00 ",4.067114094
+2009,1,AshleyLandingsCPUE," 3,570.00 "," 1,395.00 ",2.559139785
+2009,1,CooperLandingsCPUE, 920.00 , 250.00 ,3.68
+2009,1,ChsHarborLandingsCPUE," 18,522.00 "," 7,750 ",2.389935484
+2009,1,WandoLandingsCPUE," 1,888.00 ", 600.00 ,3.146666667
+2009,2,AshleyLandingsCPUE," 2,524.00 "," 1,444.00 ",1.747922438
+2009,2,ChsHarborLandingsCPUE," 16,472.00 "," 8,730 ",1.886827033
+2009,2,WandoLandingsCPUE," 1,420.00 ", 675.00 ,2.103703704
+2009,3,AshleyLandingsCPUE," 1,038.73 ", 973.00 ,1.067553957
+2009,3,CooperLandingsCPUE," 1,192.00 ", 840.00 ,1.419047619
+2009,3,ChsHarborLandingsCPUE," 7,429.20 "," 4,970 ",1.494808853
+2009,3,WandoLandingsCPUE," 1,428.00 ", 825.00 ,1.730909091
+2009,4,AshleyLandingsCPUE," 1,488.52 "," 1,591.00 ",0.935587681
+2009,4,CooperLandingsCPUE," 1,264.00 ", 800.00 ,1.58
+2009,4,ChsHarborLandingsCPUE," 2,042.00 "," 1,815 ",1.125068871
+2009,4,WandoLandingsCPUE, 220.00 , 300.00 ,0.733333333
+2009,5,AshleyLandingsCPUE," 2,409.02 "," 2,655.00 ",0.907352166
+2009,5,CooperLandingsCPUE," 10,408.00 "," 3,991.00 ",2.607867702
+2009,5,ChsHarborLandingsCPUE," 12,278.00 "," 7,038 ",1.744529696
+2009,5,WandoLandingsCPUE," 16,168.00 "," 7,820.00 ",2.067519182
+2009,6,AshleyLandingsCPUE," 6,031.08 "," 4,171.00 ",1.445955406
+2009,6,CooperLandingsCPUE," 28,128.00 "," 13,189.00 ",2.13268633
+2009,6,ChsHarborLandingsCPUE," 8,768.00 "," 6,070 ",1.444481054
+2009,6,WandoLandingsCPUE," 31,038.00 "," 12,305.00 ",2.522389273
+2009,7,AshleyLandingsCPUE," 6,809.12 "," 3,905.00 ",1.743692702
+2009,7,CooperLandingsCPUE," 22,430.00 "," 11,382.00 ",1.970655421
+2009,7,ChsHarborLandingsCPUE," 7,320.00 "," 4,980 ",1.469879518
+2009,7,WandoLandingsCPUE," 19,226.00 "," 8,280.00 ",2.321980676
+2009,8,AshleyLandingsCPUE," 7,308.36 "," 4,417.00 ",1.654598144
+2009,8,CooperLandingsCPUE," 26,766.00 "," 12,374.00 ",2.163083886
+2009,8,ChsHarborLandingsCPUE," 7,639.00 "," 4,890 ",1.562167689
+2009,8,WandoLandingsCPUE," 20,908.00 "," 9,308.00 ",2.246239794
+2009,9,AshleyLandingsCPUE," 4,250.20 "," 3,399.00 ",1.250426596
+2009,9,CooperLandingsCPUE," 22,007.20 "," 9,448.00 ",2.329297206
+2009,9,ChsHarborLandingsCPUE," 5,886.00 "," 3,500 ",1.681714286
+2009,9,WandoLandingsCPUE," 14,472.00 "," 4,992.00 ",2.899038462
+2009,10,AshleyLandingsCPUE," 7,313.32 "," 3,618.00 ",2.021370923
+2009,10,CooperLandingsCPUE," 17,836.00 "," 5,475.00 ",3.257716895
+2009,10,ChsHarborLandingsCPUE," 16,053.92 "," 4,956 ",3.23928975
+2009,10,WandoLandingsCPUE," 23,260.00 "," 8,700.00 ",2.673563218
+2009,11,AshleyLandingsCPUE," 8,590.58 "," 3,288.00 ",2.612706813
+2009,11,CooperLandingsCPUE," 15,000.00 "," 2,900.00 ",5.172413793
+2009,11,ChsHarborLandingsCPUE," 23,937.00 "," 5,540 ",4.320758123
+2009,11,WandoLandingsCPUE," 15,034.00 "," 3,800.00 ",3.956315789
+2009,12,AshleyLandingsCPUE," 1,760.00 "," 1,158.00 ",1.519861831
+2009,12,CooperLandingsCPUE," 2,956.00 ", 715.00 ,4.134265734
+2009,12,ChsHarborLandingsCPUE," 16,749.20 "," 5,264 ",3.181838906
+2009,12,WandoLandingsCPUE," 18,648.00 "," 3,720.00 ",5.012903226
+2010,1,AshleyLandingsCPUE, 560.00 , 430.00 ,1.302325581
+2010,1,CooperLandingsCPUE, 284.00 , 235.00 ,1.208510638
+2010,1,ChsHarborLandingsCPUE," 6,204.00 "," 3,310 ",1.874320242
+2010,1,WandoLandingsCPUE, 560.00 , 550.00 ,1.018181818
+2010,2,CooperLandingsCPUE, 136.00 , 130.00 ,1.046153846
+2010,2,ChsHarborLandingsCPUE," 5,488.00 "," 3,280 ",1.673170732
+2010,2,WandoLandingsCPUE, 80.00 , 150.00 ,0.533333333
+2010,3,ChsHarborLandingsCPUE," 8,438.00 "," 4,780 ",1.765271967
+2010,4,CooperLandingsCPUE," 1,213.20 ", 620.00 ,1.956774194
+2010,4,ChsHarborLandingsCPUE, 564.00 , 400 ,1.41
+2010,5,AshleyLandingsCPUE, 748.68 , 400.00 ,1.8717
+2010,5,CooperLandingsCPUE," 20,684.00 "," 8,625.00 ",2.398144928
+2010,5,ChsHarborLandingsCPUE, 929.72 , 606 ,1.534191419
+2010,5,WandoLandingsCPUE," 12,432.00 "," 4,020.00 ",3.092537313
+2010,6,AshleyLandingsCPUE," 3,895.88 "," 1,892.00 ",2.059133192
+2010,6,CooperLandingsCPUE," 29,822.00 "," 10,550.00 ",2.826729858
+2010,6,ChsHarborLandingsCPUE, 440.00 , 130 ,3.384615385
+2010,6,WandoLandingsCPUE," 12,800.00 "," 3,810.00 ",3.359580052
+2010,7,AshleyLandingsCPUE," 10,225.52 "," 5,155.00 ",1.983612027
+2010,7,CooperLandingsCPUE," 37,436.40 "," 11,005.00 ",3.401762835
+2010,7,ChsHarborLandingsCPUE," 8,920.00 "," 5,050 ",1.766336634
+2010,7,WandoLandingsCPUE," 18,300.00 "," 5,180.00 ",3.532818533
+2010,8,AshleyLandingsCPUE," 9,064.54 "," 4,666.00 ",1.942678954
+2010,8,CooperLandingsCPUE," 37,386.00 "," 12,510.00 ",2.988489209
+2010,8,ChsHarborLandingsCPUE," 4,400.00 "," 2,885 ",1.525129983
+2010,8,WandoLandingsCPUE," 20,940.00 "," 6,285.00 ",3.331742243
+2010,9,AshleyLandingsCPUE," 6,568.60 "," 3,425.00 ",1.917839416
+2010,9,CooperLandingsCPUE," 34,488.00 "," 9,655.00 ",3.572035215
+2010,9,ChsHarborLandingsCPUE," 6,910.00 "," 3,420 ",2.020467836
+2010,9,WandoLandingsCPUE," 21,940.00 "," 6,290.00 ",3.488076312
+2010,10,AshleyLandingsCPUE," 5,768.00 "," 3,285.00 ",1.75585997
+2010,10,CooperLandingsCPUE," 23,004.00 "," 5,690.00 ",4.04288225
+2010,10,ChsHarborLandingsCPUE," 12,370.00 "," 4,106 ",3.012664394
+2010,10,WandoLandingsCPUE," 16,350.00 "," 4,330.00 ",3.775981524
+2010,11,AshleyLandingsCPUE," 6,104.24 "," 2,755.00 ",2.2156951
+2010,11,CooperLandingsCPUE," 15,504.00 "," 3,450.00 ",4.493913043
+2010,11,ChsHarborLandingsCPUE," 30,630.00 "," 7,861 ",3.896450833
+2010,11,WandoLandingsCPUE," 28,120.00 "," 3,870.00 ",7.266149871
+2010,12,AshleyLandingsCPUE," 1,101.60 ", 555.00 ,1.984864865
+2010,12,CooperLandingsCPUE," 3,336.00 ", 580.00 ,5.751724138
+2010,12,ChsHarborLandingsCPUE," 14,939.00 "," 6,100 ",2.449016393
+2010,12,WandoLandingsCPUE," 5,300.00 "," 1,595.00 ",3.322884013
+2011,1,ChsHarborLandingsCPUE," 2,224.00 "," 2,095 ",1.061575179
+2011,1,WandoLandingsCPUE," 7,320.00 "," 2,610.00 ",2.804597701
+2011,2,CooperLandingsCPUE," 2,620.00 ", 600.00 ,4.366666667
+2011,2,ChsHarborLandingsCPUE," 14,013.42 "," 5,511 ",2.542808928
+2011,2,WandoLandingsCPUE," 8,546.40 "," 2,820.00 ",3.030638298
+2011,3,AshleyLandingsCPUE, 310.00 , 250.00 ,1.24
+2011,3,CooperLandingsCPUE," 4,407.32 "," 1,554.00 ",2.836113256
+2011,3,ChsHarborLandingsCPUE," 22,335.00 "," 7,018 ",3.182530636
+2011,3,WandoLandingsCPUE," 5,440.00 "," 2,270.00 ",2.396475771
+2011,4,AshleyLandingsCPUE," 4,522.40 "," 2,100.00 ",2.15352381
+2011,4,CooperLandingsCPUE," 3,040.00 "," 2,306.00 ",1.318300087
+2011,4,ChsHarborLandingsCPUE," 2,138.00 "," 1,265 ",1.690118577
+2011,4,WandoLandingsCPUE," 6,220.00 "," 2,340.00 ",2.658119658
+2011,5,AshleyLandingsCPUE," 5,519.00 "," 3,613.00 ",1.527539441
+2011,5,CooperLandingsCPUE," 20,928.00 "," 10,060.00 ",2.080318091
+2011,5,ChsHarborLandingsCPUE," 13,176.00 "," 4,945 ",2.664509606
+2011,5,WandoLandingsCPUE," 14,398.00 "," 5,409.00 ",2.661859863
+2011,6,AshleyLandingsCPUE," 8,090.40 "," 4,230.00 ",1.912624113
+2011,6,CooperLandingsCPUE," 43,336.00 "," 16,260.00 ",2.665190652
+2011,6,ChsHarborLandingsCPUE," 8,223.00 "," 3,565 ",2.306591865
+2011,6,WandoLandingsCPUE," 7,764.00 "," 3,625.00 ",2.141793103
+2011,7,AshleyLandingsCPUE," 9,138.12 "," 4,183.00 ",2.184585226
+2011,7,CooperLandingsCPUE," 65,434.00 "," 20,615.00 ",3.174096532
+2011,7,ChsHarborLandingsCPUE," 5,326.00 "," 2,119 ",2.51344974
+2011,7,WandoLandingsCPUE," 20,400.00 "," 6,219.00 ",3.28027014
+2011,8,AshleyLandingsCPUE," 9,348.16 "," 3,604.00 ",2.593829079
+2011,8,CooperLandingsCPUE," 74,740.00 "," 19,758.00 ",3.782771536
+2011,8,ChsHarborLandingsCPUE, 760.00 , 600 ,1.266666667
+2011,8,WandoLandingsCPUE," 25,480.00 "," 6,635.00 ",3.840241145
+2011,9,AshleyLandingsCPUE," 8,251.92 "," 2,818.00 ",2.928289567
+2011,9,CooperLandingsCPUE," 62,740.00 "," 17,517.00 ",3.581663527
+2011,9,ChsHarborLandingsCPUE," 2,316.00 ", 873 ,2.652920962
+2011,9,WandoLandingsCPUE," 20,920.00 "," 5,140.00 ",4.070038911
+2011,10,AshleyLandingsCPUE," 11,793.36 "," 4,030.00 ",2.92639206
+2011,10,CooperLandingsCPUE," 45,664.00 "," 10,730.00 ",4.255731594
+2011,10,ChsHarborLandingsCPUE," 7,343.96 "," 1,813 ",4.050722559
+2011,10,WandoLandingsCPUE," 20,573.20 "," 5,810.00 ",3.540998279
+2011,11,AshleyLandingsCPUE," 8,043.92 "," 3,180.00 ",2.529534591
+2011,11,CooperLandingsCPUE," 45,314.00 "," 7,427.00 ",6.101252188
+2011,11,ChsHarborLandingsCPUE," 66,760.00 "," 11,552 ",5.779085873
+2011,11,WandoLandingsCPUE," 13,940.00 "," 4,515.00 ",3.087486157
+2011,12,AshleyLandingsCPUE," 4,117.20 "," 1,170.00 ",3.518974359
+2011,12,CooperLandingsCPUE," 10,264.00 "," 1,868.00 ",5.494646681
+2011,12,ChsHarborLandingsCPUE," 77,770.42 "," 15,681 ",4.959531918
+2011,12,WandoLandingsCPUE," 10,060.00 "," 2,985.00 ",3.370184255
+2012,1,AshleyLandingsCPUE," 1,768.20 ", 560.00 ,3.1575
+2012,1,CooperLandingsCPUE," 13,226.00 "," 3,856.00 ",3.429979253
+2012,1,ChsHarborLandingsCPUE," 47,186.92 "," 12,462 ",3.786464452
+2012,1,WandoLandingsCPUE," 13,620.00 "," 3,605.00 ",3.778085992
+2012,2,AshleyLandingsCPUE," 1,760.00 ", 900.00 ,1.955555556
+2012,2,CooperLandingsCPUE," 1,118.00 ", 521.00 ,2.145873321
+2012,2,ChsHarborLandingsCPUE," 38,824.00 "," 16,638 ",2.33345354
+2012,2,WandoLandingsCPUE," 7,604.00 "," 2,855.00 ",2.663397548
+2012,3,AshleyLandingsCPUE," 1,512.00 "," 1,120.00 ",1.35
+2012,3,CooperLandingsCPUE," 4,517.96 "," 2,188.00 ",2.06488117
+2012,3,ChsHarborLandingsCPUE," 19,167.17 "," 11,265 ",1.701479805
+2012,3,WandoLandingsCPUE," 4,990.00 "," 2,305.00 ",2.164859002
+2012,4,AshleyLandingsCPUE," 10,503.20 "," 4,855.00 ",2.163377961
+2012,4,CooperLandingsCPUE," 22,101.16 "," 9,474.00 ",2.332822461
+2012,4,ChsHarborLandingsCPUE," 24,277.60 "," 8,530 ",2.846143025
+2012,4,WandoLandingsCPUE," 3,928.00 "," 2,010.00 ",1.954228856
+2012,5,AshleyLandingsCPUE," 14,387.68 "," 6,661.00 ",2.15998799
+2012,5,CooperLandingsCPUE," 44,273.60 "," 13,262.00 ",3.338380335
+2012,5,ChsHarborLandingsCPUE," 21,907.20 "," 6,422 ",3.411273746
+2012,5,WandoLandingsCPUE," 4,220.00 "," 1,960.00 ",2.153061224
+2012,6,AshleyLandingsCPUE," 20,730.84 "," 7,355.00 ",2.818605031
+2012,6,CooperLandingsCPUE," 80,687.87 "," 20,566.00 ",3.923362346
+2012,6,ChsHarborLandingsCPUE," 13,019.20 "," 3,690 ",3.528238482
+2012,6,WandoLandingsCPUE," 12,840.00 "," 5,190.00 ",2.473988439
+2012,7,AshleyLandingsCPUE," 21,160.32 "," 5,293.00 ",3.997793312
+2012,7,CooperLandingsCPUE," 82,904.00 "," 21,112.00 ",3.926866237
+2012,7,ChsHarborLandingsCPUE," 18,792.00 "," 4,556 ",4.124670764
+2012,7,WandoLandingsCPUE," 22,300.00 "," 7,135.00 ",3.125437982
+2012,8,AshleyLandingsCPUE," 19,143.02 "," 4,465.00 ",4.287350504
+2012,8,CooperLandingsCPUE," 66,650.00 "," 17,058.00 ",3.907257592
+2012,8,ChsHarborLandingsCPUE," 10,119.20 "," 3,408 ",2.969248826
+2012,8,WandoLandingsCPUE," 25,828.00 "," 7,495.00 ",3.446030687
+2012,9,AshleyLandingsCPUE," 17,341.90 "," 4,614.00 ",3.758539228
+2012,9,CooperLandingsCPUE," 54,916.00 "," 15,424.00 ",3.560425311
+2012,9,ChsHarborLandingsCPUE," 6,724.00 "," 1,823 ",3.688425672
+2012,9,WandoLandingsCPUE," 41,880.00 "," 10,650.00 ",3.932394366
+2012,10,AshleyLandingsCPUE," 10,168.74 "," 3,264.00 ",3.115422794
+2012,10,CooperLandingsCPUE," 38,674.00 "," 9,473.00 ",4.082550406
+2012,10,ChsHarborLandingsCPUE," 13,552.00 "," 4,332 ",3.128347184
+2012,10,WandoLandingsCPUE," 34,642.00 "," 8,432.00 ",4.108396584
+2012,11,AshleyLandingsCPUE," 6,632.00 "," 1,910.00 ",3.472251309
+2012,11,CooperLandingsCPUE," 37,143.00 "," 8,547.00 ",4.345735346
+2012,11,ChsHarborLandingsCPUE," 42,620.00 "," 11,464 ",3.717725052
+2012,11,WandoLandingsCPUE," 39,368.00 "," 9,338.00 ",4.215892054
+2012,12,AshleyLandingsCPUE, 884.00 , 275.00 ,3.214545455
+2012,12,CooperLandingsCPUE," 3,075.00 ", 906.00 ,3.394039735
+2012,12,ChsHarborLandingsCPUE," 57,554.00 "," 17,335 ",3.320103836
+2012,12,WandoLandingsCPUE," 11,112.00 "," 3,621.00 ",3.068765534
+2013,1,CooperLandingsCPUE," 10,339.00 "," 3,664.00 ",2.821779476
+2013,1,ChsHarborLandingsCPUE," 21,314.00 "," 13,965 ",1.526244182
+2013,1,WandoLandingsCPUE," 7,012.00 "," 3,260.00 ",2.150920245
+2013,2,CooperLandingsCPUE," 5,390.00 "," 2,680.00 ",2.01119403
+2013,2,ChsHarborLandingsCPUE," 8,100.28 "," 9,587 ",0.844923334
+2013,2,WandoLandingsCPUE," 2,480.00 "," 1,900.00 ",1.305263158
+2013,3,CooperLandingsCPUE," 3,129.14 "," 2,479.00 ",1.262258975
+2013,3,ChsHarborLandingsCPUE," 1,525.20 "," 5,873 ",0.259696918
+2013,3,WandoLandingsCPUE," 1,456.00 "," 2,620.00 ",0.555725191
+2013,4,AshleyLandingsCPUE, 116.00 , 50.00 ,2.32
+2013,4,CooperLandingsCPUE," 3,476.00 "," 3,860.00 ",0.900518135
+2013,4,ChsHarborLandingsCPUE," 1,612.00 "," 5,860 ",0.275085324
+2013,4,WandoLandingsCPUE," 1,527.44 "," 2,560.00 ",0.59665625
+2013,5,AshleyLandingsCPUE," 7,985.08 "," 5,844.00 ",1.366372348
+2013,5,CooperLandingsCPUE," 25,777.60 "," 10,927.00 ",2.359073854
+2013,5,ChsHarborLandingsCPUE," 13,564.00 "," 10,201 ",1.329673561
+2013,5,WandoLandingsCPUE," 13,208.00 "," 6,350.00 ",2.08
+2013,6,AshleyLandingsCPUE," 13,729.08 "," 6,822.00 ",2.012471416
+2013,6,CooperLandingsCPUE," 37,750.00 "," 13,724.00 ",2.750655785
+2013,6,ChsHarborLandingsCPUE," 14,260.00 "," 8,065 ",1.768133912
+2013,6,WandoLandingsCPUE," 9,340.00 "," 4,210.00 ",2.218527316
+2013,7,AshleyLandingsCPUE," 14,090.20 "," 7,095.00 ",1.985933756
+2013,7,CooperLandingsCPUE," 38,964.00 "," 14,589.00 ",2.670779354
+2013,7,ChsHarborLandingsCPUE," 14,946.00 "," 8,000 ",1.86825
+2013,7,WandoLandingsCPUE," 20,790.00 "," 7,810.00 ",2.661971831
+2013,8,AshleyLandingsCPUE," 13,588.56 "," 6,341.00 ",2.142967986
+2013,8,CooperLandingsCPUE," 28,598.00 "," 11,763.00 ",2.431182521
+2013,8,ChsHarborLandingsCPUE," 5,132.00 "," 6,180 ",0.830420712
+2013,8,WandoLandingsCPUE," 42,653.00 "," 12,180.00 ",3.501888342
+2013,9,AshleyLandingsCPUE," 14,296.72 "," 5,820.00 ",2.4564811
+2013,9,CooperLandingsCPUE," 32,258.00 "," 9,377.00 ",3.440119441
+2013,9,ChsHarborLandingsCPUE," 4,116.00 "," 2,247 ",1.831775701
+2013,9,WandoLandingsCPUE," 38,944.00 "," 11,540.00 ",3.374696707
+2013,10,AshleyLandingsCPUE," 10,348.84 "," 2,886.00 ",3.585876646
+2013,10,CooperLandingsCPUE," 34,818.00 "," 7,204.00 ",4.833148251
+2013,10,ChsHarborLandingsCPUE," 7,792.00 "," 2,800 ",2.782857143
+2013,10,WandoLandingsCPUE," 33,948.00 "," 10,051.00 ",3.377574371
+2013,11,AshleyLandingsCPUE," 14,796.00 "," 3,084.00 ",4.79766537
+2013,11,CooperLandingsCPUE," 23,144.00 "," 4,290.00 ",5.394871795
+2013,11,ChsHarborLandingsCPUE," 27,535.60 "," 5,970 ",4.612328308
+2013,11,WandoLandingsCPUE," 43,222.99 "," 9,355.00 ",4.620308926
+2013,12,AshleyLandingsCPUE," 2,168.00 ", 810.00 ,2.67654321
+2013,12,CooperLandingsCPUE," 7,964.00 "," 1,980.00 ",4.022222222
+2013,12,ChsHarborLandingsCPUE," 47,808.00 "," 13,715 ",3.485818447
+2013,12,WandoLandingsCPUE," 18,820.00 "," 6,930.00 ",2.715728716
+2014,1,AshleyLandingsCPUE, 320.00 , 240.00 ,1.333333333
+2014,1,CooperLandingsCPUE," 1,216.00 ", 520.00 ,2.338461538
+2014,1,ChsHarborLandingsCPUE," 10,160.00 "," 7,900 ",1.286075949
+2014,1,WandoLandingsCPUE," 5,588.00 "," 3,830.00 ",1.459007833
+2014,2,AshleyLandingsCPUE, 200.00 , 125.00 ,1.6
+2014,2,ChsHarborLandingsCPUE," 5,360.00 "," 4,350 ",1.232183908
+2014,2,WandoLandingsCPUE," 3,759.24 "," 2,580.00 ",1.457069767
+2014,3,CooperLandingsCPUE," 2,480.00 "," 1,700.00 ",1.458823529
+2014,3,ChsHarborLandingsCPUE," 2,172.00 "," 2,900 ",0.748965517
+2014,3,WandoLandingsCPUE," 3,020.00 "," 2,830.00 ",1.067137809
+2014,4,AshleyLandingsCPUE, 430.00 , 400.00 ,1.075
+2014,4,CooperLandingsCPUE," 5,488.00 "," 2,780.00 ",1.974100719
+2014,4,ChsHarborLandingsCPUE, 512.96 ," 1,424 ",0.360224719
+2014,4,WandoLandingsCPUE, 803.76 , 940.00 ,0.85506383
+2014,5,AshleyLandingsCPUE," 9,920.00 "," 6,540.00 ",1.516819572
+2014,5,CooperLandingsCPUE," 25,872.00 "," 8,638.00 ",2.995137763
+2014,5,ChsHarborLandingsCPUE," 8,005.40 "," 2,934 ",2.728493524
+2014,5,WandoLandingsCPUE," 10,840.00 "," 4,227.00 ",2.564466525
+2014,6,AshleyLandingsCPUE," 12,306.00 "," 5,175.00 ",2.377971014
+2014,6,CooperLandingsCPUE," 28,177.20 "," 11,552.00 ",2.43916205
+2014,6,ChsHarborLandingsCPUE," 8,052.00 "," 3,900 ",2.064615385
+2014,6,WandoLandingsCPUE," 28,314.00 "," 10,144.00 ",2.791206625
+2014,7,AshleyLandingsCPUE," 19,068.00 "," 7,663.00 ",2.488320501
+2014,7,CooperLandingsCPUE," 36,848.00 "," 11,519.00 ",3.198888792
+2014,7,ChsHarborLandingsCPUE," 7,472.00 "," 3,100 ",2.410322581
+2014,7,WandoLandingsCPUE," 33,280.00 "," 10,685.00 ",3.114646701
+2014,8,AshleyLandingsCPUE," 17,592.00 "," 8,358.00 ",2.104809763
+2014,8,CooperLandingsCPUE," 25,650.00 "," 10,990.00 ",2.333939945
+2014,8,ChsHarborLandingsCPUE," 2,528.00 "," 1,800 ",1.404444444
+2014,8,WandoLandingsCPUE," 32,624.00 "," 10,251.00 ",3.182518779
+2014,9,AshleyLandingsCPUE," 14,881.50 "," 6,359.00 ",2.340226451
+2014,9,CooperLandingsCPUE," 27,404.00 "," 9,796.00 ",2.797468354
+2014,9,ChsHarborLandingsCPUE," 1,950.00 ", 590 ,3.305084746
+2014,9,WandoLandingsCPUE," 32,324.00 "," 7,794.00 ",4.147292789
+2014,10,AshleyLandingsCPUE," 12,524.00 "," 4,260.00 ",2.939906103
+2014,10,CooperLandingsCPUE," 31,102.00 "," 9,885.00 ",3.146383409
+2014,10,ChsHarborLandingsCPUE," 3,196.00 "," 1,175 ",2.72
+2014,10,WandoLandingsCPUE," 31,408.00 "," 6,840.00 ",4.591812865
+2014,11,AshleyLandingsCPUE," 6,242.00 "," 2,108.00 ",2.961100569
+2014,11,CooperLandingsCPUE," 22,260.00 "," 5,570.00 ",3.996409336
+2014,11,ChsHarborLandingsCPUE," 23,527.20 "," 5,260 ",4.472851711
+2014,11,WandoLandingsCPUE," 40,008.00 "," 7,280.00 ",5.495604396
+2014,12,AshleyLandingsCPUE," 2,144.00 "," 1,175.00 ",1.824680851
+2014,12,CooperLandingsCPUE," 20,184.00 "," 4,375.00 ",4.613485714
+2014,12,ChsHarborLandingsCPUE," 16,726.00 "," 3,725 ",4.490201342
+2014,12,WandoLandingsCPUE," 17,692.00 "," 7,260.00 ",2.436914601
+2015,1,AshleyLandingsCPUE," 1,240.00 ", 800.00 ,1.55
+2015,1,CooperLandingsCPUE," 2,212.00 "," 1,108.00 ",1.996389892
+2015,1,ChsHarborLandingsCPUE," 13,608.00 "," 7,450 ",1.826577181
+2015,1,WandoLandingsCPUE," 9,668.00 "," 7,990.00 ",1.210012516
+2015,2,AshleyLandingsCPUE, 288.00 , 300.00 ,0.96
+2015,2,CooperLandingsCPUE, 620.00 , 521.00 ,1.190019194
+2015,2,ChsHarborLandingsCPUE," 5,752.00 "," 4,625 ",1.243675676
+2015,2,WandoLandingsCPUE," 1,016.00 "," 2,120.00 ",0.479245283
+2015,3,AshleyLandingsCPUE, 264.00 , 325.00 ,0.812307692
+2015,3,CooperLandingsCPUE," 1,824.00 "," 1,800.00 ",1.013333333
+2015,3,ChsHarborLandingsCPUE," 3,028.00 "," 4,050 ",0.747654321
+2015,3,WandoLandingsCPUE," 1,168.00 "," 2,120.00 ",0.550943396
+2015,4,AshleyLandingsCPUE," 1,288.00 "," 1,259.00 ",1.023034154
+2015,4,CooperLandingsCPUE," 5,328.00 "," 6,644.00 ",0.80192655
+2015,4,ChsHarborLandingsCPUE," 1,400.00 "," 2,400 ",0.583333333
+2015,4,WandoLandingsCPUE," 2,580.00 "," 2,300.00 ",1.12173913
+2015,5,AshleyLandingsCPUE," 7,852.00 "," 6,236.00 ",1.259140475
+2015,5,CooperLandingsCPUE," 13,780.00 "," 8,314.00 ",1.657445273
+2015,5,ChsHarborLandingsCPUE," 2,152.00 "," 2,800 ",0.768571429
+2015,5,WandoLandingsCPUE," 10,510.00 "," 6,975.00 ",1.506810036
+2015,6,AshleyLandingsCPUE," 14,125.80 "," 7,662.00 ",1.843617854
+2015,6,CooperLandingsCPUE," 17,224.00 "," 7,270.00 ",2.369188446
+2015,6,ChsHarborLandingsCPUE," 2,786.00 "," 1,950 ",1.428717949
+2015,6,WandoLandingsCPUE," 18,808.00 "," 7,726.00 ",2.434377427
+2015,7,AshleyLandingsCPUE," 22,060.00 "," 10,010.00 ",2.203796204
+2015,7,CooperLandingsCPUE," 27,968.00 "," 8,391.00 ",3.333094983
+2015,7,ChsHarborLandingsCPUE," 7,672.00 "," 2,600 ",2.950769231
+2015,7,WandoLandingsCPUE," 40,713.50 "," 14,597.00 ",2.789169007
+2015,8,AshleyLandingsCPUE," 23,898.00 "," 8,232.00 ",2.903061224
+2015,8,CooperLandingsCPUE," 22,952.00 "," 6,666.00 ",3.443144314
+2015,8,ChsHarborLandingsCPUE," 4,288.00 "," 2,400 ",1.786666667
+2015,8,WandoLandingsCPUE," 38,416.00 "," 13,979.00 ",2.748122183
+2015,9,AshleyLandingsCPUE," 15,656.00 "," 5,575.00 ",2.808251121
+2015,9,CooperLandingsCPUE," 25,604.00 "," 6,495.00 ",3.942109315
+2015,9,ChsHarborLandingsCPUE," 5,712.00 "," 2,000 ",2.856
+2015,9,WandoLandingsCPUE," 47,736.00 "," 14,155.00 ",3.372377252
+2015,10,AshleyLandingsCPUE," 7,951.96 "," 1,639.00 ",4.85171446
+2015,10,CooperLandingsCPUE," 30,480.00 "," 6,445.00 ",4.729247479
+2015,10,ChsHarborLandingsCPUE," 8,219.60 "," 1,817 ",4.523720418
+2015,10,WandoLandingsCPUE," 27,904.00 "," 6,800.00 ",4.103529412
+2015,11,AshleyLandingsCPUE," 7,591.92 "," 1,915.00 ",3.964449086
+2015,11,CooperLandingsCPUE," 21,624.00 "," 4,630.00 ",4.670410367
+2015,11,ChsHarborLandingsCPUE," 19,180.00 "," 3,900 ",4.917948718
+2015,11,WandoLandingsCPUE," 28,868.00 "," 8,400.00 ",3.436666667
+2015,12,AshleyLandingsCPUE," 3,276.00 "," 1,264.00 ",2.591772152
+2015,12,CooperLandingsCPUE," 9,132.00 "," 2,860.00 ",3.193006993
+2015,12,ChsHarborLandingsCPUE," 28,820.00 "," 5,900 ",4.884745763
+2015,12,WandoLandingsCPUE," 22,304.00 "," 7,500.00 ",2.973866667
+2016,1,AshleyLandingsCPUE," 2,768.00 "," 1,340.00 ",2.065671642
+2016,1,CooperLandingsCPUE," 2,788.00 "," 1,260.00 ",2.212698413
+2016,1,ChsHarborLandingsCPUE," 23,764.00 "," 5,900 ",4.02779661
+2016,1,WandoLandingsCPUE," 14,200.00 "," 6,700.00 ",2.119402985
+2016,2,AshleyLandingsCPUE," 1,404.00 ", 760.00 ,1.847368421
+2016,2,ChsHarborLandingsCPUE," 12,836.00 "," 4,800 ",2.674166667
+2016,2,WandoLandingsCPUE," 5,388.00 "," 4,100.00 ",1.314146341
+2016,3,AshleyLandingsCPUE," 1,904.00 "," 1,260.00 ",1.511111111
+2016,3,CooperLandingsCPUE," 1,692.00 ", 962.00 ,1.758835759
+2016,3,ChsHarborLandingsCPUE," 6,536.00 "," 4,000 ",1.634
+2016,3,WandoLandingsCPUE," 2,480.00 "," 2,800.00 ",0.885714286
+2016,4,AshleyLandingsCPUE," 7,892.00 "," 2,586.00 ",3.051817479
+2016,4,CooperLandingsCPUE," 5,725.00 "," 2,948.00 ",1.941994573
+2016,4,ChsHarborLandingsCPUE," 7,564.00 "," 3,735 ",2.025167336
+2016,4,WandoLandingsCPUE," 11,252.00 "," 5,600.00 ",2.009285714
+2016,5,AshleyLandingsCPUE," 11,964.00 "," 6,088.00 ",1.965177398
+2016,5,CooperLandingsCPUE," 17,852.30 "," 6,685.00 ",2.670501122
+2016,5,ChsHarborLandingsCPUE," 8,040.00 "," 3,080 ",2.61038961
+2016,5,WandoLandingsCPUE," 19,155.00 "," 9,100.00 ",2.104945055
+2016,6,AshleyLandingsCPUE," 21,366.40 "," 7,836.00 ",2.726697295
+2016,6,CooperLandingsCPUE," 34,618.60 "," 9,730.00 ",3.557923947
+2016,6,ChsHarborLandingsCPUE," 5,816.00 "," 2,000 ",2.908
+2016,6,WandoLandingsCPUE," 21,868.00 "," 7,780.00 ",2.810796915
+2016,7,AshleyLandingsCPUE," 32,728.00 "," 10,947.00 ",2.989677537
+2016,7,CooperLandingsCPUE," 58,734.00 "," 18,138.00 ",3.238173999
+2016,7,ChsHarborLandingsCPUE," 5,864.00 "," 2,000 ",2.932
+2016,7,WandoLandingsCPUE," 23,620.00 "," 9,550.00 ",2.473298429
+2016,8,AshleyLandingsCPUE," 28,268.00 "," 10,242.00 ",2.760007811
+2016,8,CooperLandingsCPUE," 42,992.00 "," 10,570.00 ",4.067360454
+2016,8,ChsHarborLandingsCPUE," 3,928.00 "," 1,800 ",2.182222222
+2016,8,WandoLandingsCPUE," 24,940.00 "," 10,050.00 ",2.48159204
+2016,9,AshleyLandingsCPUE," 23,284.00 "," 7,660.00 ",3.039686684
+2016,9,CooperLandingsCPUE," 33,632.00 "," 6,410.00 ",5.246801872
+2016,9,ChsHarborLandingsCPUE," 3,616.00 "," 1,800 ",2.008888889
+2016,9,WandoLandingsCPUE," 65,050.00 "," 9,800.00 ",6.637755102
+2016,10,AshleyLandingsCPUE," 20,168.00 "," 6,188.00 ",3.259211377
+2016,10,CooperLandingsCPUE," 38,928.00 "," 7,560.00 ",5.149206349
+2016,10,ChsHarborLandingsCPUE," 7,072.00 "," 2,000 ",3.536
+2016,10,WandoLandingsCPUE," 29,236.00 "," 8,350.00 ",3.501317365
+2016,11,AshleyLandingsCPUE," 10,116.00 "," 2,997.00 ",3.375375375
+2016,11,CooperLandingsCPUE," 7,040.00 "," 1,842.00 ",3.821932682
+2016,11,ChsHarborLandingsCPUE," 28,524.00 "," 6,520 ",4.374846626
+2016,11,WandoLandingsCPUE," 22,464.00 "," 6,900.00 ",3.255652174
+2016,12,AshleyLandingsCPUE," 3,648.00 "," 1,385.00 ",2.633935018
+2016,12,CooperLandingsCPUE," 3,812.00 "," 1,290.00 ",2.95503876
+2016,12,ChsHarborLandingsCPUE," 33,748.00 "," 7,500 ",4.499733333
+2016,12,WandoLandingsCPUE," 21,912.00 "," 7,150.00 ",3.064615385
+2017,1,AshleyLandingsCPUE," 3,024.00 "," 1,520.00 ",1.989473684
+2017,1,CooperLandingsCPUE," 3,452.00 "," 1,070.00 ",3.226168224
+2017,1,ChsHarborLandingsCPUE," 21,968.00 "," 6,100 ",3.601311475
+2017,1,WandoLandingsCPUE," 16,324.00 "," 6,700.00 ",2.43641791
+2017,2,AshleyLandingsCPUE," 1,400.00 "," 1,065.00 ",1.314553991
+2017,2,CooperLandingsCPUE," 2,668.00 ", 974.00 ,2.739219713
+2017,2,ChsHarborLandingsCPUE," 6,180.00 "," 4,450 ",1.388764045
+2017,2,WandoLandingsCPUE," 8,988.00 "," 5,700.00 ",1.576842105
+2017,3,AshleyLandingsCPUE," 1,484.00 "," 1,403.00 ",1.057733428
+2017,3,CooperLandingsCPUE," 9,888.00 "," 5,798.00 ",1.705415661
+2017,3,ChsHarborLandingsCPUE," 2,236.00 "," 3,200 ",0.69875
+2017,3,WandoLandingsCPUE, 752.00 ," 1,600.00 ",0.47
+2017,4,AshleyLandingsCPUE," 3,900.00 "," 1,820.00 ",2.142857143
+2017,4,CooperLandingsCPUE," 19,390.00 "," 9,950.00 ",1.948743719
+2017,4,ChsHarborLandingsCPUE, 908.75 ," 1,400 ",0.649107143
+2017,4,WandoLandingsCPUE," 6,964.00 "," 3,670.00 ",1.897547684
+2017,5,AshleyLandingsCPUE," 8,812.00 "," 3,930.00 ",2.242239186
+2017,5,CooperLandingsCPUE," 26,584.00 "," 13,385.00 ",1.986103848
+2017,5,ChsHarborLandingsCPUE," 4,260.00 "," 1,800 ",2.366666667
+2017,5,WandoLandingsCPUE," 9,212.00 "," 5,840.00 ",1.57739726
+2017,6,AshleyLandingsCPUE," 13,048.00 "," 4,720.00 ",2.76440678
+2017,6,CooperLandingsCPUE," 29,713.00 "," 12,556.00 ",2.366438356
+2017,6,ChsHarborLandingsCPUE," 2,640.00 "," 1,600 ",1.65
+2017,6,WandoLandingsCPUE," 10,828.00 "," 6,340.00 ",1.707886435
+2017,7,AshleyLandingsCPUE," 18,468.00 "," 4,911.00 ",3.760537569
+2017,7,CooperLandingsCPUE," 36,316.00 "," 11,974.00 ",3.032904627
+2017,7,ChsHarborLandingsCPUE," 9,292.00 "," 3,185 ",2.917425432
+2017,7,WandoLandingsCPUE," 17,740.00 "," 7,142.00 ",2.483898068
+2017,8,AshleyLandingsCPUE," 23,428.00 "," 6,691.00 ",3.501419818
+2017,8,CooperLandingsCPUE," 46,566.00 "," 11,948.00 ",3.897388684
+2017,8,ChsHarborLandingsCPUE," 7,988.00 "," 2,978 ",2.682337139
+2017,8,WandoLandingsCPUE," 20,524.00 "," 7,410.00 ",2.76977058
+2017,9,AshleyLandingsCPUE," 17,784.00 "," 4,490.00 ",3.960801782
+2017,9,CooperLandingsCPUE," 52,620.00 "," 13,068.00 ",4.026629936
+2017,9,ChsHarborLandingsCPUE," 9,040.00 "," 2,404 ",3.760399334
+2017,9,WandoLandingsCPUE," 27,832.00 "," 7,910.00 ",3.518584071
+2017,10,AshleyLandingsCPUE," 18,632.00 "," 4,975.00 ",3.745125628
+2017,10,CooperLandingsCPUE," 49,092.00 "," 11,899.00 ",4.125724851
+2017,10,ChsHarborLandingsCPUE," 8,236.00 "," 2,504 ",3.28913738
+2017,10,WandoLandingsCPUE," 28,056.00 "," 8,090.00 ",3.467985167
+2017,11,AshleyLandingsCPUE," 15,552.00 "," 3,846.00 ",4.043681747
+2017,11,CooperLandingsCPUE," 39,148.00 "," 8,372.00 ",4.676063067
+2017,11,ChsHarborLandingsCPUE," 16,856.00 "," 3,308 ",5.095525998
+2017,11,WandoLandingsCPUE," 37,136.00 "," 8,880.00 ",4.181981982
+2017,12,AshleyLandingsCPUE," 5,036.00 "," 1,708.00 ",2.948477752
+2017,12,CooperLandingsCPUE," 3,376.00 ", 879.00 ,3.8407281
+2017,12,ChsHarborLandingsCPUE," 31,492.00 "," 6,725 ",4.682825279
+2017,12,WandoLandingsCPUE," 25,720.00 "," 7,180.00 ",3.582172702
+2018,1,AshleyLandingsCPUE, 518.48 , 385.00 ,1.346701299
+2018,1,CooperLandingsCPUE," 1,216.00 ", 550.00 ,2.210909091
+2018,1,ChsHarborLandingsCPUE," 2,538.00 "," 1,400 ",1.812857143
+2018,1,WandoLandingsCPUE," 2,292.00 "," 1,730.00 ",1.324855491
+2018,2,AshleyLandingsCPUE, 932.00 , 760.00 ,1.226315789
+2018,2,CooperLandingsCPUE, 720.00 , 340.00 ,2.117647059
+2018,2,ChsHarborLandingsCPUE," 14,144.00 "," 5,900 ",2.397288136
+2018,2,WandoLandingsCPUE," 3,736.00 "," 1,560.00 ",2.394871795
+2018,3,AshleyLandingsCPUE, 472.00 , 820.00 ,0.575609756
+2018,3,CooperLandingsCPUE," 1,576.00 ", 680.00 ,2.317647059
+2018,3,ChsHarborLandingsCPUE," 4,508.00 "," 4,250 ",1.060705882
+2018,3,WandoLandingsCPUE," 2,936.00 "," 2,320.00 ",1.265517241
+2018,4,AshleyLandingsCPUE," 3,528.00 "," 2,049.00 ",1.72181552
+2018,4,CooperLandingsCPUE," 14,560.00 "," 9,036.00 ",1.611332448
+2018,4,ChsHarborLandingsCPUE," 2,032.00 "," 2,350 ",0.864680851
+2018,4,WandoLandingsCPUE," 4,578.00 "," 2,540.00 ",1.802362205
+2018,5,AshleyLandingsCPUE," 10,240.00 "," 4,224.00 ",2.424242424
+2018,5,CooperLandingsCPUE," 27,941.00 "," 13,193.00 ",2.117865535
+2018,5,ChsHarborLandingsCPUE," 8,364.00 "," 3,750 ",2.2304
+2018,5,WandoLandingsCPUE," 13,820.00 "," 4,920.00 ",2.808943089
+2018,6,AshleyLandingsCPUE," 13,208.00 "," 4,251.00 ",3.107033639
+2018,6,CooperLandingsCPUE," 39,100.75 "," 13,650.00 ",2.86452381
+2018,6,ChsHarborLandingsCPUE," 8,530.09 "," 4,515 ",1.889277519
+2018,6,WandoLandingsCPUE," 15,120.00 "," 5,624.00 ",2.688477952
+2018,7,AshleyLandingsCPUE," 15,915.64 "," 6,091.00 ",2.612976523
+2018,7,CooperLandingsCPUE," 37,186.50 "," 11,917.00 ",3.120458169
+2018,7,ChsHarborLandingsCPUE," 10,548.60 "," 5,270 ",2.001631879
+2018,7,WandoLandingsCPUE," 18,930.00 "," 5,703.00 ",3.319305629
+2018,8,AshleyLandingsCPUE," 26,234.00 "," 8,771.00 ",2.990993045
+2018,8,CooperLandingsCPUE," 38,919.00 "," 14,255.00 ",2.73019993
+2018,8,ChsHarborLandingsCPUE," 12,572.22 "," 4,328 ",2.904856747
+2018,8,WandoLandingsCPUE," 24,828.00 "," 6,180.00 ",4.017475728
+2018,9,AshleyLandingsCPUE," 23,834.00 "," 7,075.00 ",3.368763251
+2018,9,CooperLandingsCPUE," 29,016.00 "," 9,835.00 ",2.950279614
+2018,9,ChsHarborLandingsCPUE," 11,196.80 "," 3,130 ",3.577252396
+2018,9,WandoLandingsCPUE," 19,584.00 "," 4,020.00 ",4.871641791
+2018,10,AshleyLandingsCPUE," 15,036.00 "," 4,254.00 ",3.534555712
+2018,10,CooperLandingsCPUE," 33,025.75 "," 10,045.00 ",3.28777999
+2018,10,ChsHarborLandingsCPUE," 10,588.00 "," 2,800 ",3.781428571
+2018,10,WandoLandingsCPUE," 21,684.00 "," 5,200.00 ",4.17
+2018,11,AshleyLandingsCPUE," 16,547.00 "," 3,739.00 ",4.425514844
+2018,11,CooperLandingsCPUE," 35,156.00 "," 9,456.00 ",3.7178511
+2018,11,ChsHarborLandingsCPUE," 8,856.00 "," 2,000 ",4.428
+2018,11,WandoLandingsCPUE," 18,068.00 "," 3,400.00 ",5.314117647
+2018,12,AshleyLandingsCPUE," 6,964.00 "," 2,010.00 ",3.464676617
+2018,12,CooperLandingsCPUE," 40,748.00 "," 12,400.00 ",3.286129032
+2018,12,ChsHarborLandingsCPUE," 10,480.00 "," 2,800 ",3.742857143
+2018,12,WandoLandingsCPUE," 14,000.00 "," 3,500.00 ",4

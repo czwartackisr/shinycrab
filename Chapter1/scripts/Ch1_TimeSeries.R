@@ -26,11 +26,12 @@ theme_update(plot.title = element_text(hjust = 0.5))
 # Data Read-In ------------------------------------------------------------
 crabdata <- read.csv("./Chapter1/data/ClassSizeAbunMANUAL2.csv", stringsAsFactors = FALSE) 
 crabdata = distinct(crabdata, Coll, .keep_all = TRUE)
-#Source = "R.Project$crab - size - classSize - cleandata"
+#Source = "R.Project$crab - size - classSize - ClassSizeAbunMANUAL2" - file was manually lubridated in Excel
 #This data is cleandata from the crab project with abundance information for both size and class of crab
 
-crab1 = crabdata %>%
+B90T38 = crabdata %>% #Formerly crab1
   select(1:4, 7:16) %>%
+  filter(ProjID %in% c("B90", "T38")) %>%
   rename(Total = CPUE,
          Juvenile = JuvCPUE,
          Subadult = SubadultCPUE,
@@ -44,33 +45,66 @@ crab1 = crabdata %>%
   gather("Lifestage", "CPUE", 5:14) %>%
   mutate(Year = year(StartTime)) %>%
   mutate(Month = month(StartTime)) %>%
-  select(1,2,4,3,7,8,5,6)
-#############################################################START HERE
-#Cull Lifestage info for Vars with NAs in certain lifestages **hint: Look below***
+  select(1,2,4,3,7,8,5,6) 
 
-#Source = "R.Project$crab - flatfile - cleandata - crab.csv"
-#Wrangled in Excel due to time constraints - Chas only sites, date/time variable, Lifestage added
-T06_1 = read.csv("./Chapter1/data/T06.csv", stringsAsFactors = FALSE) 
-T06_1 = T06_1 %>%
+T06 = crabdata %>% #Formerly crab1
+  select(1:4, 7:16) %>%
+  filter(ProjID %in% "T06") %>%
+  rename(Total = CPUE) %>%
+  select(1:5) %>%
+  gather("Lifestage", "CPUE", 5) %>%
   mutate(Year = year(StartTime)) %>%
   mutate(Month = month(StartTime)) %>%
-  select(1,2,3,4,7,8,5,6)
+  select(1,2,4,3,7,8,5,6) 
 
-#combining T06 with B90 and T38
-crab2 = rbind(crab1, T06_1)
+
+P88 = crabdata %>% #Formerly crab1
+  select(1:4, 7:16) %>%
+  filter(ProjID %in% "P88") %>%
+  rename(Total = CPUE,
+         Sublegal = SublegalCPUE,
+         Legal = SublegalCPUE) %>%
+  select(1:5, 13, 14) %>%
+  gather("Lifestage", "CPUE", 5:7) %>%
+  mutate(Year = year(StartTime)) %>%
+  mutate(Month = month(StartTime)) %>%
+  select(1,2,4,3,7,8,5,6) 
+
+SCECAP = crabdata %>% #Formerly crab1
+  select(1:4, 7:16) %>%
+  filter(ProjID %in% c("E98", "E99")) %>%
+  rename(Total = CPUE,
+         Sublegal = SublegalCPUE,
+         Legal = SublegalCPUE,
+         Juvenile = JuvCPUE,
+         Subadult = SubadultCPUE,
+         Adult = AdultCPUE) %>%
+  select(1:8, 13, 14) %>%
+  gather("Lifestage", "CPUE", 5:10) %>%
+  mutate(Year = year(StartTime)) %>%
+  mutate(Month = month(StartTime)) %>%
+  select(1,2,4,3,7,8,5,6) 
+  
+crab1 = rbind(B90T38, P88) %>%
+  rbind(., T06) %>%
+  rbind(., SCECAP)
+
+
 
 #Source - Eric Hiltz OFM Fisheries Statistics
 #Wrangled in Excel due to confidentiality
 depend <- read.csv("./Chapter1/data/hardCrabsByArea_04252019_CH.csv")
 
+###############################################################################DO UP THERE
+
 #Joining Independent and Dependent 
-crab3 = full_join(crab2, depend,
+crab3 = full_join(crab1, depend,
                   by = c("ProjID", "StationCode", "Year", 
                          "Month", "Lifestage", "CPUE")) %>%
   mutate(ProjID = as.factor(ProjID)) %>%
   mutate(Coll = as.factor(Coll)) %>%
   mutate(StationCode = as.factor(StationCode)) %>%
-  mutate(StartTime = ymd_hms(StartTime)) %>%
+  mutate(StartTime = ymd(StartTime)) %>%
   mutate(Year = as.numeric(Year)) %>%
   mutate(Month = as.factor(Month)) %>%
   mutate(Lifestage = as.factor(Lifestage)) %>%
@@ -83,7 +117,10 @@ crab3 = full_join(crab2, depend,
 crab = crab3 %>%
   mutate(ProjID = recode(ProjID, 'B90' = "Harbor Trawl",
                        'T38' = "Creek Trawl",
-                       'T06' = "Trammel Net"))
+                       'T06' = "Trammel Net",
+                       'P88' = "Ashley Potting",
+                       'E98' = "SCECAP Creek Trawl",
+                       'E99' = "SCECAP Harbor Trawl"))
 
 
 
@@ -92,8 +129,11 @@ crab = crab3 %>%
 TotalCrab = crab %>%
   filter(Lifestage == "Total")
 TotalCrab$ProjID <- factor(TotalCrab$ProjID, levels = c("Harbor Trawl",
+                                                        "SCECAP Harbor Trawl",
                                                         "Creek Trawl",
-                                                        "Trammel Net"))
+                                                        "SCECAP Creek Trawl",
+                                                        "Trammel Net",
+                                                        "Ashley Potting"))
 
 #TotalCPUE = ggplot(aes(Year, CPUE), data = TotalCrab) +
   #ggtitle("All Surveys Mean Annual Abundance (Total Catch)") +
@@ -110,8 +150,8 @@ B90TotalCPUE = ggplot(aes(Year, CPUE), data = subset(TotalCrab,
   ggtitle("Harbor Trawl") + 
   stat_summary(fun.data = "mean_se", size = .7) +
   geom_smooth(method = 'loess', se=FALSE, color="gray20") +
-  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
-  labs(y=expression(Blue~crab~per~tow~or~set^{-1})) +
+  geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
+  labs(y=expression(Blue~crab~per~tow^{-1})) +
   expand_limits(x=2020)
 #B90TotalCPUE
 
@@ -120,8 +160,8 @@ T38TotalCPUE = ggplot(aes(Year, CPUE), data = subset(TotalCrab,
   ggtitle("Creek Trawl") +
   stat_summary(fun.data = "mean_se", size = .7) +
   geom_smooth(method = 'loess', se=FALSE, color="gray20") +
-  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
-  labs(y=expression(Blue~crab~per~tow~or~set^{-1})) +
+  geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
+  labs(y=expression(Blue~crab~per~tow^{-1})) +
   expand_limits(x=2020)
 #T38TotalCPUE
 
@@ -130,16 +170,53 @@ T06TotalCPUE = ggplot(aes(Year, CPUE), data = subset(TotalCrab,
   ggtitle("Trammel Net") +
   stat_summary(fun.data = "mean_se", size = .7) +
   geom_smooth(method = 'loess', se=FALSE, color="gray20") +
-  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
-  labs(y=expression(Blue~crab~per~tow~or~set^{-1})) +
+  geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
+  labs(y=expression(Blue~crab~per~set^{-1})) +
   expand_limits(x=c(2005,2020))
 #T06TotalCPUE
 
+E98TotalCPUE = ggplot(aes(Year, log(CPUE)), data = subset(TotalCrab,
+                                                     ProjID == "SCECAP Creek Trawl")) +
+  ggtitle("SCECAP Tidal Creek Trawl") +
+  stat_summary(fun.data = "mean_se", size = .7) +
+  geom_smooth(method = 'loess', se=FALSE, color="gray20") +
+  geom_hline(aes(yintercept=(log(mean(Means)))), linetype="dashed") +
+  labs(y=expression(Blue~crab~per~tow^{-1})) +
+  expand_limits(x=c(1998,2020))
 
-grid.arrange(B90TotalCPUE, T38TotalCPUE, T06TotalCPUE, nrow = 1,
+
+E99TotalCPUE = ggplot(aes(Year, CPUE), data = subset(TotalCrab,
+                                                          ProjID == "SCECAP Harbor Trawl")) +
+  ggtitle("SCECAP Open Water Trawl") +
+  stat_summary(fun.data = "mean_se", size = .7) +
+  geom_smooth(method = 'loess', se=FALSE, color="gray20") +
+  geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
+  labs(y=expression(Blue~crab~per~tow^{-1})) +
+  expand_limits(x=c(1998,2020))
+
+P88TotalCPUE = ggplot(aes(Year, CPUE), data = subset(TotalCrab,
+                                                     ProjID == "Ashley Potting")) +
+  ggtitle("SCECAP Open Water Trawl") +
+  stat_summary(fun.data = "mean_se", size = .7) +
+  geom_smooth(method = 'loess', se=FALSE, color="gray20") +
+  geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
+  labs(y=expression(Blue~crab~per~soak^{-1})) +
+  expand_limits(x=c(1988,2020))
+
+P88TotalCPUE = subset(TotalCrab,
+                      ProjID == "Ashley Potting")
+unique(crab$ProjID)
+
+E98TotalCPUE
+E99TotalCPUE
+
+
+
+grid.arrange(B90TotalCPUE, T38TotalCPUE, T06TotalCPUE, ncol = 1,
              top = "All Surveys Mean Annual Abundance (Total Catch)") 
 
-
+plot_grid(B90TotalCPUE, T38TotalCPUE, T06TotalCPUE, ncol = 1, align = 'hv')
+E99TotalCPUE, E98TotalCPUE, P88TotalCPUE, 
 
 
 # Harbor Trawl Size/Class Time Series -------------------------------------
