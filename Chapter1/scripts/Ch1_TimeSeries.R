@@ -83,7 +83,7 @@ SCECAP = crabdata %>% #Formerly crab1
   filter(ProjID %in% c("E98", "E99")) %>%
   rename(Total = CPUE,
          Sublegal = SublegalCPUE,
-         Legal = SublegalCPUE,
+         Legal = LegalCPUE,
          Juvenile = JuvCPUE,
          Subadult = SubadultCPUE,
          Adult = AdultCPUE) %>%
@@ -103,7 +103,6 @@ crab1 = rbind(B90T38, P88) %>%
 #Wrangled in Excel due to confidentiality
 depend <- read.csv("./Chapter1/data/hardCrabsByArea_04252019_CH.csv")
 
-###############################################################################DO UP THERE
 
 #Joining Independent and Dependent 
 crab3 = full_join(crab1, depend,
