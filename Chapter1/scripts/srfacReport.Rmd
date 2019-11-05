@@ -1,0 +1,406 @@
+---
+title: "SRFAC Crustacean Research & Monitoring"
+output:
+  pdf_document: default
+  word_document: default
+---
+**Core Funding Areas**: (3) Recreational Crustacean
+\newline  
+**Program Title**: Development of Crustacean Research and Fishery-Independent Monitoring to Address Significant Management Questions.  
+**Program PI**: Dr. Peter Kingsley-Smith, SCDNR MRRI Senior Marine Scientist  
+**Program Co-PIs**: Dr. Michael Kendrick, SCDNR MRRI Assistant Marine Scientist,  Jeff Brunson, SCDNR MRRI Wildlife Biologist III  
+**Program Period**: July 1, 2018- June 30, 2019  
+\newline  
+**Program Objectives:**  
+**1) Monitor white and brown shrimp populations**  
+**2) Monitor blue crab population**  
+\newline  
+**Executive summary:**  Sampling by the Crustacean Research and Monitoring Section (CRMS) focuses on the collection of recreationally-important crustacean species at critical life stages within estuarine waters. These sampling efforts facilitate timely analysis of the growth and development of crustacean species. These analyses are regularly used by the SCDNR Office of Fisheries Management to inform management decisions associated with these species. Focal species for the CRMS include white shrimp (Penaeus(Litopenaeus) setiferus), brown shrimp (Farfantepenaeus aztecus), and blue crabs (Callinectes sapidus). CRMS staff employ three survey methods to assess the abundance and growth of these crustacean species: 1) large trawl surveys, 2) creek trawl surveys, and 3) crab pot surveys. Over the course of the past year, CRMS staff have documented trends in these focal species, with white shrimp and brown shrimp abundance values largely consistent with the long-term average, and blue crab abundance showing greater-than average values.  
+
+**CRMS Surveys**  
+**1) Large trawl surveys**: The large trawl surveys are conducted on the R/V Silver Crescent using a 20-foot trawl net with 1” stretch mesh, towed for 15 minutes. Monthly sampling is conducted at four stations within the Charleston Harbor/Ashley River waterbody. Sampling at 20 additional stations along the Atlantic Intracoastal Waterway from Charleston to Hilton Head Island is also conducted (termed the “south trip”) in March, April, August, and December. The south cruise sampling is timed to provide more information on the status of crustacean populations at important times in their life cycle (e.g., availability for fall recreational harvest, population status prior to winter, and reproductive status in spring), and is critical for the proper management of these resources. All of the planned large trawl surveys were successfully completed during the July 1, 2018 to June 30, 2019 Program Period. 
+
+**2) Creek trawl surveys**: Penaeid shrimp and blue crab use tidal creeks as nursery grounds where juveniles can grow and accrue biomass. Juvenile shrimp, in particular, remain in tidal creeks before migrating into larger water bodies, and ultimately into the ocean. Juvenile brown shrimp are typically found in tidal creeks from early May to late July, while juvenile white shrimp are found from mid-June to mid-September. The CRMS creek trawl survey uses a 10-foot, ¼-inch mesh flat otter trawl towed for 5 minutes. Sampling occurs around low tide, when animals are concentrated in creek bottoms, at fixed stations. Although the catches from this survey tend to be variable, data allow CRMS to track the timing of shrimp migration into, and out of tidal creeks, and to track the use of tidal creeks by juvenile, sub-adult and adult blue crabs. Staff assess the crustacean catch (i.e., numbers and sizes of white and brown shrimp and blue crabs) in tidal creeks from May to September in the estuaries of South Carolina, with sampling concentrated in the Charleston area. During the Program Period, monthly, fixed-station sampling was completed between July and September in 2018 and in May and June in 2019. Additionally, since data from July and August 2019 are available for this report, those data are also included to provide a more complete analysis of the current state of these populations.  
+
+**3) Crab pot survey**: The crab pot survey uses standard wire crab traps deployed for 4 to 6 hour soak times. In October and November, six stations from Winyah Bay to the Broad River target crabs when they begin their seaward migration as water temperature decrease. These data also provide an index of crab abundance during this time of year. 
+
+***Program Objective 1 (Monitor shrimp population)**  
+**White shrimp (*Penaeus (Litopenaeus) setiferus*)**  
+Overview of shrimp this year: As in previous years, white shrimp catch-per-unit-effort (CPUE) generally followed a seasonal pattern from July 2018 to June 2019 (Figure 1), with a relatively high abundance of smaller sub-adult shrimp collected during the late summer and fall prior to their migration offshore in the spring. With abundances similar to the long-term mean, white shrimp were available for recreational harvest during late summer and fall of 2018.  
+
+```{r setup, include=FALSE, echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(lubridate)
+library(tidyr)
+library(dplyr)
+library(Hmisc)
+library(nlme)
+library(cowplot)
+library(knitr)
+library(readxl)
+library(rmarkdown)
+
+theme_set(theme_classic(base_size = 12)+
+           theme(panel.grid.major = element_blank(), 
+                 panel.grid.minor = element_blank(),
+                 panel.background = element_rect(colour = "black", size=0.5))+
+           theme(text=element_text(size=12,  family="serif", colour = "black"))+
+          theme(axis.text = element_text(colour = "black"))+
+          theme(axis.ticks = element_line(colour = "black"))
+          )
+update_geom_defaults("point",   list(colour = "black"))
+update_geom_defaults("line",   list(colour = "black"))
+theme_update(plot.title = element_text(hjust = 0.5))
+```
+
+```{r Data Read-In, include=FALSE, warning=FALSE, message=FALSE}
+srfac = read.csv("srfacData.csv") %>%
+  select(1:9)
+```
+
+```{r, include=FALSE, message=FALSE, warning=FALSE}
+B90 = srfac %>%
+  filter(ProjID == "B90")
+  #mutate(FiscalYr = ifelse(Month <= 6, Year, Year + 1)) %>% ##Silence definition of fiscal year
+  
+
+
+T38 = srfac %>%
+  filter(ProjID == "T38") %>%
+  filter(Year > 1994) 
+###T38 ARE MISSING VALUES FOR SEVERAL SPECIES THROUGH SEVERAL MONTHS/YEARS
+
+
+P88 = srfac %>%
+  filter(ProjID == "P88") %>%
+  filter(Year > 1994) 
+
+B90_wsAnnual = B90 %>%
+  group_by(StationCode, SpCode, Month) %>%
+  mutate(Means = mean(CPUE, na.rm=TRUE),
+         SDs = sd(CPUE, na.rm=TRUE),
+         Zs = (CPUE-Means)/ifelse(SDs>0,SDs, 0.00000001)) %>%
+  ungroup()%>%
+  group_by(StationCode, SpCode, Month, Year) %>%
+  mutate(CPUE = mean(CPUE, na.rm = TRUE),
+         Mean = mean(CPUE, na.rm = TRUE),
+         SDs_lt = sd(CPUE), na.rm = TRUE,
+         Zs_lt = (CPUE-Means)/ifelse(SDs>0,SDs, 0.00000001)) %>%
+  ungroup() %>% 
+  mutate(StartTime = as.Date(StartTime, format="%Y-%m-%d"))
+B90_wsAnnual$Month <- factor(B90_wsAnnual$Month,levels = c("7", "8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6"))
+
+B90_wsAnnual_mean<-B90_wsAnnual %>% group_by(Month, SpCode) %>% 
+  summarise_all(mean)
+```
+
+```{r Figure 1 (B90 White Shrimp), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Monthly white shrimp CPUE (mean ± standard error) from large trawl surveys. Samples from March, April, August an December are collected from statewide surveys (see Fig. 12), while samples from other months are collected from the Charleston Harbor watershed"}
+
+B90_2019wsAbun <- ggplot(aes(factor(Month), CPUE), data = subset(B90_wsAnnual, SpCode == "D005" & StartTime > as.Date("2018-06-30")))+
+  ggtitle("Monthly white shrimp abundance")+
+  geom_errorbar(aes(factor(Month), Means,ymax=..y.., ymin=..y..), data = subset(B90_wsAnnual_mean, SpCode == "D005" & StartTime < as.Date("2018-06-30")), colour="grey80", yintercept="mean", width=0.6, size=3)+
+  stat_summary(fun.data = "mean_se", size = 1) +
+  labs(y=expression(Shrimp~tow^{-1}), x="") +
+  theme(axis.text.x = element_text(angle = -45, hjust=0.2))+
+  scale_x_discrete(labels=c("7" = "July2018", "8"= "Aug2018", "9" = "Sep2018", "10" = "Oct2018", "11"="Nov2018", "12"="Dec2018", "1"="Jan2019", "2"="Feb2019", "3"="Mar2019", "4"="Apr2019", "5"="May2019", "6"="Jun2019"))+
+  theme(plot.caption = element_text(hjust = 0, size=12))+
+  annotate("point", x = 8.05, y = 1400,  colour = "black", size = 5)+
+  annotate("text", x = 10.1, y = 1400, label = "2018-2019 Mean CPUE")+
+  annotate("segment", x = 7.8, xend=8.3, y = 1250,yend = 1250, colour="grey80", size=4)+
+  annotate("text", x = 10.1, y = 1250, label = "Long-term mean CPUE")+
+  annotate("rect", xmin = 7.7, xmax = 11.9, ymin = 1150, ymax = 1500,fill=NA, colour="black")+
+#labs(caption = "Figure 1. Monthly white shrimp CPUE (mean ± standard error) from large trawl 
+#surveys. Samples from March, April, August an December are collected from 
+#statewide surveys (see Fig. 12), while samples from other months are collected from 
+#the Charleston Harbor watershed")+
+    coord_cartesian(ylim=c(0, 1800))+
+  theme(plot.title = element_text(margin = margin(t = 10, b = -20)))+
+  NULL
+ 
+
+B90_2019wsAbun
+  
+```
+
+
+```{r Figure 2a (B90 White Shrimp), echo=FALSE, message=FALSE, warning=FALSE,dpi=600}
+
+B90_wsAbun <- ggplot(aes(Year, CPUE), data = subset(B90, SpCode == "D005" & Month %in% c(9:12) & Year < 2019)) +
+  ggtitle("Fall White Shrimp") +
+  stat_summary(fun.data = "mean_se", size = .7) +
+  geom_smooth(method = 'loess', se=FALSE, color="gray20") +
+  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
+  labs(y=expression(Shrimp~tow^{-1}), x="") +
+  scale_x_continuous(limits=c(2005, 2019),
+                     breaks = c(2005, 2007, 2009, 2011, 2013, 2015, 
+                                2017, 2019))  + coord_cartesian(ylim=c(0, 1850))+
+  theme(plot.title = element_text(margin = margin(t = 10, b = -20)))+
+  #labs(caption = "Figure 2. Fall (August-December) white shrimp CPUE (mean ± standard error) during statewide harbor trawls")+ theme(plot.caption = element_text(hjust = 0, size=12))
+ NULL
+
+#B90_wsAbun
+```
+
+```{r Figure 2b (B90 Spring White Shrimp), echo=FALSE, message=FALSE, warning=FALSE,dpi=600}
+
+
+B90_wsSpringAbun <- ggplot(aes(Year, CPUE), data = subset(B90, SpCode == "D005" & Month %in% c(3:4))) +
+  ggtitle("Spring White Shrimp") +
+  stat_summary(fun.data = "mean_se", size = .7) +
+  geom_smooth(method = 'loess', se=FALSE, color="gray20") +
+  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
+  labs(y=expression(Shrimp~tow^{-1}), x="") +
+  scale_x_continuous(limits=c(2005, 2020),
+                     breaks = c(2005, 2007, 2009, 2011, 2013, 2015, 
+                                2017, 2019))+ coord_cartesian(ylim=c(0, 700))+
+  theme(plot.title = element_text(margin = margin(t = 10, b = -20)))+
+#  labs(caption = "Figure 3. Spring (March-April) white shrimp CPUE (mean ± standard error) during statewide harbor trawls")+ theme(plot.caption = element_text(hjust = 0, size=12))
+NULL 
+
+#B90_wsSpringAbun
+
+```
+
+\pagebreak
+
+**Seasonal trends in white shrimp abundance**  
+White shrimp abundance in fall (August to December) 2019 was below the long-term mean (2005-2018; Figure 2). However, white shrimp abundance in spring (March and April) 2019 was well above the long-term mean (2005-2018; Figure 2), suggesting that adequate numbers of shrimp successfully overwintered to form a spawning population. Although the catch of white shrimp in the Charleston area creek trawl survey from May to July 2019 was below the long-term mean, the presence of juvenile white shrimp in the samples demonstrates successful spawning activity and recruitment of shrimp throughout the spring and summer of 2019 (Figure 2).  
+  
+```{r Figure 2c (T38 Spring White Shrimp), echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.height=7, fig.width=5,dpi=600, fig.cap="White shrimp CPUE (mean ± standard error) from fall (top), spring (middle), and summer (bottom) surveys. Fall and spring samples are from statewide large trawls, while summer samples are from creek trawls in the Charleston Harbor watershed. Dashed lines represent long-term means and solid lines represent smoothed trends."}
+
+
+T38_wsSpringAbun <- ggplot(aes(Year, CPUE), data = subset(T38, SpCode == "D005" & Month %in% c(5:8))) +
+  ggtitle("Summer (Juvenile) White Shrimp") +
+  stat_summary(fun.data = "mean_se", size = .7) +
+  geom_smooth(method = 'loess', se=FALSE, color="gray20") +
+  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
+  labs(y=expression(Shrimp~tow^{-1}), x="") +
+  scale_x_continuous(limits=c(1995, 2020))+
+  coord_cartesian(ylim=c(0, 10000))+
+  theme(plot.title = element_text(margin = margin(t = 10, b = -20)))+
+  #labs(caption = "Figure 4. Juvenile (May-August) white shrimp CPUE (mean ± standard error) from tidal creek trawls")+
+  #theme(plot.caption = element_text(hjust = 0, size=12))+
+  NULL
+ 
+#T38_wsSpringAbun
+
+plot_grid(B90_wsAbun,B90_wsSpringAbun,T38_wsSpringAbun,
+          #labels = "AUTO", 
+          align='hv', 
+          ncol=1)+ 
+#            labs(caption = "Figure 2. White shrimp CPUE (mean ± standard error) from fall (top), #spring 
+#(middle), and summer (bottom) surveys. Fall and spring samples were 
+#collected statewide from large trawls, while summer samples were collected 
+#from creek trawls in the Charleston Harbor watershed.")+
+            theme(plot.caption = element_text(hjust = 0, size=10))
+```
+
+\pagebreak  
+
+**Brown Shrimp (*Farfantepenaeus aztecus*)** Although the recreational harvest of brown shrimp is minor compared to that of white shrimp, brown shrimp are still an important component of the recreational fishery, as they are typically available for use as bait and for food during the summer. Brown shrimp catches in both creek trawl (Figure 3) and large trawl (Figure 4) surveys in 2019 were substantially above the long-term means.
+
+```{r Figure 3 (T38 Spring Brown Shrimp), echo=FALSE, message=FALSE, warning=FALSE, out.width = '80%',dpi=600, fig.cap = "Summer (May-July) brown shrimp CPUE (mean ± standard error) from creek trawl survey. Dashed lines represent long-term means and solid lines represent smoothed trends."}
+T38_bsSpring = T38 %>%
+  group_by(StationCode, SpCode, Month) %>%
+  mutate(Means = mean(CPUE, na.rm=TRUE),
+         SDs = sd(CPUE, na.rm=TRUE),
+         Zs = (CPUE-Means)/ifelse(SDs>0,SDs, 0.00000001)) %>%
+  ungroup()
+
+T38_bsSpringAbun <- ggplot(aes(Year, CPUE), data = subset(T38_bsSpring, 
+                                                          SpCode == "D003" & Month %in% 5:7)) +
+  ggtitle("Summer Brown Shrimp from Creek Trawls") +
+  stat_summary(fun.data = "mean_se", size = 1) +
+  geom_smooth(method = 'loess', se=FALSE, color="gray20") +
+  geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
+  labs(y=expression(Shrimp~tow^{-1})) +
+  scale_x_continuous(name = "Year", limits=c(1995, 2020))+
+  theme(plot.title = element_text(margin = margin(t = 10, b = -20)))+
+  coord_cartesian(ylim=c(0, 1200))+
+#  labs(caption = "Figure 3. Summer (May-July) brown shrimp CPUE (mean ± 
+#standard error) from creek trawl survey")+
+  theme(plot.caption = element_text(hjust = 0, size=12))
+ 
+T38_bsSpringAbun
+```
+
+
+```{r Figure 4 (B90 Spring White Shrimp), echo=FALSE, message=FALSE, warning=FALSE, out.width = '80%',dpi=600, fig.cap = "Summer (May-July) brown shrimp CPUE (mean ± standard error) from large trawl survey. Dashed lines represent long-term means and solid lines represent smoothed trends."}
+B90_bsSpring = B90 %>%
+  group_by(StationCode, SpCode, Month) %>%
+  mutate(Means = mean(CPUE, na.rm=TRUE),
+        SDs = sd(CPUE, na.rm=TRUE),
+        Zs = (CPUE-Means)/ifelse(SDs>0,SDs, 0.00000001)) %>%
+  ungroup()
+
+B90_wsSpringAbun <- ggplot(aes(Year, CPUE), data = subset(B90_bsSpring, 
+                                                          SpCode == "D003" & Month %in% 5:7)) +
+  ggtitle("Summer Brown Shrimp from Large Trawls") +
+  stat_summary(fun.data = "mean_se", size = 1) +
+  geom_smooth(method = 'loess', se=FALSE, color="gray20") +
+  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
+  labs(y=expression(Shrimp~tow^{-1})) +
+  scale_x_continuous(name = "Year", limits=c(2005, 2020),
+                     breaks = c(2005, 2007, 2009, 2011, 2013, 2015, 2017, 2019))+
+  coord_cartesian(ylim=c(0, 900))+
+  theme(plot.title = element_text(margin = margin(t = 10, b = -20)))+
+#  labs(caption = "Figure 4. Summer (May-July) brown shrimp CPUE (mean ± 
+#standard error) from large trawl survey")+
+  theme(plot.caption = element_text(hjust = 0, size=12))
+ 
+
+B90_wsSpringAbun
+
+```
+
+  
+\pagebreak  
+
+**Program Objective 2 (Monitor blue crab (*Callinectes sapidus*) population)**    
+During large trawl survey sampling efforts from July 2018 to June 2019, monthly blue crab abundance was generally near the long-term mean (Figure 5). When separated by size, both legal and sublegal blue crabs were generally above the long-term mean with legal-sized crabs, in particular, showing increasing abundance over the past few years (Figure 6).
+
+```{r Figure 5, echo=FALSE, message=FALSE, warning=FALSE, out.width = '90%',dpi=600, fig.cap = "Monthly blue crab CPUE (mean ± standard error) from large trawl survey."}
+
+B90_bcAnnual_mean<-B90_wsAnnual %>% group_by(Month, SpCode) %>% 
+  summarise_all(mean)
+
+B90_2019bcAbun <- ggplot(aes(factor(Month), CPUE), data = subset(B90_wsAnnual, SpCode == "D130" & StartTime > as.Date("2016-06-30")))+
+  ggtitle("Monthly blue crab abundance")+
+  theme(plot.title = element_text(margin = margin(t = 10, b = -20)))+
+  geom_errorbar(aes(factor(Month), Means,ymax=..y.., ymin=..y..), data = subset(B90_wsAnnual_mean, SpCode == "D130" ), colour="grey80", yintercept="mean", width=0.6, size=3)+
+  stat_summary(fun.data = "mean_se", size = 1) +
+  labs(y=expression(Blue~crab~tow^{-1})) +
+  scale_x_discrete(labels=c("7" = "July2018", "8"= "Aug2018", "9" = "Sep2018", "10" = "Oct2018", "11"="Nov2018", "12"="Dec2018", "1"="Jan2019", "2"="Feb2019", "3"="Mar2019", "4"="Apr2019", "5"="May2019", "6"="Jun2019"))+
+  xlab("")+
+  theme(axis.text.x = element_text(angle = -45, hjust=0.2))+
+  annotate("point", x = 5.5, y = 25,  colour = "black", size = 5)+
+  annotate("text", x = 8.1, y = 25, label = "2018-2019 Mean CPUE")+
+  annotate("segment", x = 5.3, xend=5.8, y = 21,yend = 21, colour="grey80", size=4)+
+  annotate("text", x = 8.1, y = 21, label = "Long-term mean CPUE")+
+  annotate("rect", xmin = 5, xmax = 10.7, ymin = 19, ymax = 27,fill=NA, colour="black")+
+#   labs(caption = "Figure 5. Monthly blue crab CPUE (mean ± standard error) from large trawl survey.")+
+  coord_cartesian(ylim=c(0, 30))+
+   NULL
+ 
+B90_2019bcAbun
+#plot_grid(B90_2019ws1Abun,B90_2019bcAbun, ncol=1, align='hv')
+  
+```
+
+```{r Figure 6, echo=FALSE, message=FALSE, warning=FALSE, out.width = '90%',dpi=600, fig.cap="Annual blue crab CPUE (mean ± standard error) for legal (>126mm) and sublegal (<127mm) sized surveyed during statewide harbor trawls. Solid line represents smoothed trend."}
+
+B90_bcSpring = B90 %>%
+  group_by(StationCode, SpCode, Month) %>%
+  mutate(Means = mean(CPUE, na.rm=TRUE),
+        SDs = sd(CPUE, na.rm=TRUE),
+        Zs = (CPUE-Means)/ifelse(SDs>0,SDs, 0.00000001)) %>%
+  ungroup()
+
+B90_CrabAbun <- ggplot(aes(Year, CPUE), data = subset(B90_bcSpring, SpCode == "D130" & 
+                                                            !Lifestage == "Total")) +
+  ggtitle("Blue Crab Abundance in Large Trawls") +
+  facet_wrap(~Lifestage) +
+  stat_summary(fun.data = "mean_se", size = 1) +
+  geom_smooth(method = 'loess', se=FALSE, color="gray20") +
+  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
+  labs(y=expression(Blue~crab~tow^{-1})) +
+  scale_x_continuous(name = "Year", limits=c(2005, 2020))+
+#  labs(caption = "Figure 6. Annual blue crab CPUE (mean ± standard error) for legal 
+#(>127mm) and sublegal (<127mm) sized surveyed during 
+#statewide harbor trawls ")+
+  theme(plot.caption = element_text(hjust = 0, size=12))
+
+B90_CrabAbun
+```
+
+\pagebreak  
+
+Results from the creek trawl survey show that from May to July 2019, blue crabs of all sizes were collected in numbers below or near the long-term mean (Figure 8). The number of juvenile blue crab (i.e., those with a carapace width of less than 61mm), collected from May to June 2019 was similar to the long-term average (Figure 9).  
+    
+```{r Figure 7 (T38 Spring Blue Crab), echo=FALSE, message=FALSE, warning=FALSE, out.width = '80%',dpi=600, fig.cap = "Blue crab CPUE (mean ± standard error) from tidal creek trawls in the Charleston Harbor watershed (May-Aug). Dashed lines represent long-term means and solid lines represent smoothed trends."}
+T38_bcSpring = T38 %>%
+  group_by(StationCode, SpCode, Lifestage, Month) %>%
+  mutate(Means = mean(CPUE, na.rm=TRUE),
+         SDs = sd(CPUE, na.rm=TRUE),
+         Zs = (CPUE-Means)/ifelse(SDs>0,SDs, 0.00000001)) %>%
+  ungroup()
+
+T38_bcSpringAbun <- ggplot(aes(Year, CPUE), data = subset(T38_bcSpring, SpCode == "D130" & Month %in% 5:7)) +
+  ggtitle("All Blue Crab from Creek Trawls") +
+  stat_summary(fun.data = "mean_se", size = 1) +
+  geom_smooth(method = 'loess', se=FALSE, color="gray20") +
+  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
+  labs(y=expression(Blue~crab~tow^{-1})) +
+  scale_x_continuous(name = "Year", limits=c(1995, 2020))+
+  theme(plot.title = element_text(margin = margin(t = 10, b = -20)))+
+  coord_cartesian(ylim=c(0, 14))+
+#  labs(caption = "Figure 7. Blue crab CPUE (mean ± standard error) from tidal creek 
+#trawls in the Charleston Harbor watershed (May-Aug)")+
+  theme(plot.caption = element_text(hjust = 0, size=12))
+ 
+T38_bcSpringAbun
+```
+
+  
+    
+```{r Figure 8 (T38 Spring Juvenile Blue Crab), echo=FALSE, message=FALSE, warning=FALSE, out.width='80%',dpi=600, fig.cap = "Juvenile blue crab CPUE (<61mm; mean ± standard error) from creek trawls in the Charleston Harbor watershed (May-Aug).Dashed lines represent long-term means and solid lines represent smoothed trends."}
+
+T38_bcSpringJuvAbun <- ggplot(aes(Year, CPUE), data = subset(T38,SpCode == "D130" & Lifestage == "Juvenile" & Month %in% 5:7)) +
+  ggtitle("Juvenile Blue Crab from Creek Trawls") +
+  stat_summary(fun.data = "mean_se", size = 1) +
+  geom_smooth(method = 'loess', se=FALSE, color="gray20") +
+  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
+  labs(y=expression(Blue~crab~tow^{-1})) +
+  scale_x_continuous(name = "Year", limits=c(1995, 2020))+
+   theme(plot.title = element_text(margin = margin(t = 10, b = -20)))+
+  coord_cartesian(ylim=c(0, 7.5))+
+#  labs(caption = "Figure 8. Juvenile blue crab CPUE (<61mm; mean ± standard error) 
+#from creek trawls in the Charleston Harbor watershed (May-Aug)")+
+  theme(plot.caption = element_text(hjust = 0, size=12))
+ 
+T38_bcSpringJuvAbun
+```
+
+\pagebreak  
+
+
+**Fall 2018 crab pot survey**: The total catch in the fall 2018 crab pot survey was above the long-term mean and comparable to catch rates in 2015 and 2016 (Figure 9).  Catch rates of blue crabs in commercial style pots and of legal sized blue crabs in large trawls indicates that crabs were available for recreational harvest throughout the year.
+
+
+```{r Figure 9 (P88 Fall Blue Crab), echo=FALSE, message=FALSE, warning=FALSE,dpi=600,fig.cap="Fall blue crab CPUE (mean ± standard error) from statewide pot survey.Dashed lines represent long-term means and solid lines represent smoothed trends."}
+
+P88_bcFall = P88 %>%
+  group_by(StationCode, Lifestage, Month) %>%
+  mutate(Means = mean(CPUE, na.rm=TRUE),
+         SDs = sd(CPUE, na.rm=TRUE),
+         Zs = (CPUE-Means)/ifelse(SDs>0,SDs, 0.00000001)) %>%
+  ungroup()
+###NRK CHECK THE CONFIDENCE INTERVALS HERE
+
+P88_bcFallAbun <- ggplot(aes(Year, CPUE), data = subset(P88_bcFall, 
+                                                          SpCode == "D130" & 
+                                                          Lifestage == "Total" &
+                                                          Month %in% 8:12)) +
+  ggtitle("Fall Blue Crab in Pot Survey") +
+  stat_summary(fun.data = "mean_se", size = 1) +
+  geom_smooth(method = 'loess', se=FALSE, color="gray20") +
+  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
+  labs(y=expression(Blue~crab~pot^{-1})) +
+  scale_x_continuous(name = "Year", limits=c(1995, 2020))+
+   theme(plot.title = element_text(margin = margin(t = 10, b = -20)))+
+  coord_cartesian(ylim=c(0, 8.5))+
+#  labs(caption = "Figure 9. Fall blue crab CPUE (mean ± standard error) from 
+#statewide pot survey")+
+  theme(plot.caption = element_text(hjust = 0, size=12))
+ 
+P88_bcFallAbun
+```
+
+
+```{r pressure, echo=FALSE, out.width = '100%', fig.cap="Sampling sations for statewide large trawl survey", dpi=600}
+
+
+knitr::include_graphics("//mrdnas/Crustacean Management/ALL SHRIMP FILES/Data/20FT Trawl Survey/MonthlyReport/Trawl station jpg files/CRMSGrayLabelsAll2.jpg")
+```
+
