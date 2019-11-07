@@ -51,7 +51,7 @@ B90T38 = crabdata %>% #Formerly crab1
          "Immature Male" = ImmatureMaleCPUE,
          "Mature Male" = MatureMaleCPUE,
          Sublegal = SublegalCPUE,
-         Legal = SublegalCPUE) %>%
+         Legal = LegalCPUE) %>%
   gather("Lifestage", "CPUE", 5:14) %>%
   mutate(Year = year(StartTime)) %>%
   mutate(Month = month(StartTime)) %>%
@@ -279,3 +279,102 @@ LandingsTimeSeries
 
 ```
 
+```{r Figure 4 (Harbor Trawl Size Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Harbor Trawl blue crab abundance by size (mean ± standard error) for all sites within the Charleston Harbor watershed.", fig.width=10,fig.height=11}
+B90Crab = crab %>%
+  filter(ProjID == "Harbor Trawl") %>%
+  filter(Lifestage == c("Juvenile", "Subadult", "Adult", "Immature Female",
+                        "Immature Male", "Mature Female", "Mature Male",
+                        "Sublegal", "Legal"))
+
+B90Crab$Lifestage <- factor(B90Crab$Lifestage, levels = 
+                              c("Juvenile", "Subadult", "Adult", 
+                                "Immature Female", "Immature Male", 
+                                "Mature Female", "Mature Male",
+                                "Sublegal", "Legal"))
+
+
+B90Juv = ggplot(aes(Year, CPUE), data = subset(B90Crab,
+                                                     Lifestage == "Juvenile")) +
+  ggtitle("Juvenile CPUE (<61mm Carapace Width)") + 
+  stat_summary(fun.data = "mean_se", size = .7) +
+  geom_smooth(method = 'loess', se=FALSE, color="black") +
+  geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
+  labs(y=expression(Blue~crab~per~tow^{-1})) +
+  expand_limits(x=2020)
+
+B90Subadult = ggplot(aes(Year, CPUE), data = subset(B90Crab,
+                                                     Lifestage == "Subadult")) +
+  ggtitle("Subadult CPUE (>61mm - <127mm Carapace Width)") + 
+  stat_summary(fun.data = "mean_se", size = .7) +
+  geom_smooth(method = 'loess', se=FALSE, color="black") +
+  geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
+  labs(y=expression(Blue~crab~per~tow^{-1})) +
+  expand_limits(x=2020)
+
+
+B90Adult = ggplot(aes(Year, log(CPUE)), data = subset(B90Crab,
+                                                     Lifestage == "Adult")) +
+  ggtitle("Adult CPUE (>126mm Carapace Width)") + 
+  stat_summary(fun.data = "mean_se", size = .7) +
+  geom_smooth(method = 'loess', se=FALSE, color="black") +
+  geom_hline(aes(yintercept=log(mean(Means))), linetype="dashed") +
+  labs(y=expression((log)~Blue~crab~per~tow^{-1})) +
+  expand_limits(x=2020)
+
+B90SizeTimeSeries <- plot_grid(B90Juv, B90Subadult, B90Adult, ncol = 1, align = 'hv')
+B90SizeTimeSeries
+```
+```{r Figure 4 (Harbor Trawl sex MAturity Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Harbor Trawl blue crab abundance by sex and maturity (mean ± standard error) for all sites within the Charleston Harbor watershed.", fig.width=10,fig.height=11}
+B90ClassCrab = crab %>%
+  filter(ProjID == "Harbor Trawl") %>%
+  filter(Lifestage == c("Juvenile", "Subadult", "Adult", "Immature Female",
+                        "Immature Male", "Mature Female", "Mature Male",
+                        "Sublegal", "Legal"))
+
+B90Crab$Lifestage <- factor(B90ClassCrab$Lifestage, levels = 
+                              c("Juvenile", "Subadult", "Adult", 
+                                "Immature Female", "Immature Male", 
+                                "Mature Female", "Mature Male",
+                                "Sublegal", "Legal"))
+
+
+B90ImmatureFemale = ggplot(aes(Year, CPUE), data = subset(B90ClassCrab,
+                                                     Lifestage == "Immature Female")) +
+  ggtitle("Immature Female") + 
+  stat_summary(fun.data = "mean_se", size = .7) +
+  geom_smooth(method = 'loess', se=FALSE, color="black") +
+  geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
+  labs(y=expression(Blue~crab~per~tow^{-1})) +
+  expand_limits(x=2020)
+
+B90MatureFemale = ggplot(aes(Year, CPUE), data = subset(B90ClassCrab,
+                                                     Lifestage == "Mature Female")) +
+  ggtitle("Mature Female") + 
+  stat_summary(fun.data = "mean_se", size = .7) +
+  geom_smooth(method = 'loess', se=FALSE, color="black") +
+  geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
+  labs(y=expression(Blue~crab~per~tow^{-1})) +
+  expand_limits(x=2020)
+
+
+B90ImmatureMale = ggplot(aes(Year, CPUE), data = subset(B90ClassCrab,
+                                                     Lifestage == "Immature Male")) +
+  ggtitle("Immature Male CPUE") + 
+  stat_summary(fun.data = "mean_se", size = .7) +
+  geom_smooth(method = 'loess', se=FALSE, color="black") +
+  geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
+  labs(y=expression(Blue~crab~per~tow^{-1})) +
+  expand_limits(x=2020)
+
+B90MatureMale = ggplot(aes(Year, log(CPUE)), data = subset(B90ClassCrab,
+                                                     Lifestage == "Mature Male")) +
+  ggtitle("Mature Male CPUE") + 
+  stat_summary(fun.data = "mean_se", size = .7) +
+  geom_smooth(method = 'loess', se=FALSE, color="black") +
+  geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
+  labs(y=expression(Blue~crab~per~tow^{-1})) +
+  expand_limits(x=2020)
+
+B90ClassTimeSeries <- plot_grid(B90ImmatureFemale, B90ImmatureMale, B90MatureFemale, B90MatureMale, ncol = 1, align = 'hv')
+B90ClassTimeSeries
+```
