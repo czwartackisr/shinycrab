@@ -3,6 +3,8 @@ title: "Chapter 1"
 output:
   pdf_document: default
   word_document: default
+editor_options: 
+  chunk_output_type: inline
 ---
 
 ```{r setup, include=FALSE, echo=FALSE}
@@ -128,6 +130,8 @@ crab3 = full_join(crab1, depend,
          SDs = sd(CPUE, na.rm=TRUE),
          Zs = (CPUE-Means)/ifelse(SDs>0,SDs, 0.00000001)) %>%
   ungroup() 
+
+#### IS.FINITE NEEDS TO GO HERE FOR mATURE fEMALE STAT_SUMMS AND GEOM_HLINES
 
 crab = crab3 %>%
   mutate(ProjID = recode(ProjID, 'B90' = "Harbor Trawl",
@@ -279,7 +283,7 @@ LandingsTimeSeries
 
 ```
 
-```{r Figure 4 (Harbor Trawl Size Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Harbor Trawl blue crab abundance by size (mean ± standard error) for all sites within the Charleston Harbor watershed.", fig.width=10,fig.height=11}
+```{r Figure 4 (Harbor Trawl Size Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Harbor Trawl blue crab abundance by size (mean ± standard error) for all sites within the Charleston Harbor watershed.  Adult mean annual CPUEs were logarithmically transformed to help aid in visual scaling", fig.width=10,fig.height=11}
 B90Crab = crab %>%
   filter(ProjID == "Harbor Trawl") %>%
   filter(Lifestage == c("Juvenile", "Subadult", "Adult", "Immature Female",
@@ -324,21 +328,21 @@ B90Adult = ggplot(aes(Year, log(CPUE)), data = subset(B90Crab,
 B90SizeTimeSeries <- plot_grid(B90Juv, B90Subadult, B90Adult, ncol = 1, align = 'hv')
 B90SizeTimeSeries
 ```
-```{r Figure 4 (Harbor Trawl sex MAturity Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Harbor Trawl blue crab abundance by sex and maturity (mean ± standard error) for all sites within the Charleston Harbor watershed.", fig.width=10,fig.height=11}
+```{r Figure 4 (Harbor Trawl sex Maturity Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Harbor Trawl blue crab abundance by sex and maturity (mean ± standard error) for all sites within the Charleston Harbor watershed.", fig.width=10,fig.height=11}
 B90ClassCrab = crab %>%
   filter(ProjID == "Harbor Trawl") %>%
   filter(Lifestage == c("Juvenile", "Subadult", "Adult", "Immature Female",
                         "Immature Male", "Mature Female", "Mature Male",
                         "Sublegal", "Legal"))
 
-B90Crab$Lifestage <- factor(B90ClassCrab$Lifestage, levels = 
+B90ClassCrab$Lifestage <- factor(B90ClassCrab$Lifestage, levels = 
                               c("Juvenile", "Subadult", "Adult", 
                                 "Immature Female", "Immature Male", 
                                 "Mature Female", "Mature Male",
                                 "Sublegal", "Legal"))
 
 
-B90ImmatureFemale = ggplot(aes(Year, CPUE), data = subset(B90ClassCrab,
+B90ImmatureFemale = ggplot(aes(Year, CPUE), data = subset(B90Crab,
                                                      Lifestage == "Immature Female")) +
   ggtitle("Immature Female") + 
   stat_summary(fun.data = "mean_se", size = .7) +
@@ -347,7 +351,7 @@ B90ImmatureFemale = ggplot(aes(Year, CPUE), data = subset(B90ClassCrab,
   labs(y=expression(Blue~crab~per~tow^{-1})) +
   expand_limits(x=2020)
 
-B90MatureFemale = ggplot(aes(Year, CPUE), data = subset(B90ClassCrab,
+B90MatureFemale = ggplot(aes(Year, CPUE), data = subset(B90Crab,
                                                      Lifestage == "Mature Female")) +
   ggtitle("Mature Female") + 
   stat_summary(fun.data = "mean_se", size = .7) +
@@ -357,7 +361,7 @@ B90MatureFemale = ggplot(aes(Year, CPUE), data = subset(B90ClassCrab,
   expand_limits(x=2020)
 
 
-B90ImmatureMale = ggplot(aes(Year, CPUE), data = subset(B90ClassCrab,
+B90ImmatureMale = ggplot(aes(Year, CPUE), data = subset(B90Crab,
                                                      Lifestage == "Immature Male")) +
   ggtitle("Immature Male CPUE") + 
   stat_summary(fun.data = "mean_se", size = .7) +
@@ -366,7 +370,7 @@ B90ImmatureMale = ggplot(aes(Year, CPUE), data = subset(B90ClassCrab,
   labs(y=expression(Blue~crab~per~tow^{-1})) +
   expand_limits(x=2020)
 
-B90MatureMale = ggplot(aes(Year, log(CPUE)), data = subset(B90ClassCrab,
+B90MatureMale = ggplot(aes(Year, CPUE), data = subset(B90Crab,
                                                      Lifestage == "Mature Male")) +
   ggtitle("Mature Male CPUE") + 
   stat_summary(fun.data = "mean_se", size = .7) +
@@ -378,3 +382,50 @@ B90MatureMale = ggplot(aes(Year, log(CPUE)), data = subset(B90ClassCrab,
 B90ClassTimeSeries <- plot_grid(B90ImmatureFemale, B90ImmatureMale, B90MatureFemale, B90MatureMale, ncol = 1, align = 'hv')
 B90ClassTimeSeries
 ```
+
+```{r}
+lm(formula = Year ~ CPUE, data = subset(TotalCrab, ProjID == 
+    "Harbor Trawl"))
+lm(formula = Year ~ CPUE, data = subset(TotalCrab, ProjID == 
+    "Creek Trawl"))
+lm(formula = Year ~ CPUE, data = subset(TotalCrab, ProjID == 
+    "Ashley Potting"))
+lm(formula = Year ~ CPUE, data = subset(TotalCrab, ProjID == 
+    "SCECAP Harbor Trawl"))
+lm(formula = Year ~ CPUE, data = subset(TotalCrab, ProjID == 
+    "SCECAP Creek Trawl"))
+lm(formula = Year ~ CPUE, data = subset(TotalCrab, ProjID == 
+    "Trammel Net"))
+
+
+
+lm(formula = Year ~ CPUE, data = subset(LandingsCrab, ProjID == 
+    "Landings"))
+lm(formula = Year ~ CPUE, data = subset(LandingsCrab, ProjID == 
+    "LandingsCPUE"))
+
+
+lm(formula = Year ~ CPUE, data = subset(B90Crab, Lifestage == "Juvenile"))
+lm(formula = Year ~ CPUE, data = subset(B90Crab, Lifestage == "Subadult"))
+lm(formula = Year ~ CPUE, data = subset(B90Crab, Lifestage == "Adult"))
+lm(formula = Year ~ CPUE, data = subset(B90ClassCrab, Lifestage == "Immature Female"))
+lm(formula = Year ~ CPUE, data = subset(B90ClassCrab, Lifestage == "Mature Female"))
+lm(formula = Year ~ CPUE, data = subset(B90ClassCrab, Lifestage == "Immature Male"))
+lm(formula = Year ~ CPUE, data = subset(B90ClassCrab, Lifestage == "Mature Male"))
+lm(formula = Year ~ CPUE, data = subset(B90ClassCrab, Lifestage == "Sublegal"))
+lm(formula = Year ~ CPUE, data = subset(B90ClassCrab, Lifestage == "Legal"))
+
+
+lm(formula = Year ~ CPUE, data = subset(T38Crab, Lifestage == "Juvenile"))
+lm(formula = Year ~ CPUE, data = subset(T38Crab, Lifestage == "Subadult"))
+lm(formula = Year ~ CPUE, data = subset(T38Crab, Lifestage == "Adult"))
+lm(formula = Year ~ CPUE, data = subset(T38ClassCrab, Lifestage == "Immature Female"))
+lm(formula = Year ~ CPUE, data = subset(T38ClassCrab, Lifestage == "Mature Female"))
+lm(formula = Year ~ CPUE, data = subset(T38ClassCrab, Lifestage == "Immature Male"))
+lm(formula = Year ~ CPUE, data = subset(T38ClassCrab, Lifestage == "Mature Male"))
+lm(formula = Year ~ CPUE, data = subset(T38ClassCrab, Lifestage == "Sublegal"))
+lm(formula = Year ~ CPUE, data = subset(T38ClassCrab, Lifestage == "Legal"))
+
+
+```
+
