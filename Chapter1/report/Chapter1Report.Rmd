@@ -1,11 +1,16 @@
 ---
-title: "Chapter 1"
+title: "Chapter 1 Time Series  \nAll Abundance Surveys and Landings"
 output:
   pdf_document: default
   word_document: default
 editor_options: 
   chunk_output_type: inline
 ---
+**Discussion**
+I need help with the Inf, NaN and NA issue still.  Values are not showing up in some of the plots, expecially in SCECAP the Potting Survey.
+
+I think that may be why my regressions used in this chapter's latest analyses show no relationships, when previous analyses show plenty of significance and correlation.  The code for making the plots pretty seems good, but I'm not confident in my reults.  
+
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(ggplot2)
@@ -192,7 +197,7 @@ LandingsTimeSeries
 
 
 
-```{r TotalCrab Wrangling, include=FALSE, warning=FALSE, message=FALSE}
+```{r B90 Size Wrangle, include=FALSE, warning=FALSE, message=FALSE}
 TotalCrab = crab %>%
   filter(Lifestage == "Total")
 TotalCrab$ProjID <- factor(TotalCrab$ProjID, levels = c("Harbor Trawl",
