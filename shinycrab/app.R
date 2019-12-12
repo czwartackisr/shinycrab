@@ -5,7 +5,7 @@ library(DataCombine)
 library(PerformanceAnalytics)
 library(knitr)
 library(rmarkdown)
-crab <- read.csv("MyData.csv", stringsAsFactors = FALSE)
+crab <- read.csv("MyData2.csv", stringsAsFactors = FALSE)
 
 ui <- fluidPage(
     titlePanel("Crab Bivariate Modeling (Czwartacki)"),

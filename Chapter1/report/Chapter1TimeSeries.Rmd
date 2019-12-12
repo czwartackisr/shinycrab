@@ -37,12 +37,13 @@ theme_update(plot.title = element_text(hjust = 0.5))
 ```
 
 ```{r Data Read-In, include=FALSE, warning=FALSE, message=FALSE}
-crabdata <- read.csv("ClassSizeAbunMANUAL.csv", stringsAsFactors = FALSE) 
-crabdata = distinct(crabdata, Coll, .keep_all = TRUE) %>%
-  mutate(StartTime = as.character(StartTime)) %>%
-  mutate(StartTime = mdy(StartTime))
-#Source = "R.Project$crab - size - classSize - ClassSizeAbunMANUAL2" - file was manually lubridated in Excel
-#This data is cleandata from the crab project with abundance information for both size and class of crab
+#crabdata <- read.csv("ClassSizeAbunMANUAL.csv", stringsAsFactors = FALSE) 
+#crabdata = distinct(crabdata, Coll, .keep_all = TRUE) %>%
+  #mutate(StartTime = as.character(StartTime)) %>%
+  #mutate(StartTime = mdy(StartTime))
+#This is the old <2019-12-12 data.  Keeping around for prosperity
+
+crabdata <- read.csv("ClassSizeAbunDistinct_201912.csv", stringsAsFactors = FALSE)
 
 ```
 
@@ -579,14 +580,14 @@ T38Sublegal = ggplot(aes(Year, CPUE), data = subset(T38Crab,
 T38LegalForm = subset(T38Crab,
                          Lifestage == "Legal")
 formula27 <- lm(T38LegalForm$CPUE ~ T38LegalForm$Year)
-T38Legal = ggplot(aes(Year, log(CPUE)), data = subset(T38Crab,
+T38Legal = ggplot(aes(Year, CPUE), data = subset(T38Crab,
                                                       Lifestage == "Legal")) +
   ggtitle("Legal CPUE (>126mm Carapace Width)") + 
   stat_summary(fun.data = "mean_se", size = .7) +
   stat_poly_eq(aes(label = ..eq.label..), formula = formula27, parse = TRUE) +
   geom_smooth(method = 'loess', se=FALSE, color="black") +
-  geom_hline(aes(yintercept=log(mean(Means))), linetype="dashed") +
-  labs(y=expression((log)~Blue~crab~per~tow^{-1})) +
+  geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
+  labs(y=expression(Blue~crab~per~tow^{-1})) +
   expand_limits(x=2020)
 
 T38LegalTimeSeries <- plot_grid(T38Sublegal, T38Legal, ncol = 1, align = 'hv')
@@ -694,7 +695,7 @@ P88LegalCrab = ggplot(aes(Year, CPUE), data = subset(P88Crab,
 
 P88SizeTimeSeries <- plot_grid(P88SublegalCrab, P88LegalCrab, ncol = 1, align = 'hv')
 P88SizeTimeSeries
-####THESE ARE MISSING DATA DUE TO inf'S TOO!
+
 ```
 
 ```{r Figure 11 (SCECAP Tidal Creek Trawl Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="SCECAP Tidal Creek Trawl (<100m creek width) blue crab abundance for all sites sampled within the Charleston Harbor watershed by size (mean ± standard error).  SCECAP Tidal Creek Trawl survey is a statewide survey that occurs June and July.  Tidal Creeks within the Charleston Harbor watershed were not sampled in 2009, 2011, 2013 or 2014.", fig.width=10,fig.height=11}

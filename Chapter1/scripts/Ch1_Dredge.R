@@ -7,12 +7,12 @@ library(MASS)
 
 # Read in data ------------------------------------------------------------
 
-crab <- read.csv("./Chapter1/data/CH1data.csv", stringsAsFactors = FALSE)
+crab <- read.csv("./Chapter1/data/CH1data2.csv", stringsAsFactors = FALSE)
 #crab is the unprepared for dredge original data
 
 
 #dredgecrab = relevant variables lagged and added to original "crab" data file.  Includes lag vars too
-dredgeCPUE <- read.csv("./Chapter1/data/CH1Dredgedata_CPUE.csv", stringsAsFactors = FALSE)
+dredgeCPUE <- read.csv("./Chapter1/data/CH1Dredgedata_CPUE2.csv", stringsAsFactors = FALSE)
 
 #Dredge must have all variables with the same n.  
 #T06 is the only variable that needs to be separated due to beginning in 2006
@@ -27,16 +27,22 @@ dredgeCPUE_T06 <- filter(dredgeCPUE, Year > 2005)
 #<5 keeps it realistic
 #Landings ~ all B90
 B90crab <- filter(dredgeCPUE, Year > 2003) %>%
-  dplyr::select(1:8, 19)
+  dplyr::select(2:11, 14, 16, 18, 55)
 B90Dredge <- lm(MeanLandingsCPUE ~ ., data = B90crab, na.action = "na.fail")
 subset(dredge(B90Dredge), delta < 5) 
-
+B90lm <- lm(B90crab$MeanLandingsCPUE ~ B90crab$B90_MatureFemale+B90crab$B90_SubadultCPUELAG1)
+summary(B90lm)
 #Landings ~ all T38
 T38crab <- filter(dredgeCPUE, Year > 2003) %>%
-  dplyr::select(1, 9:15, 19)
+  dplyr::select(30:39, 40, 42, 44, 55)
 T38Dredge <- lm(MeanLandingsCPUE ~ ., data = T38crab, na.action = "na.fail")
 subset(dredge(T38Dredge), delta < 5)
 
+dredge_lm <- lm(MeanLandingsCPUE ~ B90_MatureFemaleCPUE+B90_SubadultCPUELAG1, data = dredgeCPUE)
+summary(dredge_lm)
+
+T38lm <- lm(T38crab$MeanLandingsCPUE ~ T38crab$T38_SubadultCPUELAG1)
+summary(T38lm)
 #Landings ~ T06 - no need to dredge with only one var
 T06_lm <- lm(MeanLandingsCPUE ~ T06_CPUE, data = subset(dredgeCPUE, Year>2005), na.action = "na.fail")
 summary(T06_lm)

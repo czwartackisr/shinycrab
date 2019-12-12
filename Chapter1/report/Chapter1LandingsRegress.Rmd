@@ -49,12 +49,14 @@ theme_update(plot.title = element_text(hjust = 0.5))
 
 
 ```{r Data Read-In, include=FALSE, warning=FALSE, message=FALSE}
-crabdata <- read.csv("ClassSizeAbunMANUAL.csv", stringsAsFactors = FALSE) 
-crabdata = distinct(crabdata, Coll, .keep_all = TRUE) %>%
-  mutate(StartTime = as.character(StartTime)) %>%
-  mutate(StartTime = mdy(StartTime))
+#crabdata <- read.csv("ClassSizeAbunMANUAL.csv", stringsAsFactors = FALSE) 
+#crabdata = distinct(crabdata, Coll, .keep_all = TRUE) %>%
+  #mutate(StartTime = as.character(StartTime)) %>%
+  #mutate(StartTime = mdy(StartTime))
 #Source = "R.Project$crab - size - classSize - ClassSizeAbunMANUAL2" - file was manually lubridated in Excel
-#This data is cleandata from the crab project with abundance information for both size and class of crab
+#Keeping for Prosperity
+
+crabdata <- read.csv("ClassSizeAbunDistinct_201912.csv", stringsAsFactors = FALSE)
 
 
 #Source - Eric Hiltz OFM Fisheries Statistics
