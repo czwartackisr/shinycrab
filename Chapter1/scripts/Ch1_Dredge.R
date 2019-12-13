@@ -10,11 +10,8 @@ library(MASS)
 crab <- read.csv("./Chapter1/data/CH1data.csv", stringsAsFactors = FALSE)
 #crab is the unprepared for dredge original data
 
+# B90 ---------------------------------------------------------------------
 
-# Dredge ------------------------------------------------------------------
-
-
-#<5 keeps it realistic
 #Landings ~ all B90
 B90HarborCrab <- filter(crab, Year > 1980) %>%
   dplyr::select(2:16, 52)
@@ -51,7 +48,9 @@ subset(B90CPUEDredge, delta < 4)
 
 
 
-#Landings ~ all B90
+# T38 ---------------------------------------------------------------------
+
+#Landings ~ all T38
 T38HarborCrab <- filter(crab, Year > 1980) %>%
   dplyr::select(34:48, 52)
 T38HarWanCrab <- filter(crab, Year > 1980) %>%
@@ -74,9 +73,9 @@ subset(T38LandingsDredge, delta < 4)
 
 
 
-#LandingsCPUE ~ all B90
+#LandingsCPUE ~ all T38
 T38CPUECrab <- filter(crab, Year > 2003) %>%
-  dplyr::select(2:16, 61)
+  dplyr::select(34:48, 61)
 
 
 T38CPUE_lm <- lm(SumLandingsCPUE ~ ., data = T38CPUECrab, na.action = "na.fail")
@@ -85,23 +84,118 @@ subset(T38CPUEDredge, delta < 4)
 
 
 
-subset(dredge(B90Dredge), delta < 5) 
-B90lm <- lm(B90crab$MeanLandingsCPUE ~ B90crab$B90_MatureFemale+B90crab$B90_SubadultCPUELAG1)
-summary(B90lm)
-#Landings ~ all T38
-T38crab <- filter(dredgeCPUE, Year > 2003) %>%
-  dplyr::select(30:39, 40, 42, 44, 55)
-T38Dredge <- lm(MeanLandingsCPUE ~ ., data = T38crab, na.action = "na.fail")
-subset(dredge(T38Dredge), delta < 5)
 
-dredge_lm <- lm(MeanLandingsCPUE ~ B90_MatureFemaleCPUE+B90_SubadultCPUELAG1, data = dredgeCPUE)
-summary(dredge_lm)
+# T06 ---------------------------------------------------------------------
 
-T38lm <- lm(T38crab$MeanLandingsCPUE ~ T38crab$T38_SubadultCPUELAG1)
-summary(T38lm)
 #Landings ~ T06 - no need to dredge with only one var
-T06_lm <- lm(MeanLandingsCPUE ~ T06_CPUE, data = subset(dredgeCPUE, Year>2005), na.action = "na.fail")
-summary(T06_lm)
+
+T06Landings_lm <- lm(SumLandings ~ T06_CPUE, data = crab)
+T06LandingsCPUE_lm <- lm(SumLandingsCPUE ~ T06_CPUE, data = crab)
+
+T06LandingsLAG_lm <- lm(SumLandings ~ lag(T06_CPUE), data = crab)
+T06LandingsCPUELAG_lm <- lm(SumLandingsCPUE ~ lag(T06_CPUE), data = crab)
+
+summary(T06Landings_lm)
+summary(T06LandingsCPUE_lm)
+summary(T06LandingsLAG_lm)
+summary(T06LandingsCPUELAG_lm)
+
+##T06 only predicts LandingsCPUE w/out lag P-value=0.0258 r2=0.3194
+
+
+
+
+
+# P88 ---------------------------------------------------------------------
+
+#Landings ~ all T38
+P88HarborCrab <- filter(crab, Year > 1988) %>%
+  dplyr::select(29:32, 52)
+P88HarWanCrab <- filter(crab, Year > 1988) %>%
+  dplyr::select(29:32, 54)
+P88LandingsCrab <- filter(crab, Year > 1988) %>%
+  dplyr::select(29:32, 55)
+
+
+P88Harbor_lm <- lm(ChsHarborLandings ~ ., data = P88HarborCrab, na.action = "na.fail")
+P88HarborDredge <- dredge(P88Harbor_lm)
+subset(P88HarborDredge, delta < 4)
+
+P88HarWan_lm <- lm(SumWandoHarbor ~ ., data = P88HarWanCrab, na.action = "na.fail")
+P88HarWanDredge <- dredge(P88HarWan_lm)
+subset(P88HarWanDredge, delta < 4)
+
+P88Landings_lm <- lm(SumLandings ~ ., data = P88LandingsCrab, na.action = "na.fail")
+P88LandingsDredge <- dredge(P88Landings_lm)
+subset(P88LandingsDredge, delta < 4)
+
+
+
+#LandingsCPUE ~ all T38
+P88CPUECrab <- filter(crab, Year > 2003) %>%
+  dplyr::select(29:32, 61)
+
+
+P88CPUE_lm <- lm(SumLandingsCPUE ~ ., data = P88CPUECrab, na.action = "na.fail")
+P88CPUEDredge <- dredge(P88CPUE_lm)
+subset(P88CPUEDredge, delta < 4)
+
+P88SubLag_lm <- lm(SumLandingsCPUE ~ P88_SublegalLAG, data = P88CPUECrab)
+summary(P88CPUE_lm)
+
+##P88 has no predictive relationship with either landings or landingsCPUE (with or without lag)
+
+
+
+
+
+
+# Mulitple Regression -----------------------------------------------------
+
+TotalCPUE = crab %>%
+  dplyr::select(1, 2, 17, 23, 29, 33, 34, 49, 52, 54, 61)
+
+
+# - No LAG
+#Multiple regression w/ interaction using all Total CPUEs
+TotalHarborINT_lm = lm(TotalCPUE$SumLandings ~ B90_CPUE*E98_CPUE*E99_CPUE*
+                      P88_CPUE*T06_CPUE*S16_CPUE, data = TotalCPUE)
+summary(TotalHarborINT_lm)
+
+#Multiple Regression (additive) using all Total CPUEs
+TotalHarbor_lm = lm(TotalCPUE$SumLandings ~ B90_CPUE+E98_CPUE+E99_CPUE+
+                      P88_CPUE+T06_CPUE+S16_CPUE, data = TotalCPUE)
+summary(TotalHarbor_lm)
+
+###Only B90 and E98 show relevance in our multiple models
+
+
+# - LAG
+
+#Multiple regression w/ interaction using all Total CPUEs
+TotalHarborLAGINT_lm = lm(TotalCPUE$SumLandings ~ lag(TotalCPUE$B90_CPUE)*lag(TotalCPUE$E98_CPUE)*lag(TotalCPUE$E99_CPUE)*
+                      lag(TotalCPUE$P88_CPUE)*lag(TotalCPUE$T06_CPUE)*lag(TotalCPUE$S16_CPUE))
+summary(TotalHarborLAGINT_lm)
+###Only E98 shows a relationship
+
+
+#Multiple Regression (additive) using all Total CPUEs
+TotalHarborLAG_lm = lm(TotalCPUE$SumLandings ~ lag(B90_CPUE)+lag(E98_CPUE)+lag(E99_CPUE)+
+                      lag(P88_CPUE)+lag(T06_CPUE)+lag(S16_CPUE), data = TotalCPUE)
+summary(TotalHarborLAG_lm)
+###Only B90 Shows a relatioship
+
+B90T38Landings_lm = lm(TotalCPUE$SumLandingsCPUE ~ TotalCPUE$T38_CPUE)
+summary(B90T38Landings_lm)
+
+
+
+
+
+
+
+
+
 
 TotalCPUEcrab <-  dplyr::select(dredgeCPUE_T06, 1, 8, 15:19)
 TotalDredge <- lm(MeanLandingsCPUE ~ ., data = TotalCPUEcrab, na.action = "na.fail")
