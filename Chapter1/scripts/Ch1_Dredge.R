@@ -7,18 +7,8 @@ library(MASS)
 
 # Read in data ------------------------------------------------------------
 
-crab <- read.csv("./Chapter1/data/CH1data2.csv", stringsAsFactors = FALSE)
+crab <- read.csv("./Chapter1/data/CH1data.csv", stringsAsFactors = FALSE)
 #crab is the unprepared for dredge original data
-
-
-#dredgecrab = relevant variables lagged and added to original "crab" data file.  Includes lag vars too
-dredgeCPUE <- read.csv("./Chapter1/data/CH1Dredgedata_CPUE2.csv", stringsAsFactors = FALSE)
-
-#Dredge must have all variables with the same n.  
-#T06 is the only variable that needs to be separated due to beginning in 2006
-#lag(T06) lhas no explanatory power for Mean Annual CPUE
-dredgeCPUE_T06 <- filter(dredgeCPUE, Year > 2005)
-
 
 
 # Dredge ------------------------------------------------------------------
@@ -26,9 +16,75 @@ dredgeCPUE_T06 <- filter(dredgeCPUE, Year > 2005)
 
 #<5 keeps it realistic
 #Landings ~ all B90
-B90crab <- filter(dredgeCPUE, Year > 2003) %>%
-  dplyr::select(2:11, 14, 16, 18, 55)
-B90Dredge <- lm(MeanLandingsCPUE ~ ., data = B90crab, na.action = "na.fail")
+B90HarborCrab <- filter(crab, Year > 1980) %>%
+  dplyr::select(2:16, 52)
+B90HarWanCrab <- filter(crab, Year > 1980) %>%
+  dplyr::select(2:16, 54)
+B90LandingsCrab <- filter(crab, Year > 2003) %>%
+  dplyr::select(2:16, 55)
+
+
+B90Harbor_lm <- lm(ChsHarborLandings ~ ., data = B90HarborCrab, na.action = "na.fail")
+B90HarborDredge <- dredge(B90Harbor_lm)
+subset(B90HarborDredge, delta < 4)
+
+B90HarWan_lm <- lm(SumWandoHarbor ~ ., data = B90HarWanCrab, na.action = "na.fail")
+B90HarWanDredge <- dredge(B90HarWan_lm)
+subset(B90HarWanDredge, delta < 4)
+
+B90Landings_lm <- lm(SumLandings ~ ., data = B90LandingsCrab, na.action = "na.fail")
+B90LandingsDredge <- dredge(B90Landings_lm)
+subset(B90LandingsDredge, delta < 4)
+
+
+
+#LandingsCPUE ~ all B90
+B90CPUECrab <- filter(crab, Year > 2003) %>%
+  dplyr::select(2:16, 61)
+
+
+B90CPUE_lm <- lm(SumLandingsCPUE ~ ., data = B90CPUECrab, na.action = "na.fail")
+B90CPUEDredge <- dredge(B90CPUE_lm)
+subset(B90CPUEDredge, delta < 4)
+
+
+
+
+
+#Landings ~ all B90
+T38HarborCrab <- filter(crab, Year > 1980) %>%
+  dplyr::select(34:48, 52)
+T38HarWanCrab <- filter(crab, Year > 1980) %>%
+  dplyr::select(34:48, 54)
+T38LandingsCrab <- filter(crab, Year > 2003) %>%
+  dplyr::select(34:48, 55)
+
+
+T38Harbor_lm <- lm(ChsHarborLandings ~ ., data = T38HarborCrab, na.action = "na.fail")
+T38HarborDredge <- dredge(T38Harbor_lm)
+subset(T38HarborDredge, delta < 4)
+
+T38HarWan_lm <- lm(SumWandoHarbor ~ ., data = T38HarWanCrab, na.action = "na.fail")
+T38HarWanDredge <- dredge(T38HarWan_lm)
+subset(T38HarWanDredge, delta < 4)
+
+T38Landings_lm <- lm(SumLandings ~ ., data = T38LandingsCrab, na.action = "na.fail")
+T38LandingsDredge <- dredge(T38Landings_lm)
+subset(T38LandingsDredge, delta < 4)
+
+
+
+#LandingsCPUE ~ all B90
+T38CPUECrab <- filter(crab, Year > 2003) %>%
+  dplyr::select(2:16, 61)
+
+
+T38CPUE_lm <- lm(SumLandingsCPUE ~ ., data = T38CPUECrab, na.action = "na.fail")
+T38CPUEDredge <- dredge(T38CPUE_lm)
+subset(T38CPUEDredge, delta < 4)
+
+
+
 subset(dredge(B90Dredge), delta < 5) 
 B90lm <- lm(B90crab$MeanLandingsCPUE ~ B90crab$B90_MatureFemale+B90crab$B90_SubadultCPUELAG1)
 summary(B90lm)
