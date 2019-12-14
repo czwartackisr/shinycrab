@@ -45,31 +45,17 @@ summary(P88LandLAG_lm3)
 #Significant - NONE
 
 
-###2004###
+#With LEad LAG
 
 #Insignificant
-P88Land04_lm1 <- lm(P88crab04$SumLandings ~ P88crab04$P88_CPUE)
-summary(P88Land04_lm1)
-P88Land04_lm2 <- lm(P88crab04$SumLandings ~ P88crab04$P88_SublegalCPUE)
-summary(P88Land04_lm2)
-P88Land04_lm3 <- lm(P88crab04$SumLandings ~ P88crab04$P88_LegalCPUE)
-summary(P88Land04_lm3)
+P88LandLAGLead_lm1 <- lm(lead(P88crab$SumLandings) ~ lag(P88crab$P88_CPUE))
+summary(P88LandLAGLead_lm1)
+P88LandLAGLead_lm2 <- lm(lead(P88crab$SumLandings) ~ lag(P88crab$P88_SublegalCPUE))
+summary(P88LandLAGLead_lm2)
+P88LandLAGLead_lm3 <- lm(lead(P88crab$SumLandings) ~ lag(P88crab$P88_LegalCPUE))
+summary(P88LandLAGLead_lm3) # 0.05603 - 0.1287
 
 #Significant - NONE
-
-
-#With LAG
-
-#Insignificant
-P88LandLAG04_lm1 <- lm(P88crab04$SumLandings ~ lag(P88crab04$P88_CPUE))
-summary(P88LandLAG04_lm1)
-P88LandLAG04_lm3 <- lm(P88crab04$SumLandings ~ lag(P88crab04$P88_LegalCPUE))
-summary(P88LandLAG04_lm3)
-
-#Significant - NONE
-P88LandLAG04_lm2 <- lm(P88crab04$SumLandings ~ lag(P88crab04$P88_SublegalCPUE))
-summary(P88LandLAG04_lm2) #0.05088
-
 
 
 
@@ -102,33 +88,18 @@ summary(P88CPUELAG_lm3)
 #Significant - NONE
 
 
-###2004###
+
+#With LEad LAG
 
 #Insignificant
-P88CPUE04_lm1 <- lm(P88crab04$SumLandingsCPUE ~ P88crab04$P88_CPUE)
-summary(P88CPUE04_lm1)
-P88CPUE04_lm2 <- lm(P88crab04$SumLandingsCPUE ~ P88crab04$P88_SublegalCPUE)
-summary(P88CPUE04_lm2)
-P88CPUE04_lm3 <- lm(P88crab04$SumLandingsCPUE ~ P88crab04$P88_LegalCPUE)
-summary(P88CPUE04_lm3)
+P88CPUELAGLead_lm1 <- lm(lead(P88crab$SumLandingsCPUE) ~ lag(P88crab$P88_CPUE))
+summary(P88CPUELAGLead_lm1)
+P88CPUELAGLead_lm2 <- lm(lead(P88crab$SumLandingsCPUE) ~ lag(P88crab$P88_SublegalCPUE))
+summary(P88CPUELAGLead_lm2)
+P88CPUELAGLead_lm3 <- lm(lead(P88crab$SumLandingsCPUE) ~ lag(P88crab$P88_LegalCPUE))
+summary(P88CPUELAGLead_lm3)
 
 #Significant - NONE
-
-
-#With LAG
-
-#Insignificant
-P88CPUELAG04_lm1 <- lm(P88crab04$SumLandingsCPUE ~ lag(P88crab04$P88_CPUE))
-summary(P88CPUELAG04_lm1)
-P88CPUELAG04_lm2 <- lm(P88crab04$SumLandingsCPUE ~ lag(P88crab04$P88_SublegalCPUE))
-summary(P88CPUELAG04_lm2)
-P88CPUELAG04_lm3 <- lm(P88crab04$SumLandingsCPUE ~ lag(P88crab04$P88_LegalCPUE))
-summary(P88CPUELAG04_lm3)
-
-#Significant - NONE 
-
-
-
 
 
 # E98 Landings  -----------------------------------------------------------
@@ -172,6 +143,23 @@ summary(E98LandLAG_lm6)
 #Significant - NONE
 
 
+#With Lead LAG
+
+#Insignificant
+E98LandLAGLead_lm1 <- lm(lead(crab$SumLandings) ~ lag(crab$E98_CPUE))
+summary(E98LandLAGLead_lm1)
+E98LandLAGLead_lm2 <- lm(lead(crab$SumLandings) ~ lag(crab$E98_JuvCPUE))
+summary(E98LandLAGLead_lm2)
+E98LandLAGLead_lm3 <- lm(lead(crab$SumLandings) ~ lag(crab$E98_SubadultCPUE))
+summary(E98LandLAGLead_lm3)
+E98LandLAGLead_lm4 <- lm(lead(crab$SumLandings) ~ lag(crab$E98_AdultCPUE))
+summary(E98LandLAGLead_lm4)
+E98LandLAGLead_lm5 <- lm(lead(crab$SumLandings) ~ lag(crab$E98_LegalCPUE))
+summary(E98LandLAGLead_lm5)
+E98LandLAGLead_lm6 <- lm(lead(crab$SumLandings) ~ lag(crab$E98_SublegalCPUE))
+summary(E98LandLAGLead_lm6)
+
+#Significant - NONE
 
 
 # E98 Landings CPUE -------------------------------------------------------
@@ -216,6 +204,25 @@ summary(E98CPUELAG_lm6)
 
 
 
+#With Lead LAG
+
+#Insignificant
+E98CPUELAGLead_lm1 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$E98_CPUE))
+summary(E98CPUELAGLead_lm1)
+E98CPUELAGLead_lm2 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$E98_JuvCPUE))
+summary(E98CPUELAGLead_lm2)
+E98CPUELAGLead_lm3 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$E98_SubadultCPUE))
+summary(E98CPUELAGLead_lm3)
+E98CPUELAGLead_lm4 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$E98_AdultCPUE))
+summary(E98CPUELAGLead_lm4)
+E98CPUELAGLead_lm5 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$E98_LegalCPUE))
+summary(E98CPUELAGLead_lm5)
+E98CPUELAGLead_lm6 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$E98_SublegalCPUE))
+summary(E98CPUELAGLead_lm6)
+
+#Significant - NONE
+
+
 # E99 Landings  -----------------------------------------------------------
 
 
@@ -253,6 +260,24 @@ E99LandLAG_lm5 <- lm(crab$SumLandings ~ lag(crab$E99_LegalCPUE))
 summary(E99LandLAG_lm5)
 E99LandLAG_lm6 <- lm(crab$SumLandings ~ lag(crab$E99_SublegalCPUE))
 summary(E99LandLAG_lm6)
+
+#Significant - NONE
+
+#With LAG
+
+#Insignificant
+E99LandLAGLead_lm1 <- lm(lead(crab$SumLandings) ~ lag(crab$E99_CPUE))
+summary(E99LandLAGLead_lm1)
+E99LandLAGLead_lm2 <- lm(lead(crab$SumLandings) ~ lag(crab$E99_JuvCPUE))
+summary(E99LandLAGLead_lm2)
+E99LandLAGLead_lm3 <- lm(lead(crab$SumLandings) ~ lag(crab$E99_SubadultCPUE))
+summary(E99LandLAGLead_lm3) #p=0.05585
+E99LandLAGLead_lm4 <- lm(lead(crab$SumLandings) ~ lag(crab$E99_AdultCPUE))
+summary(E99LandLAGLead_lm4)
+E99LandLAGLead_lm5 <- lm(lead(crab$SumLandings) ~ lag(crab$E99_LegalCPUE))
+summary(E99LandLAGLead_lm5)
+E99LandLAGLead_lm6 <- lm(lead(crab$SumLandings) ~ lag(crab$E99_SublegalCPUE))
+summary(E99LandLAGLead_lm6)
 
 #Significant - NONE
 
@@ -299,6 +324,23 @@ summary(E99CPUELAG_lm6)
 
 #Significant - NONE
 
+#With LAG
+
+#Insignificant
+E99CPUELAGLead_lm1 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$E99_CPUE))
+summary(E99CPUELAGLead_lm1)
+E99CPUELAGLead_lm2 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$E99_JuvCPUE))
+summary(E99CPUELAGLead_lm2)
+E99CPUELAGLead_lm3 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$E99_SubadultCPUE))
+summary(E99CPUELAGLead_lm3)
+E99CPUELAGLead_lm4 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$E99_AdultCPUE))
+summary(E99CPUELAGLead_lm4)
+E99CPUELAGLead_lm5 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$E99_LegalCPUE))
+summary(E99CPUELAGLead_lm5)
+E99CPUELAGLead_lm6 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$E99_SublegalCPUE))
+summary(E99CPUELAGLead_lm6)
+
+#Significant - NONE
 
 
 # T06 ---------------------------------------------------------------------
@@ -310,6 +352,11 @@ T06LandLAG_lm1 <- lm(crab$SumLandings ~ lag(crab$T06_CPUE))
 summary(T06LandLAG_lm1)
 T06CPUELAG_lm1 <- lm(crab$SumLandingsCPUE ~ lag(crab$T06_CPUE))
 summary(T06CPUELAG_lm1)
+T06LandLAGLead_lm1 <- lm(lead(crab$SumLandings) ~ lag(crab$T06_CPUE))
+summary(T06LandLAGLead_lm1)
+T06CPUELAGLead_lm1 <- lm(lead(crab$SumLandings) ~ lag(crab$T06_CPUE))
+summary(T06CPUELAGLead_lm1)
+
 
 #Significant
 T06CPUE_lm1 <- lm(crab$SumLandingsCPUE ~ crab$T06_CPUE)
@@ -319,4 +366,59 @@ summary(T06CPUE_lm1)
 
 
 
+
+
+
+# 2004 Exploratory --------------------------------------------------------
+
+###2004###
+
+#Insignificant
+P88Land04_lm1 <- lm(P88crab04$SumLandings ~ P88crab04$P88_CPUE)
+summary(P88Land04_lm1)
+P88Land04_lm2 <- lm(P88crab04$SumLandings ~ P88crab04$P88_SublegalCPUE)
+summary(P88Land04_lm2)
+P88Land04_lm3 <- lm(P88crab04$SumLandings ~ P88crab04$P88_LegalCPUE)
+summary(P88Land04_lm3)
+
+#Significant - NONE
+
+
+#With LAG
+
+#Insignificant
+P88LandLAG04_lm1 <- lm(P88crab04$SumLandings ~ lag(P88crab04$P88_CPUE))
+summary(P88LandLAG04_lm1)
+P88LandLAG04_lm3 <- lm(P88crab04$SumLandings ~ lag(P88crab04$P88_LegalCPUE))
+summary(P88LandLAG04_lm3)
+
+#Significant - NONE
+P88LandLAG04_lm2 <- lm(P88crab04$SumLandings ~ lag(P88crab04$P88_SublegalCPUE))
+summary(P88LandLAG04_lm2) #0.05088
+
+
+###2004###
+
+#Insignificant
+P88CPUE04_lm1 <- lm(P88crab04$SumLandingsCPUE ~ P88crab04$P88_CPUE)
+summary(P88CPUE04_lm1)
+P88CPUE04_lm2 <- lm(P88crab04$SumLandingsCPUE ~ P88crab04$P88_SublegalCPUE)
+summary(P88CPUE04_lm2)
+P88CPUE04_lm3 <- lm(P88crab04$SumLandingsCPUE ~ P88crab04$P88_LegalCPUE)
+summary(P88CPUE04_lm3)
+
+#Significant - NONE
+
+
+#With LAG
+
+#Insignificant
+P88CPUELAG04_lm1 <- lm(P88crab04$SumLandingsCPUE ~ lag(P88crab04$P88_CPUE))
+summary(P88CPUELAG04_lm1)
+P88CPUELAG04_lm2 <- lm(P88crab04$SumLandingsCPUE ~ lag(P88crab04$P88_SublegalCPUE))
+summary(P88CPUELAG04_lm2)
+P88CPUELAG04_lm3 <- lm(P88crab04$SumLandingsCPUE ~ lag(P88crab04$P88_LegalCPUE))
+summary(P88CPUELAG04_lm3)
+
+#Significant - NONE 
 

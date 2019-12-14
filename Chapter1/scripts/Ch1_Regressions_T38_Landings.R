@@ -73,6 +73,122 @@ T38LandLAG_lm5 <- lm(T38crab$SumLandings ~ lag(T38crab$T38_ImmatureFemaleCPUE))
 summary(T38LandLAG_lm5)
 
 
+#With LEad Lag
+
+#Insignificant
+T38LandLAGLead_lm1 <- lm(lead(T38crab$SumLandings) ~ lag(T38crab$T38_CPUE))
+summary(T38LandLAGLead_lm1)
+T38LandLAGLead_lm2 <- lm(lead(T38crab$SumLandings) ~ lag(T38crab$T38_JuvCPUE))
+summary(T38LandLAGLead_lm2)
+T38LandLAGLead_lm3 <- lm(lead(T38crab$SumLandings) ~ lag(T38crab$T38_SubadultCPUE))
+summary(T38LandLAGLead_lm3)
+T38LandLAGLead_lm4 <- lm(lead(T38crab$SumLandings) ~ lag(T38crab$T38_AdultCPUE))
+summary(T38LandLAGLead_lm4)
+T38LandLAGLead_lm5 <- lm(lead(T38crab$SumLandings) ~ lag(T38crab$T38_ImmatureFemaleCPUE))
+summary(T38LandLAGLead_lm5)
+T38LandLAGLead_lm6 <- lm(lead(T38crab$SumLandings) ~ lag(T38crab$T38_ImmatureMaleCPUE))
+summary(T38LandLAGLead_lm6)
+T38LandLAGLead_lm7 <- lm(lead(T38crab$SumLandings) ~ lag(T38crab$T38_MatureFemaleCPUE))
+summary(T38LandLAGLead_lm7)
+T38LandLAGLead_lm8 <- lm(lead(T38crab$SumLandings) ~ lag(T38crab$T38_MatureMaleCPUE))
+summary(T38LandLAGLead_lm8) 
+T38LandLAGLead_lm9 <- lm(lead(T38crab$SumLandings) ~ lag(T38crab$T38_SublegalCPUE))
+summary(T38LandLAGLead_lm9)
+T38LandLAGLead_lm10 <- lm(lead(T38crab$SumLandings) ~ lag(T38crab$T38_LegalCPUE))
+summary(T38LandLAGLead_lm10)
+
+#Significant 
+
+
+
+# T38 Landings CPUE -------------------------------------------------------
+
+
+###1980###
+
+#Insignificant
+T38CPUE_lm1 <- lm(crab$SumLandingsCPUE ~ crab$T38_CPUE)
+summary(T38CPUE_lm1) 
+T38CPUE_lm2 <- lm(crab$SumLandingsCPUE ~ crab$T38_JuvCPUE)
+summary(T38CPUE_lm2)
+T38CPUE_lm3 <- lm(crab$SumLandingsCPUE ~ crab$T38_SubadultCPUE)
+summary(T38CPUE_lm3) 
+T38CPUE_lm4 <- lm(crab$SumLandingsCPUE ~ crab$T38_AdultCPUE)
+summary(T38CPUE_lm4) 
+T38CPUE_lm5 <- lm(crab$SumLandingsCPUE ~ crab$T38_ImmatureFemaleCPUE)
+summary(T38CPUE_lm5)
+T38CPUE_lm6 <- lm(crab$SumLandingsCPUE ~ crab$T38_ImmatureMaleCPUE)
+summary(T38CPUE_lm6) 
+T38CPUE_lm7 <- lm(crab$SumLandingsCPUE ~ crab$T38_MatureFemaleCPUE)
+summary(T38CPUE_lm7) 
+T38CPUE_lm8 <- lm(crab$SumLandingsCPUE ~ crab$T38_MatureMaleCPUE)
+summary(T38CPUE_lm8) 
+T38CPUE_lm9 <- lm(crab$SumLandingsCPUE ~ crab$T38_LegalCPUE)
+summary(T38CPUE_lm9) 
+T38CPUE_lm10 <- lm(crab$SumLandingsCPUE ~ crab$T38_SublegalCPUE)
+summary(T38CPUE_lm10)
+
+#Significant - NONE
+ 
+
+
+##With LAG
+
+#Insignificant
+T38CPUELAG_lm4 <- lm(crab$SumLandingsCPUE ~ lag(crab$T38_AdultCPUE))
+summary(T38CPUELAG_lm4)
+T38CPUELAG_lm6 <- lm(crab$SumLandingsCPUE ~ lag(crab$T38_MatureFemaleCPUE))
+summary(T38CPUELAG_lm6)
+T38CPUELAG_lm9 <- lm(crab$SumLandingsCPUE ~ lag(crab$T38_LegalCPUE))
+summary(T38CPUELAG_lm9)
+
+#Significant
+T38CPUELAG_lm1 <- lm(crab$SumLandingsCPUE ~ lag(crab$T38_CPUE))
+summary(T38CPUELAG_lm1) 
+T38CPUELAG_lm2 <- lm(crab$SumLandingsCPUE ~ lag(crab$T38_JuvCPUE))
+summary(T38CPUELAG_lm2)
+T38CPUELAG_lm3 <- lm(crab$SumLandingsCPUE ~ lag(crab$T38_SubadultCPUE))
+summary(T38CPUELAG_lm3)
+T38CPUELAG_lm5 <- lm(crab$SumLandingsCPUE ~ lag(crab$T38_ImmatureFemaleCPUE))
+summary(T38CPUELAG_lm5)
+T38CPUELAG_lm7 <- lm(crab$SumLandingsCPUE ~ lag(crab$T38_ImmatureMaleCPUE))
+summary(T38CPUELAG_lm7)
+T38CPUELAG_lm8 <- lm(crab$SumLandingsCPUE ~ lag(crab$T38_MatureMaleCPUE))
+summary(T38CPUELAG_lm8)
+T38CPUELAG_lm10 <- lm(crab$SumLandingsCPUE ~ lag(crab$T38_SublegalCPUE))
+summary(T38CPUELAG_lm10)
+
+
+#with Lead LAG
+
+#Insignificant
+T38CPUELAGLead_lm1 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$T38_CPUE))
+summary(T38CPUELAGLead_lm1) 
+T38CPUELAGLead_lm2 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$T38_JuvCPUE))
+summary(T38CPUELAGLead_lm2)
+T38CPUELAGLead_lm3 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$T38_SubadultCPUE))
+summary(T38CPUELAGLead_lm3)
+T38CPUELAGLead_lm4 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$T38_AdultCPUE))
+summary(T38CPUELAGLead_lm4)
+T38CPUELAGLead_lm5 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$T38_ImmatureFemaleCPUE))
+summary(T38CPUELAGLead_lm5)
+T38CPUELAGLead_lm6 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$T38_MatureFemaleCPUE))
+summary(T38CPUELAGLead_lm6)
+T38CPUELAGLead_lm7 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$T38_ImmatureMaleCPUE))
+summary(T38CPUELAGLead_lm7)
+T38CPUELAGLead_lm8 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$T38_MatureMaleCPUE))
+summary(T38CPUELAGLead_lm8)
+T38CPUELAGLead_lm9 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$T38_LegalCPUE))
+summary(T38CPUELAGLead_lm9)
+T38CPUELAGLead_lm10 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$T38_SublegalCPUE))
+summary(T38CPUELAGLead_lm10)
+
+
+
+
+
+# 2004 Exploration --------------------------------------------------------
+
 ###2004###
 #Insignificant
 T38Land04_lm1 <- lm(T38crab04$SumLandings ~ T38crab04$T38_CPUE)
@@ -122,66 +238,6 @@ summary(T38LandLAG04_lm10)
 
 #Significant - NONE
 
-
-
-
-
-
-# T38 Landings CPUE -------------------------------------------------------
-
-
-###1980###
-
-#Insignificant
-T38CPUE_lm1 <- lm(crab$SumLandingsCPUE ~ crab$T38_CPUE)
-summary(T38CPUE_lm1) 
-T38CPUE_lm2 <- lm(crab$SumLandingsCPUE ~ crab$T38_JuvCPUE)
-summary(T38CPUE_lm2)
-T38CPUE_lm3 <- lm(crab$SumLandingsCPUE ~ crab$T38_SubadultCPUE)
-summary(T38CPUE_lm3) 
-T38CPUE_lm4 <- lm(crab$SumLandingsCPUE ~ crab$T38_AdultCPUE)
-summary(T38CPUE_lm4) 
-T38CPUE_lm5 <- lm(crab$SumLandingsCPUE ~ crab$T38_ImmatureFemaleCPUE)
-summary(T38CPUE_lm5)
-T38CPUE_lm6 <- lm(crab$SumLandingsCPUE ~ crab$T38_ImmatureMaleCPUE)
-summary(T38CPUE_lm6) 
-T38CPUE_lm7 <- lm(crab$SumLandingsCPUE ~ crab$T38_MatureFemaleCPUE)
-summary(T38CPUE_lm7) 
-T38CPUE_lm8 <- lm(crab$SumLandingsCPUE ~ crab$T38_MatureMaleCPUE)
-summary(T38CPUE_lm8) 
-T38CPUE_lm9 <- lm(crab$SumLandingsCPUE ~ crab$T38_LegalCPUE)
-summary(T38CPUE_lm9) 
-T38CPUE_lm10 <- lm(crab$SumLandingsCPUE ~ crab$T38_SublegalCPUE)
-summary(T38CPUE_lm10)
-
-#Significant - NONE
- 
-
-#with LAG
-
-#Insignificant
-T38CPUELAG_lm4 <- lm(crab$SumLandingsCPUE ~ lag(crab$T38_AdultCPUE))
-summary(T38CPUELAG_lm4)
-T38CPUELAG_lm6 <- lm(crab$SumLandingsCPUE ~ lag(crab$T38_MatureFemaleCPUE))
-summary(T38CPUELAG_lm6)
-T38CPUELAG_lm9 <- lm(crab$SumLandingsCPUE ~ lag(crab$T38_LegalCPUE))
-summary(T38CPUELAG_lm9)
-
-#Significant
-T38CPUELAG_lm1 <- lm(crab$SumLandingsCPUE ~ lag(crab$T38_CPUE))
-summary(T38CPUELAG_lm1) 
-T38CPUELAG_lm2 <- lm(crab$SumLandingsCPUE ~ lag(crab$T38_JuvCPUE))
-summary(T38CPUELAG_lm2)
-T38CPUELAG_lm3 <- lm(crab$SumLandingsCPUE ~ lag(crab$T38_SubadultCPUE))
-summary(T38CPUELAG_lm3)
-T38CPUELAG_lm5 <- lm(crab$SumLandingsCPUE ~ lag(crab$T38_ImmatureFemaleCPUE))
-summary(T38CPUELAG_lm5)
-T38CPUELAG_lm7 <- lm(crab$SumLandingsCPUE ~ lag(crab$T38_ImmatureMaleCPUE))
-summary(T38CPUELAG_lm7)
-T38CPUELAG_lm8 <- lm(crab$SumLandingsCPUE ~ lag(crab$T38_MatureMaleCPUE))
-summary(T38CPUELAG_lm8)
-T38CPUELAG_lm10 <- lm(crab$SumLandingsCPUE ~ lag(crab$T38_SublegalCPUE))
-summary(T38CPUELAG_lm10)
 
 
 
@@ -238,6 +294,3 @@ T38CPUELAG04_lm8 <- lm(T38crab04$SumLandingsCPUE ~ lag(T38crab04$T38_MatureMaleC
 summary(T38CPUELAG04_lm8) 
 T38CPUELAG04_lm10 <- lm(T38crab04$SumLandingsCPUE ~ lag(T38crab04$T38_SublegalCPUE))
 summary(T38CPUELAG04_lm10) 
-
-
-

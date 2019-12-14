@@ -81,57 +81,58 @@ summary(B90LandLAG_lm10)
 #Significant - NONE
 #
 
-
-###2004###
-#Insignificant
-B90Land04_lm1 <- lm(B90crab04$SumLandings ~ B90crab04$B90_CPUE)
-summary(B90Land04_lm1)
-B90Land04_lm2 <- lm(B90crab04$SumLandings ~ B90crab04$B90_JuvCPUE)
-summary(B90Land04_lm2)
-B90Land04_lm3 <- lm(B90crab04$SumLandings ~ B90crab04$B90_SubadultCPUE)
-summary(B90Land04_lm3)
-B90Land04_lm4 <- lm(B90crab04$SumLandings ~ B90crab04$B90_AdultCPUE)
-summary(B90Land04_lm4)
-B90Land04_lm5 <- lm(B90crab04$SumLandings ~ B90crab04$B90_ImmatureFemaleCPUE)
-summary(B90Land04_lm5)
-B90Land04_lm6 <- lm(B90crab04$SumLandings ~ B90crab04$B90_ImmatureMaleCPUE)
-summary(B90Land04_lm6)
-B90Land04_lm7 <- lm(B90crab04$SumLandings ~ B90crab04$B90_MatureFemaleCPUE)
-summary(B90Land04_lm7)
-B90Land04_lm8 <- lm(B90crab04$SumLandings ~ B90crab04$B90_MatureMaleCPUE)
-summary(B90Land04_lm8)
-B90Land04_lm9 <- lm(B90crab04$SumLandings ~ B90crab04$B90_SublegalCPUE)
-summary(B90Land04_lm9)
-B90Land04_lm10 <- lm(B90crab04$SumLandings ~ B90crab04$B90_LegalCPUE)
-summary(B90Land04_lm10)
-
 #With Lag
 
 #Insignificant
-B90LandLAG04_lm1 <- lm(B90crab04$SumLandings ~ lag(B90crab04$B90_CPUE))
-summary(B90LandLAG04_lm1)
-B90LandLAG04_lm3 <- lm(B90crab04$SumLandings ~ lag(B90crab04$B90_SubadultCPUE))
-summary(B90LandLAG04_lm3)
-B90LandLAG04_lm4 <- lm(B90crab04$SumLandings ~ lag(B90crab04$B90_AdultCPUE))
-summary(B90LandLAG04_lm4)
-B90LandLAG04_lm5 <- lm(B90crab04$SumLandings ~ lag(B90crab04$B90_ImmatureFemaleCPUE))
-summary(B90LandLAG04_lm5) #0.0537
-B90LandLAG04_lm6 <- lm(B90crab04$SumLandings ~ lag(B90crab04$B90_ImmatureMaleCPUE))
-summary(B90LandLAG04_lm6) #0.05815
-B90LandLAG04_lm7 <- lm(B90crab04$SumLandings ~ lag(B90crab04$B90_MatureFemaleCPUE))
-summary(B90LandLAG04_lm7)
-B90LandLAG04_lm8 <- lm(B90crab04$SumLandings ~ lag(B90crab04$B90_MatureMaleCPUE))
-summary(B90LandLAG04_lm8)
-B90LandLAG04_lm9 <- lm(B90crab04$SumLandings ~ lag(B90crab04$B90_SublegalCPUE))
-summary(B90LandLAG04_lm9)
-B90LandLAG04_lm10 <- lm(B90crab04$SumLandings ~ lag(B90crab04$B90_LegalCPUE))
-summary(B90LandLAG04_lm10)
+B90LandLAG_lm1 <- lm(B90crab$SumLandings ~ lag(B90crab$B90_CPUE))
+summary(B90LandLAG_lm1)
+B90LandLAG_lm2 <- lm(B90crab$SumLandings ~ lag(B90crab$B90_JuvCPUE))
+summary(B90LandLAG_lm2)
+B90LandLAG_lm3 <- lm(B90crab$SumLandings ~ lag(B90crab$B90_SubadultCPUE))
+summary(B90LandLAG_lm3)
+B90LandLAG_lm4 <- lm(B90crab$SumLandings ~ lag(B90crab$B90_AdultCPUE))
+summary(B90LandLAG_lm4)
+B90LandLAG_lm5 <- lm(B90crab$SumLandings ~ lag(B90crab$B90_ImmatureFemaleCPUE))
+summary(B90LandLAG_lm5)
+B90LandLAG_lm6 <- lm(B90crab$SumLandings ~ lag(B90crab$B90_ImmatureMaleCPUE))
+summary(B90LandLAG_lm6)
+B90LandLAG_lm7 <- lm(B90crab$SumLandings ~ lag(B90crab$B90_MatureFemaleCPUE))
+summary(B90LandLAG_lm7)
+B90LandLAG_lm8 <- lm(B90crab$SumLandings ~ lag(B90crab$B90_MatureMaleCPUE))
+summary(B90LandLAG_lm8) #0.05772
+B90LandLAG_lm9 <- lm(B90crab$SumLandings ~ lag(B90crab$B90_SublegalCPUE))
+summary(B90LandLAG_lm9)
+B90LandLAG_lm10 <- lm(B90crab$SumLandings ~ lag(B90crab$B90_LegalCPUE))
+summary(B90LandLAG_lm10)
 
-#Significant
-B90LandLAG04_lm2 <- lm(B90crab04$SumLandings ~ lag(B90crab04$B90_JuvCPUE))
-summary(B90LandLAG04_lm2)
+#Significant - NONE
+#
 
 
+## Lead Lag
+#With Lag
+
+#Insignificant
+B90LandLAGLead_lm1 <- lm(lead(B90crab$SumLandings) ~ lag(B90crab$B90_CPUE))
+summary(B90LandLAGLead_lm1)
+B90LandLAGLead_lm2 <- lm(lead(B90crab$SumLandings) ~ lag(B90crab$B90_JuvCPUE))
+summary(B90LandLAGLead_lm2)
+B90LandLAGLead_lm3 <- lm(lead(B90crab$SumLandings) ~ lag(B90crab$B90_SubadultCPUE))
+summary(B90LandLAGLead_lm3)
+B90LandLAGLead_lm4 <- lm(lead(B90crab$SumLandings) ~ lag(B90crab$B90_AdultCPUE))
+summary(B90LandLAGLead_lm4)
+B90LandLAGLead_lm5 <- lm(lead(B90crab$SumLandings) ~ lag(B90crab$B90_ImmatureFemaleCPUE))
+summary(B90LandLAGLead_lm5)
+B90LandLAGLead_lm6 <- lm(lead(B90crab$SumLandings) ~ lag(B90crab$B90_ImmatureMaleCPUE))
+summary(B90LandLAGLead_lm6)
+B90LandLAGLead_lm7 <- lm(lead(B90crab$SumLandings) ~ lag(B90crab$B90_MatureFemaleCPUE))
+summary(B90LandLAGLead_lm7)
+B90LandLAGLead_lm8 <- lm(lead(B90crab$SumLandings) ~ lag(B90crab$B90_MatureMaleCPUE))
+summary(B90LandLAGLead_lm8) #0.05772
+B90LandLAGLead_lm9 <- lm(lead(B90crab$SumLandings) ~ lag(B90crab$B90_SublegalCPUE))
+summary(B90LandLAGLead_lm9)
+B90LandLAGLead_lm10 <- lm(lead(B90crab$SumLandings) ~ lag(B90crab$B90_LegalCPUE))
+summary(B90LandLAGLead_lm10)
 
 
 
@@ -190,6 +191,90 @@ B90CPUELAG_lm3 <- lm(crab$SumLandingsCPUE ~ lag(crab$B90_SubadultCPUE))
 summary(B90CPUELAG_lm3)
 B90CPUELAG_lm8 <- lm(crab$SumLandingsCPUE ~ lag(crab$B90_MatureMaleCPUE))
 summary(B90CPUELAG_lm8)
+
+
+
+#with Lead LAG
+
+#Insignificant
+
+B90CPUELAGLead_lm1 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$B90_CPUE))
+summary(B90CPUELAGLead_lm1)
+B90CPUELAGLead_lm2 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$B90_JuvCPUE))
+summary(B90CPUELAGLead_lm2) 
+B90CPUELAGLead_lm3 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$B90_SubadultCPUE))
+summary(B90CPUELAGLead_lm3)
+B90CPUELAGLead_lm4 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$B90_AdultCPUE))
+summary(B90CPUELAGLead_lm4)
+B90CPUELAGLead_lm5 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$B90_ImmatureFemaleCPUE))
+summary(B90CPUELAGLead_lm5)
+B90CPUELAGLead_lm6 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$B90_MatureFemaleCPUE))
+summary(B90CPUELAGLead_lm6)
+B90CPUELAGLead_lm7 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$B90_ImmatureMaleCPUE))
+summary(B90CPUELAGLead_lm7)
+B90CPUELAGLead_lm8 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$B90_MatureMaleCPUE))
+summary(B90CPUELAGLead_lm8)
+B90CPUELAGLead_lm9 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$B90_LegalCPUE))
+summary(B90CPUELAGLead_lm9)
+B90CPUELAGLead_lm10 <- lm(lead(crab$SumLandingsCPUE) ~ lag(crab$B90_SublegalCPUE))
+summary(B90CPUELAGLead_lm10)
+
+
+
+
+
+
+
+# 2004 Exploration --------------------------------------------------------
+
+###2004###
+#Insignificant
+B90Land04_lm1 <- lm(B90crab04$SumLandings ~ B90crab04$B90_CPUE)
+summary(B90Land04_lm1)
+B90Land04_lm2 <- lm(B90crab04$SumLandings ~ B90crab04$B90_JuvCPUE)
+summary(B90Land04_lm2)
+B90Land04_lm3 <- lm(B90crab04$SumLandings ~ B90crab04$B90_SubadultCPUE)
+summary(B90Land04_lm3)
+B90Land04_lm4 <- lm(B90crab04$SumLandings ~ B90crab04$B90_AdultCPUE)
+summary(B90Land04_lm4)
+B90Land04_lm5 <- lm(B90crab04$SumLandings ~ B90crab04$B90_ImmatureFemaleCPUE)
+summary(B90Land04_lm5)
+B90Land04_lm6 <- lm(B90crab04$SumLandings ~ B90crab04$B90_ImmatureMaleCPUE)
+summary(B90Land04_lm6)
+B90Land04_lm7 <- lm(B90crab04$SumLandings ~ B90crab04$B90_MatureFemaleCPUE)
+summary(B90Land04_lm7)
+B90Land04_lm8 <- lm(B90crab04$SumLandings ~ B90crab04$B90_MatureMaleCPUE)
+summary(B90Land04_lm8)
+B90Land04_lm9 <- lm(B90crab04$SumLandings ~ B90crab04$B90_SublegalCPUE)
+summary(B90Land04_lm9)
+B90Land04_lm10 <- lm(B90crab04$SumLandings ~ B90crab04$B90_LegalCPUE)
+summary(B90Land04_lm10)
+
+#With Lag
+
+#Insignificant
+B90LandLAG04_lm1 <- lm(B90crab04$SumLandings ~ lag(B90crab04$B90_CPUE))
+summary(B90LandLAG04_lm1)
+B90LandLAG04_lm3 <- lm(B90crab04$SumLandings ~ lag(B90crab04$B90_SubadultCPUE))
+summary(B90LandLAG04_lm3)
+B90LandLAG04_lm4 <- lm(B90crab04$SumLandings ~ lag(B90crab04$B90_AdultCPUE))
+summary(B90LandLAG04_lm4)
+B90LandLAG04_lm5 <- lm(B90crab04$SumLandings ~ lag(B90crab04$B90_ImmatureFemaleCPUE))
+summary(B90LandLAG04_lm5) #0.0537
+B90LandLAG04_lm6 <- lm(B90crab04$SumLandings ~ lag(B90crab04$B90_ImmatureMaleCPUE))
+summary(B90LandLAG04_lm6) #0.05815
+B90LandLAG04_lm7 <- lm(B90crab04$SumLandings ~ lag(B90crab04$B90_MatureFemaleCPUE))
+summary(B90LandLAG04_lm7)
+B90LandLAG04_lm8 <- lm(B90crab04$SumLandings ~ lag(B90crab04$B90_MatureMaleCPUE))
+summary(B90LandLAG04_lm8)
+B90LandLAG04_lm9 <- lm(B90crab04$SumLandings ~ lag(B90crab04$B90_SublegalCPUE))
+summary(B90LandLAG04_lm9)
+B90LandLAG04_lm10 <- lm(B90crab04$SumLandings ~ lag(B90crab04$B90_LegalCPUE))
+summary(B90LandLAG04_lm10)
+
+#Significant
+B90LandLAG04_lm2 <- lm(B90crab04$SumLandings ~ lag(B90crab04$B90_JuvCPUE))
+summary(B90LandLAG04_lm2)
 
 
 
