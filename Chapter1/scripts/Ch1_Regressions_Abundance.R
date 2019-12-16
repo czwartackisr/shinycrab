@@ -11,7 +11,9 @@ crab <- read.csv("./Chapter1/data/CH1data.csv", stringsAsFactors = FALSE)
 
 
 
+###Only regressions with a lagged variable were tested, because what is the point of an index of abundance if no lag?
 # B90 ---------------------------------------------------------------------
+
 
 #B90_CPUE~B90
 B90Abun_lm1 <- lm(crab$B90_CPUE ~ lag(crab$B90_CPUE))
@@ -75,6 +77,7 @@ B90AbunP88_lm2 <- lm(crab$B90_CPUE ~ lag(crab$P88_SublegalCPUE))
 summary(B90AbunP88_lm2)
 B90AbunP88_lm3 <- lm(crab$B90_CPUE ~ lag(crab$P88_LegalCPUE))
 summary(B90AbunP88_lm3)
+### All Insignificant
 
 
 
@@ -151,7 +154,7 @@ summary(B90AbunP88Lead_lm3)
 
 #T38_CPUE~T38
 T38Abun_lm1 <- lm(crab$T38_CPUE ~ lag(crab$T38_JuvCPUE))
-summary(T38Abun_lm1)
+summary(T38Abun_lm1) 
 T38Abun_lm2 <- lm(crab$T38_CPUE ~ lag(crab$T38_SubadultCPUE))
 summary(T38Abun_lm2) # 0.007774 - 0.1809
 T38Abun_lm3 <- lm(crab$T38_CPUE ~ lag(crab$T38_AdultCPUE))

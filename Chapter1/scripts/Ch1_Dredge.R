@@ -5,33 +5,55 @@ library(PerformanceAnalytics)
 library(MuMIn)
 library(MASS)
 
+
 # Read in data ------------------------------------------------------------
 
-crab <- read.csv("./Chapter1/data/CH1data.csv", stringsAsFactors = FALSE)
+crab <- read.csv("./Chapter1/data/CH1_T38Dredge.csv", stringsAsFactors = FALSE)
 #crab is the unprepared for dredge original data
 
 # B90 ---------------------------------------------------------------------
 
-#Landings ~ all B90
-B90HarborCrab <- filter(crab, Year > 1980) %>%
-  dplyr::select(2:16, 52)
-B90HarWanCrab <- filter(crab, Year > 1980) %>%
-  dplyr::select(2:16, 54)
-B90LandingsCrab <- filter(crab, Year > 2003) %>%
-  dplyr::select(2:16, 55)
+#All Variables with 0, 1, 2 years of lag
+T38dredgeAll <- filter(crab, Year > 1981) %>%
+  dplyr::select(2:29)
+
+#All lagged variables
+T38dredgeLag <- filter(crab, Year > 1981) %>%
+  dplyr::select(2,3, 4, 5, 7, 9, 10, 12, 13, 15, 16, 18, 19, 21, 22, 24, 25, 27, 28, 30, 31)
+
+#Only those variables that have a predictive relationship
+T38dredge <- filter(crab, Year > 1981) %>%
+  dplyr::select(2, 3, 4, 9, 10, 12, 15, 16, 19, 21, 22, 24, 25, 27, 28, 30)
 
 
-B90Harbor_lm <- lm(ChsHarborLandings ~ ., data = B90HarborCrab, na.action = "na.fail")
-B90HarborDredge <- dredge(B90Harbor_lm)
-subset(B90HarborDredge, delta < 4)
 
-B90HarWan_lm <- lm(SumWandoHarbor ~ ., data = B90HarWanCrab, na.action = "na.fail")
-B90HarWanDredge <- dredge(B90HarWan_lm)
-subset(B90HarWanDredge, delta < 4)
+T38All_lm <- lm(CPUE ~ ., data = T38dredgeAll, na.action = "na.fail")
+T38AllDredge <- dredge(T38All_lm)
+subset(T38AllDredge, delta < 4)
 
-B90Landings_lm <- lm(SumLandings ~ ., data = B90LandingsCrab, na.action = "na.fail")
-B90LandingsDredge <- dredge(B90Landings_lm)
-subset(B90LandingsDredge, delta < 4)
+T38dredgeLag_lm <- lm(CPUE ~ ., data = T38dredgeLag, na.action = "na.fail")
+T38LagDredge <- dredge(T38dredgeLag_lm)
+subset(T38LagDredge, delta < 4)
+
+T38_lm <- lm(CPUE ~ ., data = T38dredge, na.action = "na.fail")
+T38RelDredge <- dredge(T38_lm)
+subset(T38RelDredge, delta < 4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
