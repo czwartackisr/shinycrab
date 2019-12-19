@@ -7,10 +7,7 @@ editor_options:
   chunk_output_type: inline
 ---
 **Discussion**
-I need help with the Inf, NaN and NA issue still.  Values are not showing up in some of the plots, expecially in SCECAP the Potting Survey.
-
-I think that may be why my regressions used in this chapter's latest analyses show no relationships, when previous analyses show plenty of significance and correlation.  The code for making the plots pretty seems good, but I'm not confident in my reults.  
-
+Mean annual blue crab abundances from South Carolina Department of Natural Resources (SCDNR) fisheries independent population surveys and landings from fisheries dependent SCDNR landings data show high annual variability.
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(ggplot2)
@@ -37,11 +34,6 @@ theme_update(plot.title = element_text(hjust = 0.5))
 ```
 
 ```{r Data Read-In, include=FALSE, warning=FALSE, message=FALSE}
-#crabdata <- read.csv("ClassSizeAbunMANUAL.csv", stringsAsFactors = FALSE) 
-#crabdata = distinct(crabdata, Coll, .keep_all = TRUE) %>%
-  #mutate(StartTime = as.character(StartTime)) %>%
-  #mutate(StartTime = mdy(StartTime))
-#This is the old <2019-12-12 data.  Keeping around for prosperity
 
 crabdata <- read.csv("ClassSizeAbunDistinct_201912.csv", stringsAsFactors = FALSE)
 
@@ -118,7 +110,7 @@ crab1 = rbind(B90T38, P88) %>%
 
 #Source - Eric Hiltz OFM Fisheries Statistics
 #Wrangled in Excel due to confidentiality
-depend <- read.csv("hardCrabsByArea_04252019_CH.csv")
+depend <- read.csv("MonthlyDependent.csv")
 
 
 #Joining Independent and Dependent 
@@ -154,42 +146,64 @@ crab = crab3 %>%
 
 ```{r Figure 1 (Landings and LandingsCPUE Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Total Annual blue crab Landings and total annual Landings CPUE (landings/number of pots pulled) (mean ± standard error) for all reporting areas within the Charleston Harbor watershed. All samples were collected within the Charleston Harbor watershed (Ashley, Wando and Cooper Rivers and Charleston Harbor).", fig.width=10,fig.height=11}
 LandingsCPUEFormTotal = subset(crab,
-                           ProjID == "LandingsCPUE")
+                           ProjID == "LandingsCPUEMean")
+
 formula1 <- lm(LandingsCPUEFormTotal$CPUE ~ LandingsCPUEFormTotal$Year)
+
 LandingsCrab = crab %>%
-  filter(ProjID == c("Landings", "LandingsCPUE")) %>%
+  filter(ProjID == c("LandingsSum", "LandingsCPUEMean")) %>%
   group_by(ProjID) %>%
   mutate(Means = mean(CPUE, na.rm=TRUE),
          SDs = sd(CPUE, na.rm=TRUE),
          Zs = (CPUE-Means)/ifelse(SDs>0,SDs, 0.00000001)) %>%
   ungroup() 
 
+
 LandingsCPUE = ggplot(aes(Year, CPUE), data = subset(LandingsCrab,
-                                                     ProjID == "LandingsCPUE")) +
+                                                     ProjID == "LandingsCPUEMean")) +
   ggtitle("Mean Annual Landings CPUE\nCharleston Harbor (Combined Watersheds)") +
   geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
   stat_summary(fun.data = "mean_se", size = .7) +
   stat_poly_eq(aes(label = ..eq.label..), formula = formula1, parse = TRUE) +
   geom_smooth(method = 'loess', se=FALSE, color="black") +
-  labs(y=expression(Blue~crab~per~tow~or~set^{-1})) +
+  labs(y=expression(Blue~crab~~per~pot~fished^{-1})) +
   expand_limits(x=c(1980, 2022))
 
 
+
+
 LandingsFormTotal = subset(crab,
-                      ProjID == "Landings")
+                      ProjID == "LandingsSum")
 formula2 <- lm(LandingsFormTotal$CPUE ~ LandingsFormTotal$Year)
 Landings = ggplot(aes(Year, CPUE), data = subset(LandingsCrab,
-                                                 ProjID == "Landings")) +
-  ggtitle("Mean Annual Landings\nCharleston Harbor (Combined Watersheds)") +
+                                                 ProjID == "LandingsSum")) +
+  ggtitle("Total Annual Landings\nCharleston Harbor (Combined Watersheds)") +
   geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
   stat_summary(fun.data = "mean_se", size = .7) +
   stat_poly_eq(aes(label = ..eq.label..), formula = formula2, parse = TRUE) +
   geom_smooth(method = 'loess', se=FALSE, color="black") +
-  labs(y=expression(Blue~crab~per~tow~or~set^{-1})) +
+  labs(y=expression(Blue~crab~lbs.~per~year^{-1})) +
   expand_limits(x=c(1980, 2022))
 
 
-LandingsTimeSeries <- plot_grid(Landings, LandingsCPUE, ncol = 1, align = 'hv')
+
+LandingsFormTotal04 = subset(crab,
+                      ProjID == "LandingsSum" &
+                        Year > 2003)
+formula3 <- lm(LandingsFormTotal04$CPUE ~ LandingsFormTotal04$Year)
+Landings04 = ggplot(aes(Year, CPUE), data = subset(LandingsCrab,
+                                                 ProjID == "LandingsSum" &
+                                                   Year > 2003)) +
+  ggtitle("Total Annual Landings\nCharleston Harbor (Combined Watersheds)") +
+  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
+  stat_summary(fun.data = "mean_se", size = .7) +
+  stat_poly_eq(aes(label = ..eq.label..), formula = formula3, parse = TRUE) +
+  geom_smooth(method = 'loess', se=FALSE, color="black") +
+  labs(y=expression(Blue~crab~lbs.~per~year^{-1})) +
+  expand_limits(x=c(1980, 2022))
+
+
+LandingsTimeSeries <- plot_grid(Landings, Landings04, LandingsCPUE, ncol = 1, align = 'hv')
 LandingsTimeSeries
 
 
