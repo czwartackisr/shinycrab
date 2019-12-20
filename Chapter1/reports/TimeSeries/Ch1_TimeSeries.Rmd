@@ -1,0 +1,234 @@
+---
+title: "Chapter 1"
+output:  pdf_document
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r knitr setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r setup, include=FALSE, echo=FALSE}
+library(ggplot2)
+library(lubridate)
+library(tidyr)
+library(dplyr)
+library(Hmisc)
+library(nlme)
+library(cowplot)
+library(gridExtra)
+library(ggpmisc)
+
+theme_set(theme_classic(base_size = 12)+
+            theme(panel.grid.major = element_blank(), 
+                  panel.grid.minor = element_blank(),
+                  panel.background = element_rect(colour = "black", size=0.5))+
+            theme(text=element_text(size=12,  family="serif", colour = "black"))+
+            theme(axis.text = element_text(colour = "black"))+
+            theme(axis.ticks = element_line(colour = "black"))
+)
+update_geom_defaults("point",   list(colour = "black"))
+update_geom_defaults("line",   list(colour = "black"))
+theme_update(plot.title = element_text(hjust = 0.5))
+```
+
+```{r Data Read-In, include=FALSE, warning=FALSE, message=FALSE}
+
+crabdata <- read.csv("ClassSizeAbunDistinct_201912.csv", stringsAsFactors = FALSE)
+
+```
+
+```{r Data Wrangling, include=FALSE, warning=FALSE, message=FALSE}
+B90T38 = crabdata %>% #Formerly crab1
+  select(1:4, 7:16) %>%
+  filter(ProjID %in% c("B90", "T38")) %>%
+  rename(Total = CPUE,
+         Juvenile = JuvCPUE,
+         Subadult = SubadultCPUE,
+         Adult = AdultCPUE,
+         "Immature Female" = ImmatureFemaleCPUE,
+         "Mature Female" = MatureFemaleCPUE,
+         "Immature Male" = ImmatureMaleCPUE,
+         "Mature Male" = MatureMaleCPUE,
+         Sublegal = SublegalCPUE,
+         Legal = LegalCPUE) %>%
+  gather("Lifestage", "CPUE", 5:14) %>%
+  mutate(Year = year(StartTime)) %>%
+  mutate(Month = month(StartTime)) %>%
+  select(1,2,4,3,7,8,5,6) 
+
+T06 = crabdata %>% #Formerly crab1
+  select(1:4, 7:16) %>%
+  filter(ProjID %in% "T06") %>%
+  rename(Total = CPUE) %>%
+  select(1:5) %>%
+  gather("Lifestage", "CPUE", 5) %>%
+  mutate(Year = year(StartTime)) %>%
+  mutate(Month = month(StartTime)) %>%
+  select(1,2,4,3,7,8,5,6) 
+
+
+P88 = crabdata %>% #Formerly crab1
+  select(1:4, 7:16) %>%
+  filter(ProjID %in% "P88") %>%
+  rename(Total = CPUE,
+         Sublegal = SublegalCPUE,
+         Legal = LegalCPUE) %>%
+  distinct(Coll, .keep_all = TRUE) %>%
+  select(1:5, 13, 14) %>%
+  gather("Lifestage", "CPUE", 5:7) %>%
+  mutate(Year = year(StartTime)) %>%
+  mutate(Month = month(StartTime)) %>%
+  select(1,2,4,3,7,8,5,6) 
+
+p88Crab = crabdata %>% #Formerly crab1
+  select(1:4, 7:16) %>%
+  filter(ProjID %in% "P88") 
+
+
+SCECAP = crabdata %>% #Formerly crab1
+  select(1:4, 7:16) %>%
+  filter(ProjID %in% c("E98", "E99")) %>%
+  rename(Total = CPUE,
+         Sublegal = SublegalCPUE,
+         Legal = LegalCPUE,
+         Juvenile = JuvCPUE,
+         Subadult = SubadultCPUE,
+         Adult = AdultCPUE) %>%
+  select(1:8, 13, 14) %>%
+  gather("Lifestage", "CPUE", 5:10) %>%
+  mutate(Year = year(StartTime)) %>%
+  mutate(Month = month(StartTime)) %>%
+  select(1,2,4,3,7,8,5,6) 
+
+crab1 = rbind(B90T38, P88) %>%
+  rbind(., T06) %>%
+  rbind(., SCECAP)
+
+
+
+#Source - Eric Hiltz OFM Fisheries Statistics
+#Wrangled in Excel due to confidentiality
+depend <- read.csv("MonthlyDependent.csv")
+
+
+#Joining Independent and Dependent 
+crab3 = full_join(crab1, depend,
+                  by = c("ProjID", "StationCode", "Year", 
+                         "Month", "Lifestage", "CPUE")) %>%
+  mutate(ProjID = as.factor(ProjID)) %>%
+  mutate(Coll = as.factor(Coll)) %>%
+  mutate(StationCode = as.factor(StationCode)) %>%
+  mutate(StartTime = ymd(StartTime)) %>%
+  mutate(Year = as.numeric(Year)) %>%
+  mutate(Month = as.factor(Month)) %>%
+  mutate(Lifestage = as.factor(Lifestage)) %>%
+  group_by(ProjID, StationCode, Lifestage, Month) %>%
+  mutate(Means = mean(CPUE, na.rm=TRUE),
+         SDs = sd(CPUE, na.rm=TRUE),
+         Zs = (CPUE-Means)/ifelse(SDs>0,SDs, 0.00000001)) %>%
+  ungroup() 
+
+#### IS.FINITE NEEDS TO GO HERE FOR mATURE fEMALE STAT_SUMMS AND GEOM_HLINES
+
+crab = crab3 %>%
+  mutate(ProjID = recode(ProjID, 'B90' = "Harbor Trawl",
+                         'T38' = "Creek Trawl",
+                         'T06' = "Trammel Net",
+                         'P88' = "Ashley Potting",
+                         'E98' = "SCECAP Creek Trawl",
+                         'E99' = "SCECAP Harbor Trawl"))
+
+
+```
+
+##Landings Values Computation Methods
+Landings are a sum of total pounds of landings accross all reporting areas in the Charleston Harbor watershed from 1972-2018. These data show crab landings reported in the Ashley River (2003-2018), Cooper River (2003-2018), Wando River (1974, 1978-2018) and Charleston Harbor (1972-2018).  Landings from 2003 to 2018 are the only time period covering all 4 reporting areas.  Standard error bars for these total sum landings show a sum total monthly range across all reporting areas.  
+
+The Landings04 data set is the Total Landings dataset subset to 2003-2018.  2003 was the first year for landings in the Ashley and Cooper Rivers, and the first first year for effort data.  
+
+Landings CPUE are landings with number of pots pulled as a metric of fishing effort.  These mean annual data were computed as: 
+$\overline{X}$annual($\overline{x}$monthly($\Sigma$lbs month/year/watershed / $\Sigma$pots pulled month/year/watershed)) or:
+Sum total monthly/Annual (ex. 01-1980) landings by watershed -> mean monthly/annual all watersheds -> mean annual all watersheds
+
+###Questions
+Should I plot number of pots pulled?  I would like to stay away from talk of the fishery, as it would be distracting from the message of the chapter.  
+
+```{r Figure 1, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="(A) Total annual blue crab Landings (mean ± standard error),(B) total annual blue crab landings (mean ± standard error) subset to 2004-2018, and (C) mean annual landings CPUE (mean ± standard error) for all reporting areas within the Charleston Harbor watershed (Ashley River, Wando River, Cooper River and Charleston Harbor)", fig.width=10,fig.height=11}
+LandingsCPUEFormTotal = subset(crab,
+                           ProjID == "LandingsCPUEMean")
+
+formula1 <- lm(LandingsCPUEFormTotal$CPUE ~ LandingsCPUEFormTotal$Year)
+
+LandingsCrab = crab %>%
+  filter(ProjID == c("LandingsSum", "LandingsCPUEMean")) %>%
+  group_by(ProjID) %>%
+  mutate(Means = mean(CPUE, na.rm=TRUE),
+         SDs = sd(CPUE, na.rm=TRUE),
+         Zs = (CPUE-Means)/ifelse(SDs>0,SDs, 0.00000001)) %>%
+  ungroup() 
+
+
+LandingsCPUE = ggplot(aes(Year, CPUE), data = subset(LandingsCrab,
+                                                     ProjID == "LandingsCPUEMean")) +
+  ggtitle("Mean Annual Landings CPUE\nCharleston Harbor (Combined Watersheds)") +
+  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
+  stat_summary(fun.data = "mean_se", size = .7) +
+  stat_poly_eq(aes(label = ..eq.label..), formula = formula1, parse = TRUE) +
+  geom_smooth(method = 'loess', se=FALSE, color="black") +
+  labs(y=expression(Blue~crab~~per~pot~fished^{-1})) +
+  expand_limits(x=c(1980, 2022)) 
+
+
+
+
+LandingsFormTotal = subset(crab,
+                      ProjID == "LandingsSum")
+formula2 <- lm(LandingsFormTotal$CPUE ~ LandingsFormTotal$Year)
+Landings = ggplot(aes(Year, CPUE), data = subset(LandingsCrab,
+                                                 ProjID == "LandingsSum")) +
+  ggtitle("Total Annual Landings\nCharleston Harbor (Combined Watersheds)") +
+  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
+  stat_summary(fun.data = "mean_se", size = .7) +
+  stat_poly_eq(aes(label = ..eq.label..), formula = formula2, parse = TRUE) +
+  geom_smooth(method = 'loess', se=FALSE, color="black") +
+  labs(y=expression(Blue~crab~lbs.~per~year^{-1})) +
+  expand_limits(x=c(1980, 2022)) 
+
+
+
+LandingsFormTotal04 = subset(crab,
+                      ProjID == "LandingsSum" &
+                        Year > 2002)
+formula3 <- lm(LandingsFormTotal04$CPUE ~ LandingsFormTotal04$Year)
+Landings04 = ggplot(aes(Year, CPUE), data = subset(LandingsCrab,
+                                                 ProjID == "LandingsSum" &
+                                                   Year > 2002)) +
+  ggtitle("Total Annual Landings\nCharleston Harbor (Combined Watersheds)") +
+  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
+  stat_summary(fun.data = "mean_se", size = .7) +
+  stat_poly_eq(aes(label = ..eq.label..), formula = formula3, parse = TRUE) +
+  geom_smooth(method = 'loess', se=FALSE, color="black") +
+  labs(y=expression(Blue~crab~lbs.~per~year^{-1})) +
+  expand_limits(x=c(1980, 2022)) 
+  
+
+
+LandingsTimeSeries <- plot_grid(Landings, Landings04, LandingsCPUE, ncol = 1, align = 'hv', labels = c("A", "B", "C"))
+
+  LandingsTimeSeries
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
