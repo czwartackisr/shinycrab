@@ -1,9 +1,10 @@
 ---
-title: "Ch1_SingleRegressionPlots"
-author: "Stephen Czwartacki"
-date: "12/21/2019"
-output: html_document
+output: pdf_document
 ---
+**Discussion**
+OLS single regression models were constructed using mean annual total CPUEs for all surveys as the dependent varaibale and mean annual CPUEs of every lifestage of every survey with 1- and 2- yr. lags as the explanatory variable - i.e., the mean annual CPUEs of all available blue crab lifestages of all 6 SCDNR fisheries independent surveys were used as independent explanatory variables to predict Harbor Trawl total CPUE.  Results show only the Creek Trawl has consist significant results accross all lifestages lagged (Table 3).  One significant relationship predicting Harbor Trawl CPUEs was found (Table 4), and one significant relationship predicting the Trammel Net survey (Table 4) were found.  Scatterplots for select models showing the highest correlation scores for each survey's total CPUE dependent variable were generated showing none of the models have a high correlation (Figure 16).
+
+Each explanatory variable populating a significant relatioship model will be used to populate an exploratory dredge to suggest multiple regression models.
 
 ```{r knitr setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -44,28 +45,6 @@ crab <- read.csv("CH1data.csv", stringsAsFactors = FALSE)
 # 1-yr lag
 B90AbunT38Lead_lm3 <- lm(lead(crab$B90_CPUE) ~ lag(crab$T38_SubadultCPUE))
 summary(B90AbunT38Lead_lm3)
-```
-
-```{r Figure 16, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="OLS single regression predicting Harbor Trawl total CPUE by Creek Trawl subadults with a 2-yr lag.  This is the only significant relationship predicting the CRMS Harbor Trawl total CPUE.", fig.width=10,fig.height=11}
-B90AbunT38Lead_lm3 = lm(crab$B90_CPUE ~ lag(crab$T38_SubadultCPUE, 2))
-B90AbunT38LeadPlot = ggplot(aes(B90_CPUE, lag(crab$T38_SubadultCPUE, 2)), data = crab) +
-  ggtitle("Harbor Trawl CPUE \nby Creek Trawl Subadult (2-yr. lag)") +
-  geom_point() +
-  stat_fit_glance(method = "lm", method.args = list(formula = B90AbunT38Lead_lm3),
-                  label.x = "right",
-                  label.y = "bottom",
-                  aes(label = paste("italic(P)*\"-value = \"*", 
-                                    signif(..p.value.., digits = 4), sep = "")),
-                  parse = TRUE) +
-  stat_poly_eq(aes(label = paste(..rr.label..)), 
-               label.x.npc = "right", label.y.npc = 0.08,
-               formula = B90AbunT38Lead_lm3,rr.digits = 4,  parse = TRUE, size = 4) +
-  geom_smooth(method = 'lm', se=FALSE, color="black") +
-  labs(y=expression(Harbor~Trawl~CPUE~year^{-1}),
-       x=expression(Creek~Trawl~subadult~CPUE~"(2-yr lag)"~year^{-1}))
-
-B90AbunT38LeadPlot
-
 ```
 
 ```{r List of T38 Models, include=FALSE, warning=FALSE, message=FALSE}
@@ -109,7 +88,32 @@ summary(T38AbunLead_lm10) # 0.004898 - 0.205
 
 ```
 
-```{r Figure 17, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="OLS single regression predicting Creek Trawl total CPUE by Creek Trawl mature males with a 2-yr lag.  This is the the most significant relationship predicting the CRMS Creek Trawl total CPUE.", fig.width=10,fig.height=11}
+```{r List of T06 Models, include=FALSE, warning=FALSE, message=FALSE}
+# 1-yr lag
+T06AbunB90_lm7 <- lm(crab$T06_CPUE ~ lag(crab$B90_MatureFemaleCPUE))
+summary(T06AbunB90_lm7)
+
+```
+
+```{r Plot Creation, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+B90AbunT38Lead_lm3 = lm(crab$B90_CPUE ~ lag(crab$T38_SubadultCPUE, 2))
+B90AbunT38LeadPlot = ggplot(aes(B90_CPUE, lag(crab$T38_SubadultCPUE, 2)), data = crab) +
+  ggtitle("Harbor Trawl CPUE \nby Creek Trawl Subadult (2-yr. lag)") +
+  geom_point() +
+  stat_fit_glance(method = "lm", method.args = list(formula = B90AbunT38Lead_lm3),
+                  label.x = "right",
+                  label.y = "bottom",
+                  aes(label = paste("italic(P)*\"-value = \"*", 
+                                    signif(..p.value.., digits = 4), sep = "")),
+                  parse = TRUE) +
+  stat_poly_eq(aes(label = paste(..rr.label..)), 
+               label.x.npc = "right", label.y.npc = 0.12,
+               formula = B90AbunT38Lead_lm3,rr.digits = 4,  parse = TRUE, size = 4) +
+  geom_smooth(method = 'lm', se=FALSE, color="black") +
+  labs(y=expression(Harbor~Trawl~CPUE~year^{-1}),
+       x=expression(Creek~Trawl~subadult~CPUE~"(2-yr lag)"~year^{-1}))
+
+
 T38AbunLead_lm2 = lm(crab$T38_CPUE ~ lag(crab$T38_SubadultCPUE, 2))
 T38AbunLeadPlot = ggplot(aes(T38_CPUE, lag(crab$T38_SubadultCPUE, 2)), data = crab) +
   ggtitle("Creek Trawl CPUE \nby Creek Trawl Subadult (2-yr. lag)") +
@@ -121,24 +125,12 @@ T38AbunLeadPlot = ggplot(aes(T38_CPUE, lag(crab$T38_SubadultCPUE, 2)), data = cr
                                     signif(..p.value.., digits = 4), sep = "")),
                   parse = TRUE) +
   stat_poly_eq(aes(label = paste(..rr.label..)), 
-               label.x.npc = "right", label.y.npc = 0.08,
+               label.x.npc = "right", label.y.npc = 0.12,
                formula = T38AbunLead_lm2,rr.digits = 4,  parse = TRUE, size = 4) +
   geom_smooth(method = 'lm', se=FALSE, color="black") +
   labs(y=expression(Creek~Trawl~CPUE~year^{-1}),
        x=expression(Creek~Trawl~subadult~CPUE~"(2-yr lag)"~year^{-1}))
 
-T38AbunLeadPlot
-
-```
-
-```{r List of T06 Models, include=FALSE, warning=FALSE, message=FALSE}
-# 1-yr lag
-T06AbunB90_lm7 <- lm(crab$T06_CPUE ~ lag(crab$B90_MatureFemaleCPUE))
-summary(T06AbunB90_lm7)
-
-```
-
-```{r Figure 19, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="OLS single regression predicting Trammel Net  total CPUE by Harbor Trawl mature females with a 1-yr lag.  This is the the only significant relationship predicting the Trammel Net total CPUE.", fig.width=10,fig.height=11}
 T06AbunB90_lm7 = lm(crab$T06_CPUE ~ lag(crab$B90_MatureFemaleCPUE, 1))
 T06AbunB90MFPlot = ggplot(aes(T38_CPUE, lag(crab$T38_SubadultCPUE, 1)), data = crab) +
   ggtitle("Trammel Net CPUE \nby Harbor Trawl Mature Female CPUE (1-yr. lag)") +
@@ -150,14 +142,17 @@ T06AbunB90MFPlot = ggplot(aes(T38_CPUE, lag(crab$T38_SubadultCPUE, 1)), data = c
                                     signif(..p.value.., digits = 4), sep = "")),
                   parse = TRUE) +
   stat_poly_eq(aes(label = paste(..rr.label..)), 
-               label.x.npc = "right", label.y.npc = 0.08,
+               label.x.npc = "right", label.y.npc = 0.12,
                formula = T06AbunB90_lm7,rr.digits = 4,  parse = TRUE, size = 4) +
   geom_smooth(method = 'lm', se=FALSE, color="black") +
   labs(y=expression(Harbor~Trawl~CPUE~year^{-1}),
        x=expression(Creek~Trawl~mature~female~"(1-yr lag)"~year^{-1}))
 
-T06AbunB90MFPlot
-
 ```
 
+```{r Figure 16, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Ordinary Least Squares regression plots of select significant explanatory relatioships using lagged variables to predict survey total CPUEs.  Mean annual Harbor Trawl total CPUE by Creek Trawl subadults with a 1-yr lag (A), mean annual Creek Trawl total CPUE by Creek Trawl subadult CPUE with a 2-yr. lag (B), and Trammel Net total CPUE by Harbor Trawl mature female CPUE with a 1-yr. lag (C).", fig.width=10,fig.height=11}
 
+SingleRegressPlot <- plot_grid(B90AbunT38LeadPlot, T38AbunLeadPlot, T06AbunB90MFPlot, ncol = 1, align = 'hv', labels = c("A", "B", "C")) 
+SingleRegressPlot
+
+```

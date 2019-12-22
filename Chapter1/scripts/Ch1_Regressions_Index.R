@@ -13,8 +13,8 @@ crab <- read.csv("./Chapter1/data/CH1_T38Dredge.csv", stringsAsFactors = FALSE)
 
 # Multiple Regression -----------------------------------------------------
 
-# Additive
-T38Index_lm1 <- lm(crab$CPUE ~ crab$IM_2*crab$MM_1)
+# Interactive
+T38Index_lm1 <- lm(crab$CPUE ~ crab$IM_2 * crab$MM_1)
 T38Index_lm2 <- lm(crab$CPUE ~ crab$MM_1 * crab$Subadult_2)
 T38Index_lm3 <- lm(crab$CPUE ~ crab$MM_1 * crab$MM_2 * crab$Subadult_2)
 T38Index_lm4 <- lm(crab$CPUE ~ crab$MM_1 * crab$Sublegal_2)
@@ -60,7 +60,7 @@ summary(T38Index_lm20)
 summary(T38Index_lm21)
 
 
-#Interactive
+#Additive
 
 T38Ind_lm1 <- lm(crab$CPUE ~ crab$IM_2+crab$MM_1)
 T38Ind_lm2 <- lm(crab$CPUE ~ crab$MM_1+crab$Subadult_2)
