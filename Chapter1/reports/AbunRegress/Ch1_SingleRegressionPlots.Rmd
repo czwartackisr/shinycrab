@@ -1,0 +1,163 @@
+---
+title: "Ch1_SingleRegressionPlots"
+author: "Stephen Czwartacki"
+date: "12/21/2019"
+output: html_document
+---
+
+```{r knitr setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r setup, include=FALSE, echo=FALSE}
+library(ggplot2)
+library(lubridate)
+library(tidyr)
+library(dplyr)
+library(Hmisc)
+library(nlme)
+library(cowplot)
+library(gridExtra)
+library(ggpmisc)
+
+theme_set(theme_classic(base_size = 12)+
+            theme(panel.grid.major = element_blank(), 
+                  panel.grid.minor = element_blank(),
+                  panel.background = element_rect(colour = "black", size=0.5))+
+            theme(text=element_text(size=12,  family="serif", colour = "black"))+
+            theme(axis.text = element_text(colour = "black"))+
+            theme(axis.ticks = element_line(colour = "black"))
+)
+update_geom_defaults("point",   list(colour = "black"))
+update_geom_defaults("line",   list(colour = "black"))
+theme_update(plot.title = element_text(hjust = 0.5))
+```
+
+```{r Data Read-In, include=FALSE, warning=FALSE, message=FALSE}
+
+crab <- read.csv("CH1data.csv", stringsAsFactors = FALSE)
+
+```
+
+```{r List of B90 Models, include=FALSE, warning=FALSE, message=FALSE}
+# B90
+# 1-yr lag
+B90AbunT38Lead_lm3 <- lm(lead(crab$B90_CPUE) ~ lag(crab$T38_SubadultCPUE))
+summary(B90AbunT38Lead_lm3)
+```
+
+```{r Figure 16, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="OLS single regression predicting Harbor Trawl total CPUE by Creek Trawl subadults with a 2-yr lag.  This is the only significant relationship predicting the CRMS Harbor Trawl total CPUE.", fig.width=10,fig.height=11}
+B90AbunT38Lead_lm3 = lm(crab$B90_CPUE ~ lag(crab$T38_SubadultCPUE, 2))
+B90AbunT38LeadPlot = ggplot(aes(B90_CPUE, lag(crab$T38_SubadultCPUE, 2)), data = crab) +
+  ggtitle("Harbor Trawl CPUE \nby Creek Trawl Subadult (2-yr. lag)") +
+  geom_point() +
+  stat_fit_glance(method = "lm", method.args = list(formula = B90AbunT38Lead_lm3),
+                  label.x = "right",
+                  label.y = "bottom",
+                  aes(label = paste("italic(P)*\"-value = \"*", 
+                                    signif(..p.value.., digits = 4), sep = "")),
+                  parse = TRUE) +
+  stat_poly_eq(aes(label = paste(..rr.label..)), 
+               label.x.npc = "right", label.y.npc = 0.08,
+               formula = B90AbunT38Lead_lm3,rr.digits = 4,  parse = TRUE, size = 4) +
+  geom_smooth(method = 'lm', se=FALSE, color="black") +
+  labs(y=expression(Harbor~Trawl~CPUE~year^{-1}),
+       x=expression(Creek~Trawl~subadult~CPUE~"(2-yr lag)"~year^{-1}))
+
+B90AbunT38LeadPlot
+
+```
+
+```{r List of T38 Models, include=FALSE, warning=FALSE, message=FALSE}
+
+# T38
+# 1-yr lag
+T38Abun_lm2 <- lm(crab$T38_CPUE ~ lag(crab$T38_SubadultCPUE))
+summary(T38Abun_lm2) # 0.007774 - 0.1809
+T38Abun_lm3 <- lm(crab$T38_CPUE ~ lag(crab$T38_AdultCPUE))
+summary(T38Abun_lm3) # 0.0312 - 0.1225
+T38Abun_lm4 <- lm(crab$T38_CPUE ~ lag(crab$T38_ImmatureFemaleCPUE))
+summary(T38Abun_lm4) # 0.05007 - 0.1025
+T38Abun_lm5 <- lm(crab$T38_CPUE ~ lag(crab$T38_ImmatureMaleCPUE))
+summary(T38Abun_lm5) # 0.04854 - 0.1038
+T38Abun_lm7 <- lm(crab$T38_CPUE ~ lag(crab$T38_MatureMaleCPUE))
+summary(T38Abun_lm7) # 0.002197 - 0.2321
+T38Abun_lm8 <- lm(crab$T38_CPUE ~ lag(crab$T38_SublegalCPUE))
+summary(T38Abun_lm8) # 0.0252 - 0.1314
+T38Abun_lm9 <- lm(crab$T38_CPUE ~ lag(crab$T38_LegalCPUE))
+summary(T38Abun_lm9) # 0.0312 - 0.1225
+T38Abun_lm10 <- lm(crab$T38_CPUE ~ lag(crab$T38_CPUE))
+summary(T38Abun_lm10) # 0.01906 - 0.1434
+
+# 2-yr lag
+T38AbunLead_lm2 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_SubadultCPUE))
+summary(T38AbunLead_lm2) # 0.001926 - 0.2432
+T38AbunLead_lm4 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_ImmatureFemaleCPUE))
+summary(T38AbunLead_lm4) # 0.01038 - 0.1733
+T38AbunLead_lm5 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_ImmatureMaleCPUE))
+summary(T38AbunLead_lm5) # 0.004023 - 0.2131
+T38AbunLead_lm6 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_MatureFemaleCPUE))
+summary(T38AbunLead_lm6) # 0.019 - 0.1473
+T38AbunLead_lm7 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_MatureMaleCPUE))
+summary(T38AbunLead_lm7) # 0.03076 - 0.1265
+T38AbunLead_lm8 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_SublegalCPUE))
+summary(T38AbunLead_lm8) # 0.004317 - 0.2102
+T38AbunLead_lm10 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_CPUE))
+summary(T38AbunLead_lm10) # 0.004898 - 0.205
+
+
+
+```
+
+```{r Figure 17, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="OLS single regression predicting Creek Trawl total CPUE by Creek Trawl mature males with a 2-yr lag.  This is the the most significant relationship predicting the CRMS Creek Trawl total CPUE.", fig.width=10,fig.height=11}
+T38AbunLead_lm2 = lm(crab$T38_CPUE ~ lag(crab$T38_SubadultCPUE, 2))
+T38AbunLeadPlot = ggplot(aes(T38_CPUE, lag(crab$T38_SubadultCPUE, 2)), data = crab) +
+  ggtitle("Creek Trawl CPUE \nby Creek Trawl Subadult (2-yr. lag)") +
+  geom_point() +
+  stat_fit_glance(method = "lm", method.args = list(formula = T38AbunLead_lm2),
+                  label.x = "right",
+                  label.y = "bottom",
+                  aes(label = paste("italic(P)*\"-value = \"*", 
+                                    signif(..p.value.., digits = 4), sep = "")),
+                  parse = TRUE) +
+  stat_poly_eq(aes(label = paste(..rr.label..)), 
+               label.x.npc = "right", label.y.npc = 0.08,
+               formula = T38AbunLead_lm2,rr.digits = 4,  parse = TRUE, size = 4) +
+  geom_smooth(method = 'lm', se=FALSE, color="black") +
+  labs(y=expression(Creek~Trawl~CPUE~year^{-1}),
+       x=expression(Creek~Trawl~subadult~CPUE~"(2-yr lag)"~year^{-1}))
+
+T38AbunLeadPlot
+
+```
+
+```{r List of T06 Models, include=FALSE, warning=FALSE, message=FALSE}
+# 1-yr lag
+T06AbunB90_lm7 <- lm(crab$T06_CPUE ~ lag(crab$B90_MatureFemaleCPUE))
+summary(T06AbunB90_lm7)
+
+```
+
+```{r Figure 19, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="OLS single regression predicting Trammel Net  total CPUE by Harbor Trawl mature females with a 1-yr lag.  This is the the only significant relationship predicting the Trammel Net total CPUE.", fig.width=10,fig.height=11}
+T06AbunB90_lm7 = lm(crab$T06_CPUE ~ lag(crab$B90_MatureFemaleCPUE, 1))
+T06AbunB90MFPlot = ggplot(aes(T38_CPUE, lag(crab$T38_SubadultCPUE, 1)), data = crab) +
+  ggtitle("Trammel Net CPUE \nby Harbor Trawl Mature Female CPUE (1-yr. lag)") +
+  geom_point() +
+  stat_fit_glance(method = "lm", method.args = list(formula = T06AbunB90_lm7),
+                  label.x = "right",
+                  label.y = "bottom",
+                  aes(label = paste("italic(P)*\"-value = \"*", 
+                                    signif(..p.value.., digits = 4), sep = "")),
+                  parse = TRUE) +
+  stat_poly_eq(aes(label = paste(..rr.label..)), 
+               label.x.npc = "right", label.y.npc = 0.08,
+               formula = T06AbunB90_lm7,rr.digits = 4,  parse = TRUE, size = 4) +
+  geom_smooth(method = 'lm', se=FALSE, color="black") +
+  labs(y=expression(Harbor~Trawl~CPUE~year^{-1}),
+       x=expression(Creek~Trawl~mature~female~"(1-yr lag)"~year^{-1}))
+
+T06AbunB90MFPlot
+
+```
+
+

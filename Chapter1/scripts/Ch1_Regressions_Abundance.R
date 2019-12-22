@@ -28,7 +28,7 @@ B90Abun_lm5 <- lm(crab$B90_CPUE ~ lag(crab$B90_ImmatureFemaleCPUE))
 summary(B90Abun_lm5)
 B90Abun_lm6 <- lm(crab$B90_CPUE ~ lag(crab$B90_ImmatureMaleCPUE))
 summary(B90Abun_lm6)
-B90Abun_lm7- lm(crab$B90_CPUE ~ lag(crab$B90_MatureFemaleCPUE))
+B90Abun_lm7 <- lm(crab$B90_CPUE ~ lag(crab$B90_MatureFemaleCPUE))
 summary(B90Abun_lm7)
 B90Abun_lm8 <- lm(crab$B90_CPUE ~ lag(crab$B90_MatureMaleCPUE))
 summary(B90Abun_lm8)
@@ -229,19 +229,19 @@ summary(T38AbunLead_lm9)
 
 ### Significant
 T38AbunLead_lm2 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_SubadultCPUE))
-summary(T38AbunLead_lm2) 
+summary(T38AbunLead_lm2) # 0.001926 - 0.2432
 T38AbunLead_lm4 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_ImmatureFemaleCPUE))
-summary(T38AbunLead_lm4) 
+summary(T38AbunLead_lm4) # 0.01038 - 0.1733
 T38AbunLead_lm5 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_ImmatureMaleCPUE))
-summary(T38AbunLead_lm5) 
+summary(T38AbunLead_lm5) # 0.004023 - 0.2131
 T38AbunLead_lm6 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_MatureFemaleCPUE))
-summary(T38AbunLead_lm6) 
+summary(T38AbunLead_lm6) # 0.019 - 0.1473
 T38AbunLead_lm7 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_MatureMaleCPUE))
-summary(T38AbunLead_lm7) 
+summary(T38AbunLead_lm7) # 0.03076 - 0.1265
 T38AbunLead_lm8 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_SublegalCPUE))
-summary(T38AbunLead_lm8) 
+summary(T38AbunLead_lm8) # 0.004317 - 0.2102
 T38AbunLead_lm10 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_CPUE))
-summary(T38AbunLead_lm10) 
+summary(T38AbunLead_lm10) # 0.004898 - 0.205
 
 
 #T38_CPUE~B90
@@ -284,6 +284,8 @@ summary(T38AbunP88Lead_lm3)
 # T06 ---------------------------------------------------------------------
 
 #T06~B90
+
+#Insignificant
 T06AbunB90_lm1 <- lm(crab$T06_CPUE ~ lag(crab$B90_CPUE))
 summary(T06AbunB90_lm1)
 T06AbunB90_lm2 <- lm(crab$T06_CPUE ~ lag(crab$B90_JuvCPUE))
@@ -296,15 +298,16 @@ T06AbunB90_lm5 <- lm(crab$T06_CPUE ~ lag(crab$B90_ImmatureFemaleCPUE))
 summary(T06AbunB90_lm5) 
 T06AbunB90_lm6 <- lm(crab$T06_CPUE ~ lag(crab$B90_ImmatureMaleCPUE))
 summary(T06AbunB90_lm6) 
-T06AbunB90_lm7 <- lm(crab$T06_CPUE ~ lag(crab$B90_MatureFemaleCPUE))
-summary(T06AbunB90_lm7)
 T06AbunB90_lm8<- lm(crab$T06_CPUE ~ lag(crab$B90_MatureMaleCPUE))
 summary(T06AbunB90_lm8) 
 T06AbunB90_lm9 <- lm(crab$T06_CPUE ~ lag(crab$B90_SublegalCPUE))
 summary(T06AbunB90_lm9) 
 T06AbunB90_lm10 <- lm(crab$T06_CPUE ~ lag(crab$B90_LegalCPUE))
 summary(T06AbunB90_lm10) 
-# All Insignificant
+
+#Significant
+T06AbunB90_lm7 <- lm(crab$T06_CPUE ~ lag(crab$B90_MatureFemaleCPUE))
+summary(T06AbunB90_lm7)
 
 
 #T06~T38

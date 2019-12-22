@@ -1,0 +1,68 @@
+---
+title: "Untitled"
+author: "Stephen Czwartacki"
+date: "12/21/2019"
+output:
+  pdf_document: default
+  
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+```{r, echo=FALSE, warning=FALSE, include=FALSE}
+library(knitr)
+library(tinytex)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(kableExtra)
+options(tinytex.verbose = TRUE)
+```
+
+
+```{r, echo=FALSE, warning=FALSE, include=FALSE}
+AbunRegressTable = read.csv("SingleAbundanceRegress.csv") %>%
+  rename("Degrees of Freedom" = Degrees.of.Freedom,
+         "Explanatory Variable" = Explanatory.Variable,
+         "Dependent Variable" = Dependent.Variable,
+         "p-value" = p.value,
+         "F-statistic" = F.statistic) %>%
+  dplyr::select(2, 4:8)
+
+AbunRegressTable2 = read.csv("SingleAbundanceRegressOthers.csv") %>%
+  rename("Degrees of Freedom" = Degrees.of.Freedom,
+         "Explanatory Variable" = Explanatory.Variable,
+         "Dependent Variable" = Dependent.Variable,
+         "p-value" = p.value,
+         "F-statistic" = F.statistic) %>%
+  dplyr::select(2:7)
+
+```
+
+```{r T38, include=TRUE, echo=FALSE, warning=FALSE, fig.cap="Table 3: All significant OLS regression relationships between Creek Trawl total CPUEs dependent variable and all survey CPUEs from all size and classes with a 1-yr and 2-yr lag (explanatory variable)."}
+Abun_Table = kable(AbunRegressTable, "latex", booktabs = T) %>%
+  kable_styling(latex_options = "scale_down" , font_size = 8) %>%
+  add_header_above(c(" " = 2, "Summary Statistics" = 4)) %>%
+  column_spec(7, width = "5em") %>%
+  column_spec(3:6, width = "6em") %>%
+  column_spec(8, width = "7em")
+
+Abun_Table
+
+```
+
+
+```{r non-T38, include=TRUE, echo=FALSE, warning=FALSE, fig.cap="Table 4: All significant OLS regression relationships between all non-Creek Trawl survey total CPUEs dependent variable and all survey CPUEs from all size and classes with a 1-yr and 2-yr lag (explanatory variable)."}
+Abun_Table2 = kable(AbunRegressTable2, "latex", booktabs = T) %>%
+  kable_styling(latex_options = "scale_down" , font_size = 8) %>%
+  add_header_above(c(" " = 2, "Summary Statistics" = 4)) %>%
+  pack_rows("Harbor Trawl", 1,1) %>%
+  pack_rows("Trammel Net", 2,2) 
+
+Abun_Table2
+
+```

@@ -1,0 +1,3 @@
+DepSurveyu,Dependent Variable ,Explanatory Variable,p-value,r2,F-statistic,Degrees of Freedom
+B90,Total CPUE,Harbor Trawl Subadult (1-yr. lag),0.02906,0.1289,5.181,35
+T06,Total CPUE,Harbor Trawl Mature Female (1-yr lag),0.04651,0.36137,5.028,11
