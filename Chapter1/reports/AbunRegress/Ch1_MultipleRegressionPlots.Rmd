@@ -19,6 +19,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r setup, include=FALSE, echo=FALSE}
 library(sjPlot)
 library(ggplot2)
+library(dplyr)
+library(tidyr)
 
 theme_set(theme_classic(base_size = 12)+
             theme(panel.grid.major = element_blank(), 
@@ -35,33 +37,34 @@ theme_update(plot.title = element_text(hjust = 0.5))
 
 ```{r Data Read-In, include=FALSE, warning=FALSE, message=FALSE}
 
-crab <- read.csv("CH1_T38Dredge.csv", stringsAsFactors = FALSE)
+crab <- read.csv("CH1_T38Dredge.csv", stringsAsFactors = FALSE) %>%
+  dplyr::rename("ImmatureMale1" = IM_1,
+                "ImmatureMale2" = IM_2,
+                "MatureMale1" = MM_1,
+                "Subadult2" = Subadult_2,
+                "Sublegal2" = Sublegal_2,
+                "CPUE2" = CPUE_2,
+                "CPUE1" = CPUE_1,
+                "ImmatureFemale1" = IF_1)
 
 ```
 
 ```{r T38 relevant dredge Models, include=FALSE, warning=FALSE, message=FALSE}
-T38Ind_lm1=lm(crab$CPUE ~ crab$IM_2 + crab$MM_1)
-T38Ind_lm2=lm(crab$CPUE ~ crab$MM_1 + crab$Subadult_2)
-T38Ind_lm4=lm(crab$CPUE ~ crab$MM_1 + crab$Sublegal_2)
-T38Ind_lm8=lm(crab$CPUE ~ crab$CPUE_2 + crab$MM_1)
-T38Ind_lm9=lm(crab$CPUE ~ crab$CPUE_1 + crab$IF_1 + crab$IM_2)
+T38Ind_lm1=lm(CPUE ~ ImmatureMale2 + MatureMale1, data = crab)
+T38Ind_lm2=lm(CPUE ~ MatureMale1 + Subadult2, data = crab)
+T38Ind_lm4=lm(CPUE ~ MatureMale1 + Sublegal2, data = crab)
+T38Ind_lm8=lm(CPUE ~ CPUE2 + MatureMale1, data = crab)
+T38Ind_lm9=lm(CPUE ~ CPUE1 + ImmatureFemale1 + ImmatureMale2, data = crab)
 
 T38Table1 <- tab_model(T38Ind_lm1,T38Ind_lm2, auto.label = FALSE)
 T38Table2 <- tab_model(T38Ind_lm4, T38Ind_lm8, auto.label = FALSE)
 T38Table3 <- tab_model(T38Ind_lm9, auto.label = FALSE)
-
+T38Table4 <- tab_model(T38Ind_lm1,T38Ind_lm2, T38Ind_lm4, T38Ind_lm8, T38Ind_lm9, auto.label = TRUE)
 ```
 
 
 **Table 6:** OLS multiple regression model results suggested by the dredge with all main effects significant. 
 ```{r T381, include=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
-T38Table1
+T38Table4
 ```
-**Table 7:** OLS multiple regression model results suggested by the dredge with all main effects significant. 
-```{r T382, include=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
-T38Table2
-```
-**Table 8:** OLS multiple regression model results suggested by the dredge with all main effects significant. 
-```{r T383, include=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
-T38Table3
-```
+
