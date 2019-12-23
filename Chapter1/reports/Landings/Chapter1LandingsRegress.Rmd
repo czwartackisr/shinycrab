@@ -1,5 +1,5 @@
 ---
-title: "Index of Abundance Using  \nSum Landings for Charleston Harbor"
+title: "Charleston Harbor Sum Landings Regressions"
 output:
   pdf_document: default
   word_document: default
@@ -61,7 +61,7 @@ crabdata <- read.csv("ClassSizeAbunDistinct_201912.csv", stringsAsFactors = FALS
 
 #Source - Eric Hiltz OFM Fisheries Statistics
 #Wrangled in Excel due to confidentiality
-depend <- read.csv("hardCrabsByArea_04252019_CH.csv")
+depend <- read.csv("MonthlyDependent.csv")
 
 ```
 
@@ -151,7 +151,7 @@ crab3 = full_join(crab1, depend,
          Zs = (CPUE-Means)/ifelse(SDs>0,SDs, 0.00000001)) %>%
   ungroup() 
 
-#### IS.FINITE NEEDS TO GO HERE FOR mATURE fEMALE STAT_SUMMS AND GEOM_HLINES
+unique(crab3$ProjID)
 
 crab = crab3 %>%
   mutate(ProjID = recode(ProjID, 'B90' = "Harbor Trawl",
@@ -160,11 +160,11 @@ crab = crab3 %>%
                          'P88' = "Ashley Potting",
                          'E98' = "SCECAP Creek Trawl",
                          'E99' = "SCECAP Harbor Trawl"))
-crab$CPUE[is.infinite(crab$CPUE)] <- NA
+#crab$CPUE[is.infinite(crab$CPUE)] <- NA
 
 
 Landings = crab %>%
-  filter(ProjID == c("Landings", "LandingsCPUE")) %>%
+  filter(ProjID == c("LandingsSum", "LandingsCPUEMean")) %>%
   group_by(ProjID, Lifestage, Month, Year) %>%
   summarise_at(vars(CPUE), funs(mean(., na.rm = TRUE))) %>%
   ungroup() %>%
