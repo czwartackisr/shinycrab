@@ -1,16 +1,18 @@
 ---
-output:  
+output:
+  html_document:
+    df_print: paged
   pdf_document:
-    fig_caption: true
-
+    fig_caption: yes
+  word_document: default
 ---
 # **Ordinary Least Squares Single Regression Landings CPUE Models**
 **Discussion**
-OLS regression models using all lifestages from all surveys with a 1- and 2-yr lag to predict Charleston Harbor watershed (Ashley River, Cooper River, Wando River and Charleston Harbor) landings CPUEs were constructed to find all explanatory relationships.  All significant relationships are displayed in the following tables.  The CRMS Creek Trawl is the most consistently responsive of the surveys when used in regression modeling.  Fifteen significant relationships exist between total CPUEs from the Creek Trawl survey and several 1- and 2-yr.lagged lifestage variables (Table 3).  The CRMS Harbor Trawl had one significant explanatory relationship with subadults from the same survey lagged 1-yr (Table 4).  The Trammel Net survey had one significant explanatory relatioship with mature females from the Harbor Trawl lagged 1-yr (Table 4), which is the highest correlation (r<sup>2</sup>=0.36) of all the single regression models.  
+OLS regression models using all lifestages from all surveys with a 1- and 2-yr lag to predict Charleston Harbor watershed (Ashley River, Cooper River, Wando River and Charleston Harbor) landings CPUEs were constructed to find all explanatory relationships.  All significant relationships are displayed in the following tables.  The CRMS Creek Trawl is the most consistently responsive of the surveys when used in regression modeling.  Nine significant relationships exist between mean annual Landings CPUE and several 1- and 2-yr.lagged lifestage variables from the CRMS Harbor and Creek Trawl surveys (Table 5).  The CRMS Harbor Trawl survey's mature males 1-yr. lag and the CRMS Creek Trawl survey's immature male 1-yr. lag are the only variables with a coefficient of determination (r-squared) > 0.40.  
 \newline
-Although there were several significant regression models constructed using fisheries independent survey life stage abundance CPUEs, no relationships correlate strong enough to be effective models.  Using OLS single regression modeling, the six SCDNR fisheries independent surveys used to monitor blue crab populations in the Charleston Harbor watershed are ineffective are ineffective predictors of their own abundance CPUEs. 
+Only two fisheries independent life stage abundance CPUEs have significant relatioships with Landings with no fishing effort factor (Table 6).  The effects from these models have very small explanatory power over total landings.  
 \newline
-The next step in this chapter is to put all relevant variables for the Creek Trawl into an exploratory dredge to find combinations of variables to populate multiple regression models.  These models will be constucted using the suggestions of the dredge.
+The next step in this chapter is to put all variables for the Harbor and Creek Trawl surveys into an exploratory dredge predicting mean annual landings CPUE.  This exploratory dredge will suggest combinations of variables to populate multiple regression models.  Multiple regression OLS models will be constucted using the suggestions of the dredge.
 \newline
 
 ```{r, echo=FALSE, warning=FALSE, include=FALSE}
@@ -58,11 +60,11 @@ LandRegressTable2 = read.csv("SingleLandingsRegressLandings.csv") %>%
          "Dependent Variable" = Dependent.Variable,
          "p-value" = p.value,
          "F-statistic" = F.statistic) %>%
-  dplyr::select(2:7)
+  dplyr::select(2, 4:8)
 
 ```
 
-**Table 3:** Significant OLS regression relatioships of Landings CPUE by all lifestages from all surveys.
+**Table 5:** Significant OLS regression relatioships of Landings CPUE by all lifestages from all surveys.
 ```{r T38, include=TRUE, echo=FALSE, warning=FALSE, include=TRUE, dpi=600, fig.cap="Table 3: OLS regression of total Creek Trawl CPUE by all lifestages from all surveys."}
 
 Land_Table =  kable(LandRegressTable, "latex", booktabs = T, align = "llcccc") %>%
@@ -77,14 +79,14 @@ Land_Table
 ```
 
 
-**Table 4:** OLS regression of all non-Creek Trawl survey total CPUEs by all lifestages from all surveys.
-```{r non-T38, include=FALSE, echo=FALSE, warning=FALSE, dpi=600, fig.cap="Table 4: OLS regression of all non-Creek Trawl survey total CPUEs by all lifestages from all surveys."}
+**Table 6:** Significant OLS regression of all non-Creek Trawl survey Total Landings by all lifestages from all surveys.
+```{r non-T38, include=TRUE, echo=FALSE, warning=FALSE, dpi=600, fig.cap="Table 4: OLS regression of all non-Creek Trawl survey total CPUEs by all lifestages from all surveys."}
 
 Land_Table2 =  kable(LandRegressTable2, "latex", booktabs = T, align = "llcccc") %>%
   kable_styling(latex_options = "scale_down" , font_size = 8) %>%
   add_header_above(c(" " = 2, "Summary Statistics" = 4)) %>%
-  pack_rows("Harbor Trawl (explanatory variable)", 1,1) %>%
-  pack_rows("Creek Trawl (explanatory variable)", 2,2) %>%
+  pack_rows("Ashley Potting Survey (explanatory variable)", 1,1) %>%
+  pack_rows("Harbor Trawl (explanatory variable)", 2,2) %>%
   column_spec(3:6, width = "5em") 
 
 Land_Table2

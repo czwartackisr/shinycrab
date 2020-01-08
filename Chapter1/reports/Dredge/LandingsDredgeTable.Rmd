@@ -12,7 +12,7 @@ An exploratory dredge was performed, populated with Creek Trawl total CPUE as an
 Many of the models in Table 5 are illogical (e.g., Adult 1-yr. lag and Legal 1-yr. lag which are the same data).  Multiple OLS regression models, both additive and with interaction, will be constructed using the models suggested by thi dredge in the next step.
 
 
-**Table 5:** Exploratory dredge results of Creek Trawl total CPUE predicted with all relevant Creek Trawl lifestage variables with 1- and 2-yr. lags previously shown to have a significant relationhsip using single regression.  Results show a subset of models ranked by AICc.   
+**Table 8:** Exploratory dredge results of all relevant CPUE predicted with all relevant Creek Trawl lifestage variables with 1- and 2-yr. lags previously shown to have a significant relationhsip using single regression.  Results show a subset of models ranked by AICc.   
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dplyr)
@@ -26,18 +26,32 @@ library(kableExtra)
 
 # Read in data ------------------------------------------------------------
 
-crab <- read.csv("CH1_T38Dredge.csv", stringsAsFactors = FALSE)
+crab <- read.csv("CH1_LandingsDredgeNEW.csv", stringsAsFactors = FALSE)
 #crab is the unprepared for dredge original data
 #Only those variables that have a predictive relationship
-T38dredge <- filter(crab, Year > 2003) %>%
-  dplyr::select(2, 3, 4, 9, 10, 12, 15, 16, 19, 21, 22, 24, 25, 27, 28, 30)
+B90Landingsdredge <- filter(crab, Year > 2003) %>%
+  #dplyr::select(14, 7, 3, 46, 49, 40, 36, 38, 43, 54)
+  dplyr::select(2:21, 62)
+T38Landingsdredge <- filter(crab, Year > 2003) %>%
+  #dplyr::select(14, 7, 3, 46, 49, 40, 36, 38, 43, 54)
+  dplyr::select(39:58, 62)
+
 ```
 
 ```{r Dredge Table, echo=FALSE, message=FALSE, warning=FALSE, include=TRUE, dpi=600}
-T38_lm <- lm(CPUE ~ ., data = T38dredge, na.action = "na.fail")
-T38RelDredge <- dredge(T38_lm)
-T38dredgeTable <- subset(T38RelDredge, delta < 2.5)
-kable(T38dredgeTable) %>%
+B90Landings_lm <- lm(LandingsCPUEMean ~ ., data = B90Landingsdredge, na.action = "na.fail")
+B90LandingsRelDredge <- dredge(B90Landings_lm)
+B90LandingsdredgeTable <- subset(B90LandingsRelDredge, delta < 2.5)
+kable(B90LandingsdredgeTable) %>%
+  kable_styling(bootstrap_options = c("striped", "scale_down"))
+
+```
+
+```{r Dredge Table2, echo=FALSE, message=FALSE, warning=FALSE, include=TRUE, dpi=600}
+T38Landings_lm <- lm(LandingsCPUEMean ~ ., data = T38Landingsdredge, na.action = "na.fail")
+T38LandingsRelDredge <- dredge(T38Landings_lm)
+T38LandingsdredgeTable <- subset(T38LandingsRelDredge, delta < 2.5)
+kable(T38LandingsdredgeTable) %>%
   kable_styling(bootstrap_options = c("striped", "scale_down"))
 
 ```
