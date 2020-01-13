@@ -269,7 +269,13 @@ summary(B90CPUELAGLead_lm10)
 
 
 
+# Multiple Regreesion (suggested by Dredge) -------------------------------
 
+dredge_lm <- lm(crab$LandingsCPUEMean ~ lag(crab$B90_MatureMaleCPUE)*lag(crab$T38_SubadultCPUE))
+summary(dredge_lm)
+
+dredgeAdd_lm <- lm(crab$LandingsCPUEMean ~ lag(crab$B90_MatureMaleCPUE)+lag(crab$T38_SubadultCPUE))
+summary(dredgeAdd_lm)
 
 
 # 2004 Exploration --------------------------------------------------------

@@ -1,0 +1,70 @@
+---
+title: "Landings Multiple Regression Table"
+output: html_document
+---
+## **Discussion**
+OLS multiple regression models for the Creek Trawl, the only survey with multiple significant single regression relationships with lagged lifestage variables, were constructed based-on the exploratory dredge suggestions.  Additive multiple regression models and interactive multiple regression models were run.
+
+**Interactive Models**
+Although analyses show all interactive models are significant, no model has a significant interactive term and few had significant main effects.  Only two interactive models, dredge models 75 and 4107 (Table 5), have main effects with significance.  None of the models has an adjusted R^2 > 0.32.  This suggests that the main effects have some degree of colinearity, but there are no significant interactive effects within these relatioships.  Creek Trawl lifestage variables with 1- and 2-yr. lag do not explain the variation between the observed and expected outcome values. 
+
+**Additive Models**
+All additive OLS multiple regression models suggested by the exploratory dredge are significant.  However, only dredge models 577, 4609, 16897, 517 and 75 (Table 5), are populated with main effects that have significant relatioships.  None of these models has an adj R^2 > 0.30 (Table 6).    
+
+
+```{r knitr setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r setup, include=FALSE, echo=FALSE}
+library(sjPlot)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+theme_set(theme_classic(base_size = 12)+
+            theme(panel.grid.major = element_blank(), 
+                  panel.grid.minor = element_blank(),
+                  panel.background = element_rect(colour = "black", size=0.5))+
+            theme(text=element_text(size=12,  family="serif", colour = "black"))+
+            theme(axis.text = element_text(colour = "black"))+
+            theme(axis.ticks = element_line(colour = "black"))
+)
+update_geom_defaults("point",   list(colour = "black"))
+update_geom_defaults("line",   list(colour = "black"))
+theme_update(plot.title = element_text(hjust = 0.5))
+```
+
+```{r Data Read-In, include=FALSE, warning=FALSE, message=FALSE}
+
+crab <- read.csv("CH1data.csv", stringsAsFactors = FALSE) %>%
+  dplyr::select("ImmatureMale1" = IM_1,
+                "ImmatureMale2" = IM_2,
+                "MatureMale1" = MM_1,
+                "Subadult2" = Subadult_2,
+                "Sublegal2" = Sublegal_2,
+                "CPUE2" = CPUE_2,
+                "CPUE1" = CPUE_1,
+                "ImmatureFemale1" = IF_1)
+
+```
+
+```{r T38 relevant dredge Models, include=FALSE, warning=FALSE, message=FALSE}
+T38Ind_lm1=lm(CPUE ~ ImmatureMale2 + MatureMale1, data = crab)
+T38Ind_lm2=lm(CPUE ~ MatureMale1 + Subadult2, data = crab)
+T38Ind_lm4=lm(CPUE ~ MatureMale1 + Sublegal2, data = crab)
+T38Ind_lm8=lm(CPUE ~ CPUE2 + MatureMale1, data = crab)
+T38Ind_lm9=lm(CPUE ~ CPUE1 + ImmatureFemale1 + ImmatureMale2, data = crab)
+
+T38Table1 <- tab_model(T38Ind_lm1,T38Ind_lm2, auto.label = FALSE)
+T38Table2 <- tab_model(T38Ind_lm4, T38Ind_lm8, auto.label = FALSE)
+T38Table3 <- tab_model(T38Ind_lm9, auto.label = FALSE)
+T38Table4 <- tab_model(T38Ind_lm1,T38Ind_lm2, T38Ind_lm4, T38Ind_lm8, T38Ind_lm9, auto.label = TRUE)
+```
+
+
+**Table 6:** OLS multiple regression model results suggested by the dredge with all main effects significant. 
+```{r T381, include=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+T38Table4
+```
+

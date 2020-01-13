@@ -46,7 +46,7 @@ options(tinytex.verbose = TRUE)
 ```
 
 ```{r, echo=FALSE, warning=FALSE, include=FALSE}
-LandRegressTable = read.csv("SingleLandingsRegressLandingsCPUE.csv") %>%
+LandRegressTable = read.csv("SingleLandingsCPUERegress.csv") %>%
   rename("Degrees of Freedom" = Degrees.of.Freedom,
          "Explanatory Variable" = Explanatory.Variable,
          "Dependent Variable" = Dependent.Variable,
@@ -54,13 +54,14 @@ LandRegressTable = read.csv("SingleLandingsRegressLandingsCPUE.csv") %>%
          "F-statistic" = F.statistic) %>%
   dplyr::select(2, 4:8)
 
-LandRegressTable2 = read.csv("SingleLandingsRegressLandings.csv") %>%
+LandRegressTable2 = read.csv("SingleLandingsRegress.csv") %>%
   rename("Degrees of Freedom" = Degrees.of.Freedom,
          "Explanatory Variable" = Explanatory.Variable,
          "Dependent Variable" = Dependent.Variable,
          "p-value" = p.value,
          "F-statistic" = F.statistic) %>%
   dplyr::select(2, 4:8)
+
 
 ```
 
