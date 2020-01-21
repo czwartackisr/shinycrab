@@ -268,7 +268,7 @@ OtherCPUETimeSeries <- plot_grid(E99TotalCPUE, E98TotalCPUE, T06TotalCPUE, ncol 
 OtherCPUETimeSeries
 ```                                                        
 
-```{r Figure 4 (Harbor Trawl Size Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Harbor Trawl survey mean annual blue crab abundance (CPUE) by size (mean ± standard error) for all sites within the Charleston Harbor watershed.  Juvenile CPUEs (A), Subadult CPUEs (B) and Adult CPUEs (C) are shown.  Adult mean annual CPUEs were logarithmically transformed to help aid in visual scaling.", fig.width=10,fig.height=11}
+```{r Figure 4 (Harbor Trawl Size Time Series), echo=FALSE, include=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Harbor Trawl survey mean annual blue crab abundance (CPUE) by size (mean ± standard error) for all sites within the Charleston Harbor watershed.  Juvenile CPUEs (A), Subadult CPUEs (B) and Adult CPUEs (C) are shown.  Adult mean annual CPUEs were logarithmically transformed to help aid in visual scaling.", fig.width=10,fig.height=11}
 B90Crab = crab %>%
   filter(ProjID == "Harbor Trawl") %>%
   filter(Lifestage == c("Juvenile", "Subadult", "Adult", "Immature Female",
@@ -329,7 +329,7 @@ B90SizeTimeSeries
 ```
 
 
-```{r Figure 5 (Harbor Trawl Legal-Size Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Harbor Trawl survey mean annual blue crab abundance (CPUE) by legal-size (mean ± standard error) for all sites within the Charleston Harbor watershed.  Sublegal (<127mm carapace width) CPUEs (A), and legal (>126mm carapace width) CPUEs (B) are shown.", fig.width=10,fig.height=11}
+```{r Figure 5 (Harbor Trawl Legal-Size Time Series), echo=FALSE, include=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Harbor Trawl survey mean annual blue crab abundance (CPUE) by legal-size (mean ± standard error) for all sites within the Charleston Harbor watershed.  Sublegal (<127mm carapace width) CPUEs (A), and legal (>126mm carapace width) CPUEs (B) are shown.", fig.width=10,fig.height=11}
 
 B90SublegalForm = subset(B90Crab,
                    Lifestage == "Sublegal")
@@ -363,7 +363,7 @@ B90LegalTimeSeries <- plot_grid(B90Sublegal, B90Legal, ncol = 1, align = 'hv', l
 B90LegalTimeSeries
 ```
 
-```{r Figure 6 (Harbor Trawl sex Maturity Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Harbor Trawl survey mean annual blue crab abundance (CPUE) by sex and maturity class (mean ± standard error) for all sites within the Charleston Harbor watershed.  Immature female CPUEs (A), mature Female CPUEs (B), mature male CPUEs (C) and mature male CPUEs (D) are shown.",fig.width=10,fig.height=12}
+```{r Figure 6 (Harbor Trawl sex Maturity Time Series), echo=FALSE, include=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Harbor Trawl survey mean annual blue crab abundance (CPUE) by sex and maturity class (mean ± standard error) for all sites within the Charleston Harbor watershed.  Immature female CPUEs (A), mature Female CPUEs (B), mature male CPUEs (C) and mature male CPUEs (D) are shown.",fig.width=10,fig.height=12}
 #I have to make a separate data frame here due to poor subset performance
 
 B90IFForm = subset(B90Crab,
@@ -441,7 +441,7 @@ B90ClassTimeSeries <- plot_grid(B90ImmatureFemale, B90ImmatureMale, B90MatureFem
 B90ClassTimeSeries
 ```
 
-```{r Figure 7 (Creek Trawl Size Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Creek Trawl survey mean annual blue crab abundance (CPUE) by size (mean ± standard error) for all sites within the Charleston Harbor watershed.  Juvenile CPUEs (A), Subadult CPUEs (B) and Adult CPUEs (C) are shown.", fig.width=10,fig.height=11}
+```{r Figure 7 (Creek Trawl Size Time Series), echo=FALSE, include=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Creek Trawl survey mean annual blue crab abundance (CPUE) by size (mean ± standard error) for all sites within the Charleston Harbor watershed.  Juvenile CPUEs (A), Subadult CPUEs (B) and Adult CPUEs (C) are shown.", fig.width=10,fig.height=11}
 T38Crab = crab %>%
   filter(ProjID == "Creek Trawl") %>%
   filter(Lifestage == c("Juvenile", "Subadult", "Adult", "Immature Female",
@@ -503,7 +503,7 @@ T38SizeTimeSeries <- plot_grid(T38Juv, T38Subadult, T38Adult, ncol = 1, align = 
 T38SizeTimeSeries
 ```
 
-```{r Figure 8 (Creek Trawl Legal-Size Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Creek Trawl survey mean annual blue crab abundance (CPUE) by legal-size (mean ± standard error) for all sites within the Charleston Harbor watershed.  Sublegal (<127mm carapace width) CPUEs (A), and legal (>126mm carapace width) CPUEs (B) are shown.", fig.width=10,fig.height=11}
+```{r Figure 8 (Creek Trawl Legal-Size Time Series), echo=FALSE, include=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Creek Trawl survey mean annual blue crab abundance (CPUE) by legal-size (mean ± standard error) for all sites within the Charleston Harbor watershed.  Sublegal (<127mm carapace width) CPUEs (A), and legal (>126mm carapace width) CPUEs (B) are shown.", fig.width=10,fig.height=11}
 
 T38SublegalForm = subset(T38Crab,
                    Lifestage == "Sublegal")
@@ -536,7 +536,7 @@ T38LegalTimeSeries <- plot_grid(T38Sublegal, T38Legal, ncol = 1, align = 'hv', l
 T38LegalTimeSeries
 ```
 
-```{r Figure 9 (Creek Trawl Sex and Maturity Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Creek Trawl survey mean annual blue crab abundance (CPUE) by sex and maturity class (mean ± standard error) for all sites within the Charleston Harbor watershed.  Immature female CPUEs (A), mature Female CPUEs (B), mature male CPUEs (C) and mature male CPUEs (D) are shown.", fig.width=10,fig.height=12}
+```{r Figure 9 (Creek Trawl Sex and Maturity Time Series), echo=FALSE, include=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Creek Trawl survey mean annual blue crab abundance (CPUE) by sex and maturity class (mean ± standard error) for all sites within the Charleston Harbor watershed.  Immature female CPUEs (A), mature Female CPUEs (B), mature male CPUEs (C) and mature male CPUEs (D) are shown.", fig.width=10,fig.height=12}
 #I have to make a separate data frame here due to poor subset performance
 
 T38IFForm = subset(T38Crab,
@@ -599,7 +599,7 @@ T38ClassTimeSeries
 
 
 
-```{r Figure 10 (Ashley Potting Survey Size Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Ashley Potting Survey mean annual blue crab abundance (CPUE) by legal-size (mean ± standard error) for all sites within the Charleston Harbor watershed.  Sublegal (<127mm carapace width) CPUEs (A), and legal (>126mm carapace width) CPUEs (B) are shown.", fig.width=10,fig.height=11}
+```{r Figure 10 (Ashley Potting Survey Size Time Series), echo=FALSE, include=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Ashley Potting Survey mean annual blue crab abundance (CPUE) by legal-size (mean ± standard error) for all sites within the Charleston Harbor watershed.  Sublegal (<127mm carapace width) CPUEs (A), and legal (>126mm carapace width) CPUEs (B) are shown.", fig.width=10,fig.height=11}
 P88Crab = crab %>%
   filter(ProjID == "Ashley Potting") %>%
   filter(Lifestage == c("Sublegal", "Legal"))
@@ -642,7 +642,7 @@ P88SizeTimeSeries
 
 ```
 
-```{r Figure 11 (SCECAP Tidal Creek Trawl Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="SCECAP Tidal Creek Trawl survey mean annual blue crab abundance (CPUE) by size (mean ± standard error) for all sites within the Charleston Harbor watershed.  Juvenile CPUEs (A), Subadult CPUEs (B) and Adult CPUEs (C) are shown.  Tidal Creeks within the Charleston Harbor watershed were not sampled in 2009, 2011, 2013 or 2014.", fig.width=10,fig.height=11}
+```{r Figure 11 (SCECAP Tidal Creek Trawl Time Series), echo=FALSE, include=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="SCECAP Tidal Creek Trawl survey mean annual blue crab abundance (CPUE) by size (mean ± standard error) for all sites within the Charleston Harbor watershed.  Juvenile CPUEs (A), Subadult CPUEs (B) and Adult CPUEs (C) are shown.  Tidal Creeks within the Charleston Harbor watershed were not sampled in 2009, 2011, 2013 or 2014.", fig.width=10,fig.height=11}
 E98Crab = crab %>%
   filter(ProjID == "SCECAP Creek Trawl") %>%
   filter(Lifestage == c("Juvenile", "Subadult", "Adult",
@@ -716,7 +716,7 @@ E98SizeTimeSeries
 ####THESE ARE MISSING DATA DUE TO inf'S TOO!
 ```
 
-```{r Figure 12 (SCECAP Tidal Creek Trawl Legal-Size Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="SCECAP Tidal Creek Trwal survey mean annual blue crab abundance (CPUE) by legal-size (mean ± standard error) for all sites within the Charleston Harbor watershed.  Sublegal (<127mm carapace width) CPUEs (A), and legal (>126mm carapace width) CPUEs (B) are shown.  Tidal Creeks within the Charleston Harbor watershed were not sampled in 2009, 2011, 2013 or 2014.", fig.width=10,fig.height=11}
+```{r Figure 12 (SCECAP Tidal Creek Trawl Legal-Size Time Series), echo=FALSE, include=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="SCECAP Tidal Creek Trwal survey mean annual blue crab abundance (CPUE) by legal-size (mean ± standard error) for all sites within the Charleston Harbor watershed.  Sublegal (<127mm carapace width) CPUEs (A), and legal (>126mm carapace width) CPUEs (B) are shown.  Tidal Creeks within the Charleston Harbor watershed were not sampled in 2009, 2011, 2013 or 2014.", fig.width=10,fig.height=11}
 
 E98SublegalForm = subset(E98Crab,
                       Lifestage == "Sublegal")
@@ -749,7 +749,7 @@ E98LegalTimeSeries <- plot_grid(E98Sublegal, E98Legal, ncol = 1, align = 'hv',
 E98LegalTimeSeries
 ```
 
-```{r Figure 13 (SCECAP Tidal Open Water Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="SCECAP Open Water Trawl survey mean annual blue crab abundance (CPUE) by size (mean ± standard error) for all sites within the Charleston Harbor watershed.  Juvenile CPUEs (A), Subadult CPUEs (B) and Adult CPUEs (C) are shown.  No Open Water SCECAP sampling occured in 2008.", fig.width=10,fig.height=11}
+```{r Figure 13 (SCECAP Tidal Open Water Time Series), echo=FALSE, include=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="SCECAP Open Water Trawl survey mean annual blue crab abundance (CPUE) by size (mean ± standard error) for all sites within the Charleston Harbor watershed.  Juvenile CPUEs (A), Subadult CPUEs (B) and Adult CPUEs (C) are shown.  No Open Water SCECAP sampling occured in 2008.", fig.width=10,fig.height=11}
 E99Crab = crab %>%
   filter(ProjID == "SCECAP Harbor Trawl") %>%
   filter(Lifestage == c("Juvenile", "Subadult", "Adult",
@@ -807,7 +807,7 @@ E99SizeTimeSeries
 ####THESE ARE MISSING DATA DUE TO inf'S TOO!
 ```
 
-```{r Figure 14 (SCECAP Tidal Open Water Trawl Legal-Size Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Ashley Potting Survey mean annual blue crab abundance (CPUE) by legal-size (mean ± standard error) for all sites within the Charleston Harbor watershed.  Sublegal (<127mm carapace width) CPUEs (A), and legal (>126mm carapace width) CPUEs (B) are shown.  No Open Water SCECAP sampling occured in 2008.", fig.width=10,fig.height=11}
+```{r Figure 14 (SCECAP Tidal Open Water Trawl Legal-Size Time Series), include=FALSE, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Ashley Potting Survey mean annual blue crab abundance (CPUE) by legal-size (mean ± standard error) for all sites within the Charleston Harbor watershed.  Sublegal (<127mm carapace width) CPUEs (A), and legal (>126mm carapace width) CPUEs (B) are shown.  No Open Water SCECAP sampling occured in 2008.", fig.width=10,fig.height=11}
 
 E99SublegalForm = subset(E99Crab,
                       Lifestage == "Sublegal")

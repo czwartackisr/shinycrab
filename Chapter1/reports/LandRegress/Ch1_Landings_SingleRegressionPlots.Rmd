@@ -117,11 +117,11 @@ summary(T06CPUE_lm1) # 0.01691 - 0.4182
 ```
 
 ```{r Plot Creation, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
-B90AbunT38Lead_lm3 = lm(crab$B90_CPUE ~ lag(crab$T38_SubadultCPUE, 2))
-B90AbunT38LeadPlot = ggplot(aes(B90_CPUE, lag(crab$T38_SubadultCPUE, 2)), data = crab) +
-  ggtitle("Harbor Trawl CPUE \nby Creek Trawl Subadult (2-yr. lag)") +
+B90CPUELAG_lm8 <- lm(crab$LandingsCPUEMean ~ lag(crab$B90_MatureMaleCPUE, 1))
+B90CPUELagPlot = ggplot(aes(LandingsCPUEMean, lag(B90_MatureMaleCPUE, 1)), data = crab) +
+  ggtitle("Landings CPUE \nby Harbor Trawl Mature Male (1-yr. lag)") +
   geom_point() +
-  stat_fit_glance(method = "lm", method.args = list(formula = B90AbunT38Lead_lm3),
+  stat_fit_glance(method = "lm", method.args = list(formula = B90CPUELAG_lm8),
                   label.x = "right",
                   label.y = "bottom",
                   aes(label = paste("italic(P)*\"-value = \"*", 
@@ -129,17 +129,17 @@ B90AbunT38LeadPlot = ggplot(aes(B90_CPUE, lag(crab$T38_SubadultCPUE, 2)), data =
                   parse = TRUE) +
   stat_poly_eq(aes(label = paste(..rr.label..)), 
                label.x.npc = "right", label.y.npc = 0.12,
-               formula = B90AbunT38Lead_lm3,rr.digits = 4,  parse = TRUE, size = 4) +
+               formula = B90CPUELAG_lm8,rr.digits = 4,  parse = TRUE, size = 4) +
   geom_smooth(method = 'lm', se=FALSE, color="black") +
-  labs(y=expression(Harbor~Trawl~CPUE~year^{-1}),
-       x=expression(Creek~Trawl~subadult~CPUE~"(2-yr lag)"~year^{-1}))
+  labs(y=expression(Landings~CPUE~year^{-1}),
+       x=expression(Harbor~Trawl~mature~male~CPUE~"(1-yr lag)"~year^{-1}))
 
 
-T38AbunLead_lm2 = lm(crab$T38_CPUE ~ lag(crab$T38_SubadultCPUE, 2))
-T38AbunLeadPlot = ggplot(aes(T38_CPUE, lag(crab$T38_SubadultCPUE, 2)), data = crab) +
-  ggtitle("Creek Trawl CPUE \nby Creek Trawl Subadult (2-yr. lag)") +
+T38CPUELAG_lm7 <- lm(crab$LandingsCPUEMean ~ lag(crab$T38_ImmatureMaleCPUE, 1))
+T38CPUELAGPlot = ggplot(aes(LandingsCPUEMean, lag(T38_ImmatureMaleCPUE, 2)), data = crab) +
+  ggtitle("Landings CPUE \nby Creek Trawl Immature Male (1-yr. lag)") +
   geom_point() +
-  stat_fit_glance(method = "lm", method.args = list(formula = T38AbunLead_lm2),
+  stat_fit_glance(method = "lm", method.args = list(formula = T38CPUELAG_lm7),
                   label.x = "right",
                   label.y = "bottom",
                   aes(label = paste("italic(P)*\"-value = \"*", 
@@ -147,33 +147,18 @@ T38AbunLeadPlot = ggplot(aes(T38_CPUE, lag(crab$T38_SubadultCPUE, 2)), data = cr
                   parse = TRUE) +
   stat_poly_eq(aes(label = paste(..rr.label..)), 
                label.x.npc = "right", label.y.npc = 0.12,
-               formula = T38AbunLead_lm2,rr.digits = 4,  parse = TRUE, size = 4) +
+               formula = T38CPUELAG_lm7,rr.digits = 4,  parse = TRUE, size = 4) +
   geom_smooth(method = 'lm', se=FALSE, color="black") +
-  labs(y=expression(Creek~Trawl~CPUE~year^{-1}),
-       x=expression(Creek~Trawl~subadult~CPUE~"(2-yr lag)"~year^{-1}))
+  labs(y=expression(Landings~CPUE~year^{-1}),
+       x=expression(Creek~Trawl~immature~male~CPUE~"(1-yr lag)"~year^{-1}))
 
-T06AbunB90_lm7 = lm(crab$T06_CPUE ~ lag(crab$B90_MatureFemaleCPUE, 1))
-T06AbunB90MFPlot = ggplot(aes(T38_CPUE, lag(crab$T38_SubadultCPUE, 1)), data = crab) +
-  ggtitle("Trammel Net CPUE \nby Harbor Trawl Mature Female CPUE (1-yr. lag)") +
-  geom_point() +
-  stat_fit_glance(method = "lm", method.args = list(formula = T06AbunB90_lm7),
-                  label.x = "right",
-                  label.y = "bottom",
-                  aes(label = paste("italic(P)*\"-value = \"*", 
-                                    signif(..p.value.., digits = 4), sep = "")),
-                  parse = TRUE) +
-  stat_poly_eq(aes(label = paste(..rr.label..)), 
-               label.x.npc = "right", label.y.npc = 0.12,
-               formula = T06AbunB90_lm7,rr.digits = 4,  parse = TRUE, size = 4) +
-  geom_smooth(method = 'lm', se=FALSE, color="black") +
-  labs(y=expression(Harbor~Trawl~CPUE~year^{-1}),
-       x=expression(Creek~Trawl~mature~female~"(1-yr lag)"~year^{-1}))
+
 
 ```
 
-```{r Figure 16, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Ordinary Least Squares regression plots of select significant explanatory relatioships using lagged variables to predict survey total CPUEs.  Mean annual Harbor Trawl total CPUE by Creek Trawl subadults with a 1-yr lag (A), mean annual Creek Trawl total CPUE by Creek Trawl subadult CPUE with a 2-yr. lag (B), and Trammel Net total CPUE by Harbor Trawl mature female CPUE with a 1-yr. lag (C).", fig.width=10,fig.height=11}
+```{r Figure 4, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Ordinary Least Squares regression plots of select significant explanatory relatioships using lagged variables to Charleston Harbor watershed Landings CPUEs.  Mean annual landings CPUE by Harbor Trawl mature males with a 1-yr lag (A), and mean annual landings CPUE by Creek Trawl immature males CPUE with a 1-yr. lag (B).", fig.width=10,fig.height=11}
 
-SingleRegressPlot <- plot_grid(B90AbunT38LeadPlot, T38AbunLeadPlot, T06AbunB90MFPlot, ncol = 1, align = 'hv', labels = c("A", "B", "C")) 
+SingleRegressPlot <- plot_grid(B90CPUELagPlot, T38CPUELAGPlot, ncol = 1, align = 'hv', labels = c("A", "B")) 
 SingleRegressPlot
 
 ```
