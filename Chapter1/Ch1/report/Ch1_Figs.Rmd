@@ -20,8 +20,10 @@ library(dplyr)
 library(Hmisc)
 library(nlme)
 library(cowplot)
+library(grid)
 library(gridExtra)
 library(ggpmisc)
+library(knitr)
 
 theme_set(theme_classic(base_size = 12)+
             theme(panel.grid.major = element_blank(), 
@@ -35,6 +37,12 @@ update_geom_defaults("point",   list(colour = "black"))
 update_geom_defaults("line",   list(colour = "black"))
 theme_update(plot.title = element_text(hjust = 0.5))
 ```
+
+
+# Abstract
+
+Marked high fluctuations in blue crab (Callinectes sapidus) seasonal and annual abundance, and commercial landings are typical, but data from both fisheries independent and dependent surveys have shown declines in populations in recent years in South Carolina. Despite several long-term fisheries independent surveys encountering blue crab, predictive models have not recently been developed in South Carolina to quantify variation in abundance and commercial landings.  The goal of this study is to assess the current status of blue crab in SC and explore the potential for developing a more predictive understanding of commercial landings. This goal is me through the following objectives: 1) assess long-term trends in blue crab landings and fisheries-independent abundance, 2) test the applicability of a juvenile index, where juvenile abundance in one year predicts adult abundance in a following year, 3) explore predictive relationships between fisheries-independent abundance and commercial landings. Data from several long-term South Carolina Department of Natural Resources (SCDNR) fisheries independent blue crab surveys were standardized for each of 6 surveys and commercial landings data were compiled.  Long-term trends showed… Analyses testing the applicability of a juvenile index showed that the Creek Trawl survey was the only survey with significant, but weak, correlative relationships between multiple lagged population structure variables and its own annual abundance. Significant relationships were found with effort-corrected commercial landings predicted by the previous year’s abundance of males crabs. This relationship was significant for immature crabs collected in the Harbor Trawl survey, and for mature crabs collected in the Creek Trawl survey. These results suggest effective population sampling, but a potential influence on abundance of blue crab from outside factors such as fishing, habitat or environmental variables.  
+
 
 ```{r Data Read-In, include=FALSE, warning=FALSE, message=FALSE}
 
@@ -149,8 +157,12 @@ crab = crab3 %>%
 
 
 ```
+\newpage
+## Objective 1
+Assess long-term trends in blue crab landings and fisheries-independent abundance
+\newline
 
-```{r Figure 1, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="(A) Total annual blue crab Landings (mean ± standard error), and (B) mean annual landings CPUE (mean ± standard error) for all reporting areas within the Charleston Harbor watershed (Ashley River, Wando River, Cooper River and Charleston Harbor)", fig.width=10,fig.height=11}
+```{r Figure 1, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="(A) Total annual blue crab Landings (mean ± standard error), and (B) effort corrected mean annual landings (mean ± standard error) for all reporting areas within the Charleston Harbor watershed (Ashley River, Wando River, Cooper River and Charleston Harbor).  Dark line is loess smoothing trendline.  Broken line is survey mean.", fig.width=10,fig.height=11}
 LandingsCPUEFormTotal = subset(crab,
                            ProjID == "LandingsCPUEMean")
 
@@ -167,13 +179,14 @@ LandingsCrab = crab %>%
 
 LandingsCPUE = ggplot(aes(Year, CPUE), data = subset(LandingsCrab,
                                                      ProjID == "LandingsCPUEMean")) +
-  ggtitle("Mean Annual Landings CPUE\nCharleston Harbor (Combined Watersheds)") +
+  #ggtitle("Commercial Landings CPUE\nCharleston Harbor (Combined Watersheds)") +
   geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
   stat_summary(fun.data = "mean_se", size = .7) +
-  stat_poly_eq(aes(label = ..eq.label..), formula = formula1, parse = TRUE) +
+  #stat_poly_eq(aes(label = ..eq.label..), formula = formula1, parse = TRUE) +
   geom_smooth(method = 'loess', se=FALSE, color="black") +
   labs(y=expression(Blue~crab~~per~pot~fished^{-1})) +
   expand_limits(x=c(1980, 2022)) 
+
 
 
 
@@ -183,36 +196,18 @@ LandingsFormTotal = subset(crab,
 formula2 <- lm(LandingsFormTotal$CPUE ~ LandingsFormTotal$Year)
 Landings = ggplot(aes(Year, CPUE), data = subset(LandingsCrab,
                                                  ProjID == "LandingsSum")) +
-  ggtitle("Total Annual Landings\nCharleston Harbor (Combined Watersheds)") +
+  ggtitle("Commercial Landings CPUE\nCharleston Harbor (Combined Watersheds))") +
   geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
   stat_summary(fun.data = "mean_se", size = .7) +
-  stat_poly_eq(aes(label = ..eq.label..), formula = formula2, parse = TRUE) +
+  #stat_poly_eq(aes(label = ..eq.label..), formula = formula2, parse = TRUE) +
   geom_smooth(method = 'loess', se=FALSE, color="black") +
-  labs(y=expression(Blue~crab~lbs.~per~year^{-1})) +
+  labs(y=expression(Blue~crab~lbs.~per~year^{-1}), x=expression(" ")) +
   expand_limits(x=c(1980, 2022)) 
-
-
-
-LandingsFormTotal04 = subset(crab,
-                      ProjID == "LandingsSum" &
-                        Year > 2002)
-formula3 <- lm(LandingsFormTotal04$CPUE ~ LandingsFormTotal04$Year)
-Landings04 = ggplot(aes(Year, CPUE), data = subset(LandingsCrab,
-                                                 ProjID == "LandingsSum" &
-                                                   Year > 2002)) +
-  ggtitle("Total Annual Landings\nCharleston Harbor (Combined Watersheds)") +
-  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
-  stat_summary(fun.data = "mean_se", size = .7) +
-  stat_poly_eq(aes(label = ..eq.label..), formula = formula3, parse = TRUE) +
-  geom_smooth(method = 'loess', se=FALSE, color="black") +
-  labs(y=expression(Blue~crab~lbs.~per~year^{-1})) +
-  expand_limits(x=c(1980, 2022)) 
-  
 
 
 LandingsTimeSeries <- plot_grid(Landings, LandingsCPUE, ncol = 1, align = 'hv', labels = c("A", "B"))
 
-  LandingsTimeSeries
+LandingsTimeSeries
 
 ```
 
@@ -343,15 +338,15 @@ P88TotalAnnualCPUE = ggplot(aes(Year, CPUE), data = subset(TotalCrab,
   expand_limits(x=c(1980,2020))
 ```
 
-```{r Figure 2 (CRMS Survey Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Mean annual blue crab (total catch) CPUE (mean ± standard error) for all SCDNR Crustacean Section fisheries independent surveys, including Harbor Trawl (A), Creek Trawl (B), and Ashley River Potting Survey (C), SCECAP Open Water Trawl (D), SCECAP Tidal Creek Trawl (E), and the Inshore Fisheries Trammel Net survey (F).", fig.width=10,fig.height=11}
+```{r Figure 2 (CRMS Survey Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Mean annual blue crab CPUE (mean ± standard error) for all SCDNR fisheries independent surveys, including Harbor Trawl (A), Creek Trawl (B), Ashley River Potting Survey (C), SCECAP Open Water Trawl (D), SCECAP Tidal Creek Trawl (E), and the Inshore Fisheries Trammel Net survey (F).   Dark line is loess smoothing trendline.  Broken line is survey mean.", fig.width=10,fig.height=11}
 
 CRMSCPUETimeSeries <- plot_grid(B90TotalCPUE, T38TotalCPUE, P88FallTotalCPUE, 
                                 E99TotalCPUE, E98TotalCPUE, T06TotalCPUE, ncol = 2, align = 'hv',
-                                labels = c("A", "B", "C", "D", "E", "F")) 
+                                labels = c("A", "B", "C", "D", "E", "F"))
   
-CRMSCPUETimeSeries
+CRMSCPUETimeSeries 
 
 ```
 
-##########NEED TO FIX LABELS ON FIGURE 2##########
+
 
