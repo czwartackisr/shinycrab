@@ -231,12 +231,13 @@ B90FormTotal = subset(TotalCrab,
 formula3 <- lm(B90FormTotal$CPUE ~ B90FormTotal$Year)
 B90TotalCPUE = ggplot(aes(Year, CPUE), data = subset(TotalCrab,
                                                      ProjID == "Harbor Trawl")) +
+  ggtitle(" ") +
   #ggtitle("Harbor Trawl") + 
   stat_summary(fun.data = "mean_se", size = .7) +
   #stat_poly_eq(aes(label = ..eq.label..), formula = formula3, parse = TRUE) +
   geom_smooth(method = 'loess', se=FALSE, color="black") +
   geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
-  labs(y=expression(), x=expression()) +
+  labs(y=expression(" "), x=expression(" ")) +
   #labs(y=expression(Blue~crab~per~tow^{-1})) +
   expand_limits(x=2020)
 #B90TotalCPUE
@@ -246,12 +247,13 @@ T38FormTotal = subset(TotalCrab,
 formula4 <- lm(T38FormTotal$CPUE ~ T38FormTotal$Year)
 T38TotalCPUE = ggplot(aes(Year, CPUE), data = subset(TotalCrab,
                                                      ProjID == "Creek Trawl")) +
-  #ggtitle("Creek Trawl") +
+  ggtitle(" ") +
+    #ggtitle("Creek Trawl") +
   stat_summary(fun.data = "mean_se", size = .7) +
   #stat_poly_eq(aes(label = ..eq.label..), formula = formula4, parse = TRUE, label.x = "right") +
   geom_smooth(method = 'loess', se=FALSE, color="black") +
   geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
-  labs(y=expression(), x=expression()) +
+  labs(y=expression(" "), x=expression(" ")) +
   #labs(y=expression(Blue~crab~per~tow^{-1})) +
   expand_limits(x=2020)
 #T38TotalCPUE
@@ -261,11 +263,12 @@ T06FormTotal = subset(TotalCrab,
 formula5 <- lm(T06FormTotal$CPUE ~ T06FormTotal$Year)
 T06TotalCPUE = ggplot(aes(Year, CPUE), data = subset(TotalCrab,
                                                      ProjID == "Trammel Net")) +
+  ggtitle(" ") +
   #ggtitle("Trammel Net") +
   stat_summary(fun.data = "mean_se", size = .7) +
   #stat_poly_eq(aes(label = ..eq.label..), formula = formula5, parse = TRUE) +
   geom_smooth(method = 'loess', se=FALSE, color="black") +
-  labs(y=expression(), x=expression()) +
+  labs(y=expression(" "), x=expression(" ")) +
   geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
   #labs(y=expression(Blue~crab~per~set^{-1})) +
   expand_limits(x=c(1980,2020))
@@ -276,12 +279,13 @@ E98FormTotal = subset(TotalCrab,
 formula6 <- lm(E98FormTotal$CPUE ~ E98FormTotal$Year)
 E98TotalCPUE = ggplot(aes(Year, log(CPUE)), data = subset(TotalCrab,
                                                           ProjID == "SCECAP Creek Trawl")) +
+  ggtitle(" ") +
   #ggtitle("SCECAP Tidal Creek Trawl") +
   stat_summary(fun.data = "mean_se", size = .7) +
   #stat_poly_eq(aes(label = ..eq.label..), formula = formula6, parse = TRUE) +
   geom_smooth(method = 'loess', se=FALSE, color="black") +
   geom_hline(aes(yintercept=(log(mean(Means)))), linetype="dashed") +
-  labs(y=expression(), x=expression()) +
+  labs(y=expression(" "), x=expression(" ")) +
   #labs(y=expression((log)~Blue~crab~per~tow^{-1})) +
   expand_limits(x=c(1980,2020)) +
   coord_cartesian(ylim = c(0,8))
@@ -291,12 +295,13 @@ E99FormTotal = subset(TotalCrab,
 formula7 <- lm(E99FormTotal$CPUE ~ E99FormTotal$Year)
 E99TotalCPUE = ggplot(aes(Year, CPUE), data = subset(TotalCrab,
                                                      ProjID == "SCECAP Harbor Trawl")) +
+  ggtitle(" ") +
   #ggtitle("SCECAP Open Water Trawl") +
   stat_summary(fun.data = "mean_se", size = .7) +
   #stat_poly_eq(aes(label = ..eq.label..), formula = formula7, parse = TRUE) +
   geom_smooth(method = 'loess', se=FALSE, color="black") +
   geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
-  labs(y=expression(), x=expression()) +
+  labs(y=expression(" "), x=expression(" ")) +
   #labs(y=expression(Blue~crab~per~tow^{-1})) +
   expand_limits(x=c(1980,2020)) 
 
@@ -308,12 +313,13 @@ P88FallTotalCPUE = TotalCrab %>%
   filter(Month %in% c("10", "11"))
 P88FallTotalCPUE = ggplot(aes(Year, CPUE), data = subset(TotalCrab,
                                                          ProjID == "Ashley Potting")) +
+  ggtitle(" ") +
   #ggtitle("Ashley River Potting Survey (fall)") +
   stat_summary(fun.data = "mean_se", size = .7) +
   #stat_poly_eq(aes(label = ..eq.label..), formula = formula8, parse = TRUE) +
   geom_smooth(method = 'loess', se=FALSE, color="black", na.rm = TRUE) +
   geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
-  labs(y=expression(), x=expression()) +
+  labs(y=expression(" "), x=expression(" ")) +
   #labs(y=expression(Blue~crab~per~soak^{-1})) +
   expand_limits(x=c(1980,2020))
 
@@ -326,12 +332,13 @@ formula9 <- lm(P88FormTotal$CPUE ~ P88FormTotal$Year)
 P88TotalAnnualCPUE = ggplot(aes(Year, CPUE), data = subset(TotalCrab,
                                                            ProjID == "Ashley Potting" &
                                                              Year > 2002)) +
+  ggtitle(" ") +
   #ggtitle("Ashley River Potting Survey (bi-monthly)") +
   stat_summary(fun.data = "mean_se", size = .7) +
   #stat_poly_eq(aes(label = ..eq.label..), formula = formula9, parse = TRUE) +
   geom_smooth(method = 'loess', se=FALSE, color="black", na.rm = TRUE) +
   geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
-  labs(y=expression(), x=expression()) +
+  labs(y=expression(" "), x=expression(" ")) +
   #labs(y=expression(Blue~crab~per~soak^{-1})) +
   expand_limits(x=c(1980,2020))
 ```
@@ -339,10 +346,11 @@ P88TotalAnnualCPUE = ggplot(aes(Year, CPUE), data = subset(TotalCrab,
 ```{r Figure 2 (CRMS Survey Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Mean annual blue crab (total catch) CPUE (mean ± standard error) for all SCDNR Crustacean Section fisheries independent surveys, including Harbor Trawl (A), Creek Trawl (B), and Ashley River Potting Survey (C), SCECAP Open Water Trawl (D), SCECAP Tidal Creek Trawl (E), and the Inshore Fisheries Trammel Net survey (F).", fig.width=10,fig.height=11}
 
 CRMSCPUETimeSeries <- plot_grid(B90TotalCPUE, T38TotalCPUE, P88FallTotalCPUE, 
-                                E99TotalCPUE, E98TotalCPUE, T06TotalCPUE, ncol = 2, align = 'hv', 
+                                E99TotalCPUE, E98TotalCPUE, T06TotalCPUE, ncol = 2, align = 'hv',
                                 labels = c("A", "B", "C", "D", "E", "F")) 
   
 CRMSCPUETimeSeries
+
 ```
 
 ##########NEED TO FIX LABELS ON FIGURE 2##########
