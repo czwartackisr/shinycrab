@@ -1,0 +1,7 @@
+Survey,Gear Method,Gear Type,Sample Area,Sample Interval,Sample Method,N(events),CPUE Standardization
+Creek Trawl,Active,"6m Trawl, 2.54cm stretch mesh","Ashley River, Wando River","Monthly, May-Sep",Fixed Stations,1827,Time
+Harbor Trawl,Active,"4.6m Trawl, 0.6cm D mesh","Ashley River, Charleston Harbor",Monthly,Fixed Stations,2956,"Time, Gear"
+Ashley Fall Potting ,Passive,"0.6 x 0.6 x 0.46m Pot, 3.8 cm mesh",Ashley River,"Monthly, Oct-Nov",Randomized Block w/in a Fixed Station,128,Time
+SCECAP Tidal Creeks,Active,"5m trawl, 1.9cm bar mesh",Charleston Harbor Systemwide,Jun - Aug,Random Stratified,62,Volumetric
+SCECAP Open Water,Active,"5m trawl, 1.9cm bar mesh",Charleston Harbor Systemwide,Jun - Aug,Random Stratified,92,Volumetric
+Trammel Net,Passive,183 x 2.1m trammel net,Charleston Harbor Systemwide,Monthly,Random Stratified,4736,None (Total)
