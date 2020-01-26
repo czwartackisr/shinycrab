@@ -253,7 +253,7 @@ LandingsFormTotal = subset(crab,
 formula2 <- lm(LandingsFormTotal$CPUE ~ LandingsFormTotal$Year)
 Landings = ggplot(aes(Year, CPUE), data = subset(LandingsCrab,
                                                  ProjID == "LandingsSum")) +
-  ggtitle("Commercial Landings CPUE\nCharleston Harbor (Combined Watersheds))") +
+  ggtitle("Commercial Landings\nCharleston Harbor (Combined Watersheds))") +
   geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
   stat_summary(fun.data = "mean_se", size = .7) +
   #stat_poly_eq(aes(label = ..eq.label..), formula = formula2, parse = TRUE) +
@@ -407,6 +407,10 @@ CRMSCPUETimeSeries
 ```
 
 \newpage
+### Methods
+
+
+
 ### Discussion
 Commercial landings (fig. 1) and survey abundance (fig. 2) time series show the high annual variablility of blue crab populations, but also may not agree totally on the decline in populations through the decade of the 2000's.  
 
@@ -430,7 +434,7 @@ AbunRegressTable = read.csv("SingleAbundanceRegress.csv") %>%
 ```
 
 
-**Table 3:** These are all relevant explanatory variables.  Only one survey has explanatory relationships.  Juveniles do not predict abundances in later years.  Maybe the subadults with a 2-yr. lag show that juveniles in this survey could be used with a 3-yr lag, or that the survey simply does not catch juveinles effectively.
+**Table 3:** These are all relevant explanatory variables.  Only one survey has explanatory relationships.  Juveniles do not predict abundances in later years.  Maybe the subadults with a 2-yr. lag show that juveniles in this survey could be used with a 3-yr lag, or that the survey simply does not catch juveinles effectively, or juveniles are not populating sampled micro-habitats.
 ```{r T38, include=TRUE, echo=FALSE, warning=FALSE, include=TRUE, dpi=600, fig.cap="Table 3: OLS regression of total Creek Trawl CPUE by all lifestages from all surveys."}
 
 Abun_Table =  kable(AbunRegressTable, "latex", booktabs = T, align = "llcccc") %>%
@@ -460,15 +464,91 @@ T38AbunLeadPlot = ggplot(aes(T38_CPUE, lag(AbunPlotcrab$T38_SubadultCPUE, 2)), d
                formula = T38AbunLead_lm2,rr.digits = 4,  parse = TRUE, size = 4) +
   geom_smooth(method = 'lm', se=FALSE, color="black") +
   labs(y=expression(CPUE~year^{-1}),
-       x=expression(subadult~CPUE~"(2-yr lag)"~year^{-1}))
+       x=expression(subadult~CPUE~year^{-2}))
 
 T38AbunLeadPlot
 ```
 
 \newpage
-
-OLS regression models using all lifestages from all surveys with a 1- and 2-yr lag to predict all survey's total CPUEs were constructed to find all explanatory relationships.  All significant relationships are displayed in the following tables.  The CRMS Creek Trawl is the most consistently responsive of the surveys when used in regression modeling.  Fifteen significant relationships exist between total CPUEs from the Creek Trawl survey and several 1- and 2-yr.lagged lifestage variables (Table 3).  The CRMS Harbor Trawl had one significant explanatory relationship with subadults from the same survey lagged 1-yr (Table 4).  The Trammel Net survey had one significant explanatory relatioship with mature females from the Harbor Trawl lagged 1-yr (Table 4), which is the highest correlation (r<sup>2</sup>=0.36) of all the single regression models.  
+### Discussion
+OLS regression models using all lifestages from all surveys with a 1- and 2-yr lag to predict all survey's total CPUEs were constructed to find all explanatory relationships.  The CRMS Creek Trawl survey is the most consistently responsive of the surveys when used in regression modeling.  Fifteen significant relationships exist between total CPUEs from the Creek Trawl survey and several 1- and 2-yr.lagged lifestage variables (Table 3).  The CRMS Harbor Trawl had one significant explanatory relationship with subadults from the same survey lagged 1-yr.  The Trammel Net survey had one significant explanatory relatioship with mature females from the Harbor Trawl lagged 1-yr, which is the highest correlation (r<sup>2</sup>=0.36) of all the single regression models.  
 \newline
 Although there were several significant regression models constructed using fisheries independent survey life stage abundance CPUEs, no relationships correlate strong enough to be effective models.  Using OLS single regression modeling, the six SCDNR fisheries independent surveys used to monitor blue crab populations in the Charleston Harbor watershed are ineffective are ineffective predictors of their own abundance CPUEs. 
+
+\newpage
+## Objective 3
+Explore predictive relationships between fisheries-independent abundance and commercial landings. 
+
+**Table 4:** Objective 3 - All significant relatioships of effort corrected Charleston Harbor watershed (Ashley, Cooper and Wando Rivers and Charlesotn Harbor) commercial Landings by lifestage variables from all surveys using OLS regression. Only variables from the Harbor and Creek Trawl surveys were related to these corrected landings.  Multiple variables with consistent correlations through both surveys seem to suggest the surveys are effectively measuring the population, but there may be some other driver (habitat, environmental, fishing) outside of stock/population (proper term?) variables that affect blue crab abundance.
+```{r Table 4, include=TRUE, echo=FALSE, warning=FALSE, include=TRUE, dpi=600, fig.cap="Table 4: OLS regression of total Creek Trawl CPUE by all lifestages from all surveys."}
+LandRegressTable = read.csv("SingleLandingsCPUERegress.csv") %>%
+  rename("Degrees of Freedom" = Degrees.of.Freedom,
+         "Explanatory Variable" = Explanatory.Variable,
+         "Dependent Variable" = Dependent.Variable,
+         "p-value" = p.value,
+         "F-statistic" = F.statistic) %>%
+  dplyr::select(2, 4:8)
+
+
+Land_Table =  kable(LandRegressTable, "latex", booktabs = T, align = "llcccc") %>%
+  kable_styling(latex_options = "scale_down" , font_size = 8) %>%
+  add_header_above(c(" " = 2, "Summary Statistics" = 4)) %>%
+  column_spec(3:6, width = "6em") %>%
+  pack_rows("Harbor Trawl (explanatory variable)", 1,3) %>%
+  pack_rows("Creek Trawl (explanatory variable)", 4, 9) 
+
+Land_Table
+
+```
+
+***Discussion***
+OLS regression models using all lifestages from all surveys with a 1- and 2-yr lag to predict Charleston Harbor watershed (Ashley River, Cooper River, Wando River and Charleston Harbor) landings CPUEs were constructed to find all explanatory relationships.  All significant relationships are displayed in the following tables.  The CRMS Creek Trawl is the most consistently responsive of the surveys when used in regression modeling.  Nine significant relationships exist between mean annual Landings CPUE and several 1- and 2-yr.lagged lifestage variables from the CRMS Harbor and Creek Trawl surveys (Table 4).  The CRMS Harbor Trawl survey's mature males 1-yr. lag and the CRMS Creek Trawl survey's immature male 1-yr. lag are the only variables with a coefficient of determination (r-squared) > 0.40.  
 \newline
-The next step in this chapter is to put all relevant variables for the Creek Trawl into an exploratory dredge to find combinations of variables to populate multiple regression models.  These models will be constucted using the suggestions of the dredge.
+Total landings for the integrated Charleston Harbor watershed  Only two fisheries independent life stage abundance CPUEs have significant relatioships with total landings.  The effects from these models have very small explanatory power over total landings. It should be mentioned that >2003 is when data from all 4 reporting areas (Ashley, Cooper, Wando Rivers and Charleston Harbor) and the effort-correction (pots pulled) begin.  
+
+```{r Figure 4, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Ordinary Least Squares regression plots of select significant explanatory relatioships using lagged variables to Charleston Harbor watershed Landings CPUEs.  Mean annual landings CPUE by Harbor Trawl mature males with a 1-yr lag (A), and mean annual landings CPUE by Creek Trawl immature males CPUE with a 1-yr. lag (B)."}
+
+LandPlotcrab <- read.csv("CH1data.csv", stringsAsFactors = FALSE)
+
+B90CPUELAG_lm8 <- lm(LandPlotcrab$LandingsCPUEMean ~ lag(LandPlotcrab$B90_MatureMaleCPUE, 1))
+B90CPUELagPlot = ggplot(aes(LandingsCPUEMean, lag(B90_MatureMaleCPUE, 1)), data = LandPlotcrab) +
+  ggtitle("Landings CPUE \nby Harbor Trawl Mature Male (1-yr. lag)") +
+  geom_point() +
+  stat_fit_glance(method = "lm", method.args = list(formula = B90CPUELAG_lm8),
+                  label.x = "right",
+                  label.y = "bottom",
+                  aes(label = paste("italic(P)*\"-value = \"*", 
+                                    signif(..p.value.., digits = 4), sep = "")),
+                  parse = TRUE) +
+  stat_poly_eq(aes(label = paste(..rr.label..)), 
+               label.x.npc = "right", label.y.npc = 0.12,
+               formula = B90CPUELAG_lm8,rr.digits = 4,  parse = TRUE, size = 4) +
+  geom_smooth(method = 'lm', se=FALSE, color="black") +
+  labs(y=expression(Landings~CPUE~year^{-1}),
+       x=expression(Harbor~Trawl~mature~male~CPUE~"(1-yr lag)"~year^{-1}))
+
+
+T38CPUELAG_lm7 <- lm(LandPlotcrab$LandingsCPUEMean ~ lag(LandPlotcrab$T38_ImmatureMaleCPUE, 1))
+T38CPUELAGPlot = ggplot(aes(LandingsCPUEMean, lag(T38_ImmatureMaleCPUE, 2)), data = LandPlotcrab) +
+  #ggtitle("Landings CPUE \nby Creek Trawl Immature Male (1-yr. lag)") +
+  geom_point() +
+  stat_fit_glance(method = "lm", method.args = list(formula = T38CPUELAG_lm7),
+                  label.x = "right",
+                  label.y = "bottom",
+                  aes(label = paste("italic(P)*\"-value = \"*", 
+                                    signif(..p.value.., digits = 4), sep = "")),
+                  parse = TRUE) +
+  stat_poly_eq(aes(label = paste(..rr.label..)), 
+               label.x.npc = "right", label.y.npc = 0.12,
+               formula = T38CPUELAG_lm7,rr.digits = 4,  parse = TRUE, size = 4) +
+  geom_smooth(method = 'lm', se=FALSE, color="black") +
+  labs(y=expression(Landings~CPUE~year^{-1}),
+       x=expression(Creek~Trawl~immature~male~CPUE~"(1-yr lag)"~year^{-1}))
+
+
+
+SingleRegressPlot <- plot_grid(B90CPUELagPlot, T38CPUELAGPlot, ncol = 1, align = 'hv', labels = c("A", "B")) 
+SingleRegressPlot
+
+```
+
