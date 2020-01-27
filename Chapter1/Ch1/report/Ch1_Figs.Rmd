@@ -1,5 +1,5 @@
 ---
-title: "Predicting blue crab abundance and landings from fisheries independent surveys in Charleston Harbor, South Carolina"
+title: "Predicting blue crab (*Callinectes sapidus*) fisheries independent survey abundances and commercial landings in Charleston Harbor, South Carolina"
 output:
   pdf_document: default
   word_document: default
@@ -43,7 +43,7 @@ theme_update(plot.title = element_text(hjust = 0.5))
 
 # Abstract
 
-Marked high fluctuations in blue crab (Callinectes sapidus) seasonal and annual abundance, and commercial landings are typical, but data from both fisheries independent and dependent surveys have shown declines in populations in recent years in South Carolina. Despite several long-term fisheries independent surveys encountering blue crab, predictive models have not recently been developed in South Carolina to quantify variation in abundance and commercial landings.  The goal of this study is to assess the current status of blue crab in SC and explore the potential for developing a more predictive understanding of commercial landings. This goal is me through the following objectives: 1) assess long-term trends in blue crab landings and fisheries-independent abundance, 2) test the applicability of a juvenile index, where juvenile abundance in one year predicts adult abundance in a following year, 3) explore predictive relationships between fisheries-independent abundance and commercial landings. Data from several long-term South Carolina Department of Natural Resources (SCDNR) fisheries independent blue crab surveys were standardized for each of 6 surveys and commercial landings data were compiled.  Long-term trends showed… Analyses testing the applicability of a juvenile index showed that the Creek Trawl survey was the only survey with significant, but weak, correlative relationships between multiple lagged population structure variables and its own annual abundance. Significant relationships were found with effort-corrected commercial landings predicted by the previous year’s abundance of males crabs. This relationship was significant for immature crabs collected in the Harbor Trawl survey, and for mature crabs collected in the Creek Trawl survey. These results suggest effective population sampling, but a potential influence on abundance of blue crab from outside factors such as fishing, habitat or environmental variables.  
+Marked high fluctuations in blue crab (*Callinectes sapidus*) seasonal and annual abundance, and commercial landings are typical, but data from both fisheries independent and dependent surveys have shown declines in populations in recent years in South Carolina. Despite several long-term fisheries independent surveys encountering blue crab, predictive models have not recently been developed in South Carolina to quantify variation in abundance and commercial landings.  The goal of this study is to assess the current status of blue crab in SC and explore the potential for developing a more predictive understanding of commercial landings. This goal is me through the following objectives: 1) assess long-term trends in blue crab landings and fisheries-independent abundance, 2) test the applicability of a juvenile index, where juvenile abundance in one year predicts adult abundance in a following year, 3) explore predictive relationships between fisheries-independent abundance and commercial landings. Data from several long-term South Carolina Department of Natural Resources (SCDNR) fisheries independent blue crab surveys were standardized for each of 6 surveys and commercial landings data were compiled.  Long-term trends showed… Analyses testing the applicability of a juvenile index showed that the Creek Trawl survey was the only survey with significant, but weak, correlative relationships between multiple lagged population structure variables and its own annual abundance. Significant relationships were found with effort-corrected commercial landings predicted by the previous year’s abundance of males crabs. This relationship was significant for immature crabs collected in the Harbor Trawl survey, and for mature crabs collected in the Creek Trawl survey. These results suggest effective population sampling, but a potential influence on abundance of blue crab from outside factors such as fishing, habitat or environmental variables.  
 
 
 ```{r Data Read-In, include=FALSE, warning=FALSE, message=FALSE}
@@ -165,6 +165,8 @@ crab = crab3 %>%
 
 Data were put through a rigorous data wrangling process to standardize each survey relative to its methods.  Fisheries dependent commercial landings and fisheries independent survey abundances were truncated from statewide data to Charleston Harbor watershed data.  
 
+Surveys cover a range of habitats.  
+
 ```{r, echo=FALSE, warning=FALSE, include=FALSE}
 SurveyTable = read.csv("SurveyTable.csv") %>%
   rename("Gear Method" = Gear.Method,
@@ -184,7 +186,7 @@ SurveyClass = read.csv("SurveyClass.csv") %>%
 
 ```
 
-**Table 1:** SCDNR fisheries independent survey methodology
+**Table 1:** Methods - SCDNR fisheries independent survey methodology.  This table sums up some of the differences in methodology from each of the survey.  I think it covers a range of of different methodology variables (temporal, spatial, gear, standardization, sample numbers, etc.).  
 ```{r Survey Background, include=TRUE, echo=FALSE, warning=FALSE, include=TRUE, fig.cap="Table 1: SCDNR fisheries independent survey methodology"}
 Ch1_Table = kable(SurveyTable, "latex", booktabs = T) %>%
   kable_styling(latex_options = "scale_down" , font_size = 8) %>%
@@ -200,7 +202,7 @@ Ch1_Table
 
 ```
 
-**Table 2:** Lifestage data for blue crab by SCDNR fisheries independent survey
+**Table 2:** Lifestage data for blue crab by SCDNR fisheries independent survey.  It should be mentioned in the methods what type of lifestage data is available from these surveys.  The "legal" category is pretty redundant.  "Legal" = "Adult, and "Sublegal" = "Juvenile" + "Subadult".  
 ```{r Survey Data, include=TRUE, echo=FALSE, warning=FALSE, include=TRUE, fig.cap="Table 2: Lifestage data for blue crab by SCDNR fisheries independent survey"}
 Ch1_SurveyLifestageTable = kable(SurveyClass, "latex", booktabs = T, align = "lcccccccccc") %>%
   kable_styling(latex_options = "scale_down" , font_size = 8) %>%
@@ -396,7 +398,7 @@ P88TotalAnnualCPUE = ggplot(aes(Year, CPUE), data = subset(TotalCrab,
 ```
 
 
-```{r Figure 2 (CRMS Survey Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Objective 1 - This plot sshows the same high annual variabilty in our fish-independent surveys.  This plot could also suggest different resiliency (? wrong word), and/or different responses of the population in different habitats.I'd love to add some sort of size/sex time series plot in", fig.width=10,fig.height=11}
+```{r Figure 2 (CRMS Survey Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Objective 1 - ...although this plot does show a decline in some of the more robust surveys (A, B, E), with disagreement from another robust survey (F) that is not long-term (>2005).  The same high annual variabilty in the commercial landings are found in the fish-independent surveys.  This plot could suggest different resiliency (? wrong word), and/or different responses of the population in different habitats. I'd love to add some sort of size/sex time series plot in", fig.width=10,fig.height=11}
 
 CRMSCPUETimeSeries <- plot_grid(B90TotalCPUE, T38TotalCPUE, E99TotalCPUE, E98TotalCPUE, 
                                 P88FallTotalCPUE, T06TotalCPUE, ncol = 2, align = 'hv',
@@ -412,6 +414,7 @@ CRMSCPUETimeSeries
 
 
 ### Discussion
+
 Commercial landings (fig. 1) and survey abundance (fig. 2) time series show the high annual variablility of blue crab populations, but also may not agree totally on the decline in populations through the decade of the 2000's.  
 
 The total pounds landed in the combined Charleston Harbor watersheds shows a trending decline from 2003 - 2010, but when these same landings data are corrected for effort in terms of number of pots pulled that trend is not observed.  The year 2003 marks the first year of "trip ticket" reporting, in which all commercial blue crab license holders are required to report their catch.  This is the same time frame (>2003) the Ashley and Cooper Rivers are included in commercial landings, whether that is due to not being actively fished for blue crab, underreported, or included in another reporting area. Time series data from the abundance surveys (fig 2) show a more severe decline in surveys occuring in tidal creek areas (figs 2B and 2D) than in open water areas (figs 2A, 2C, 2E) with data from the SCDNR Trammel Net survey not showing a decline but no data available for comparison before 2006.  This suggests influence of habitat or environmental conditions on blue crab populations in particular areas of the estuary.
@@ -434,7 +437,7 @@ AbunRegressTable = read.csv("SingleAbundanceRegress.csv") %>%
 ```
 
 
-**Table 3:** These are all relevant explanatory variables.  Only one survey has explanatory relationships.  Juveniles do not predict abundances in later years.  Maybe the subadults with a 2-yr. lag show that juveniles in this survey could be used with a 3-yr lag, or that the survey simply does not catch juveinles effectively, or juveniles are not populating sampled micro-habitats.
+**Table 3:** Objective 2 - These are all relevant explanatory variables.  Only one survey has explanatory relationships.  No juveniles from any survey predict abundances in later years.  Maybe the subadults with a 2-yr. lag show that juveniles in this survey could be used with a 3-yr lag, or that the survey simply does not catch juveinles effectively, or juveniles are not populating sampled micro-habitats.
 ```{r T38, include=TRUE, echo=FALSE, warning=FALSE, include=TRUE, dpi=600, fig.cap="Table 3: OLS regression of total Creek Trawl CPUE by all lifestages from all surveys."}
 
 Abun_Table =  kable(AbunRegressTable, "latex", booktabs = T, align = "llcccc") %>%
@@ -446,12 +449,12 @@ Abun_Table
 
 ```
 
-```{r Figure 3 (Sub Plot), echo=FALSE, message=FALSE, warning=FALSE, include=TRUE, fig.cap="Objective 2 - Shows the potential to predict, but poor correlation.  Being subadult with a 2-yr lag suggests that either juveniles are underrepresented in sampling, or maybe they do not congregate until this size? THIS PLOT IS NOT NEEDED", fig.width=5,fig.height=3}
+```{r Figure 3 (Sub Plot), echo=FALSE, message=FALSE, warning=FALSE, include=TRUE, fig.cap="Objective 2 - Shows the potential to predict, but poor correlation.  Prediction by subadult with a 2-yr lag suggests that either juveniles are underrepresented in sampling, or maybe they do not congregate until this size? THIS PLOT IS NOT NEEDED AND WOULD NEED CLEANUP", fig.width=5,fig.height=3}
 AbunPlotcrab <- read.csv("CH1data.csv", stringsAsFactors = FALSE)
 
 T38AbunLead_lm2 = lm(AbunPlotcrab$T38_CPUE ~ lag(AbunPlotcrab$T38_SubadultCPUE, 2))
 T38AbunLeadPlot = ggplot(aes(T38_CPUE, lag(AbunPlotcrab$T38_SubadultCPUE, 2)), data = AbunPlotcrab) +
-  ggtitle("Index of Abundance Relationship") +
+  #ggtitle("Index of Abundance Relationship") +
   geom_point() +
   stat_fit_glance(method = "lm", method.args = list(formula = T38AbunLead_lm2),
                   label.x = "right",
@@ -506,13 +509,13 @@ OLS regression models using all lifestages from all surveys with a 1- and 2-yr l
 \newline
 Total landings for the integrated Charleston Harbor watershed  Only two fisheries independent life stage abundance CPUEs have significant relatioships with total landings.  The effects from these models have very small explanatory power over total landings. It should be mentioned that >2003 is when data from all 4 reporting areas (Ashley, Cooper, Wando Rivers and Charleston Harbor) and the effort-correction (pots pulled) begin.  
 
-```{r Figure 4, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Ordinary Least Squares regression plots of select significant explanatory relatioships using lagged variables to Charleston Harbor watershed Landings CPUEs.  Mean annual landings CPUE by Harbor Trawl mature males with a 1-yr lag (A), and mean annual landings CPUE by Creek Trawl immature males CPUE with a 1-yr. lag (B)."}
+```{r Figure 4, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Ordinary Least Squares regression plots of select significant explanatory relatioships using lagged variables to Charleston Harbor watershed Landings CPUEs.  Mean annual landings CPUE by Harbor Trawl mature males with a 1-yr lag (A), and mean annual landings CPUE by Creek Trawl immature males CPUE with a 1-yr. lag (B).  Because the multiple regression relationships do not have as strong a correlation as some of the single, and are more illogical, I don't think the table with multiple regression models is needed."}
 
 LandPlotcrab <- read.csv("CH1data.csv", stringsAsFactors = FALSE)
 
 B90CPUELAG_lm8 <- lm(LandPlotcrab$LandingsCPUEMean ~ lag(LandPlotcrab$B90_MatureMaleCPUE, 1))
 B90CPUELagPlot = ggplot(aes(LandingsCPUEMean, lag(B90_MatureMaleCPUE, 1)), data = LandPlotcrab) +
-  ggtitle("Landings CPUE \nby Harbor Trawl Mature Male (1-yr. lag)") +
+  #ggtitle("Commercial Landings ~ Select Survey Variables") +
   geom_point() +
   stat_fit_glance(method = "lm", method.args = list(formula = B90CPUELAG_lm8),
                   label.x = "right",
