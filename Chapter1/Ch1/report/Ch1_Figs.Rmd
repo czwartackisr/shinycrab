@@ -26,6 +26,7 @@ library(dplyr)
 library(Hmisc)
 library(nlme)
 library(cowplot)
+library(MuMIn)
 library(grid)
 library(gridExtra)
 library(ggpmisc)
@@ -463,10 +464,10 @@ T38AbunLeadPlot = ggplot(aes(T38_CPUE, lag(AbunPlotcrab$T38_SubadultCPUE, 2)), d
                   label.y = "bottom",
                   aes(label = paste("italic(P)*\"-value = \"*", 
                                     signif(..p.value.., digits = 4), sep = "")),
-                  parse = TRUE) +
+                  parse = TRUE, size = 3.2) +
   stat_poly_eq(aes(label = paste(..rr.label..)), 
                label.x.npc = "right", label.y.npc = 0.12,
-               formula = T38AbunLead_lm2,rr.digits = 4,  parse = TRUE, size = 4) +
+               formula = T38AbunLead_lm2,rr.digits = 4,  parse = TRUE, size = 3.2) +
   geom_smooth(method = 'lm', se=FALSE, color="black") +
   labs(y=expression(CPUE~year^{-1}),
        x=expression(subadult~CPUE~"(2-yr. lag)"~year^{-1}))
@@ -519,11 +520,11 @@ B90CPUELagPlot = ggplot(aes(LandingsCPUEMean, lag(B90_MatureMaleCPUE, 1)), data 
                   label.y = 0.865,
                   aes(label = paste("italic(P)*\"-value = \"*", 
                                     signif(..p.value.., digits = 4), sep = "")),
-                  parse = TRUE) +
+                  parse = TRUE, size = 3.2) +
   stat_poly_eq(aes(label = paste(..rr.label..)), 
                label.x.npc = "right", 
                label.y.npc = "top",
-               formula = B90CPUELAG_lm8,rr.digits = 4,  parse = TRUE, size = 4) +
+               formula = B90CPUELAG_lm8,rr.digits = 4,  parse = TRUE, size = 3.2) +
   geom_smooth(method = 'lm', se=FALSE, color="black") +
   labs(y=expression(Landings~CPUE~year^{-1}),
        x=expression(Harbor~Trawl~mature~male~CPUE~"(1-yr lag)"~year^{-1}))
@@ -536,14 +537,14 @@ T38CPUELAGPlot = ggplot(aes(LandingsCPUEMean, lag(T38_ImmatureMaleCPUE, 2)), dat
   geom_point() +
   stat_poly_eq(aes(label = paste(..rr.label..)), 
                label.x.npc = "right", label.y = "top",
-               formula = T38CPUELAG_lm7,rr.digits = 4,  parse = TRUE, size = 4) +
+               formula = T38CPUELAG_lm7,rr.digits = 4,  parse = TRUE, size = 3.2) +
   geom_smooth(method = 'lm', se=FALSE, color="black") +
   stat_fit_glance(method = "lm", method.args = list(formula = T38CPUELAG_lm7),
                   label.x = "right",
                   label.y = 0.865,
                   aes(label = paste("italic(P)*\"-value = \"*", 
                                     signif(..p.value.., digits = 4), sep = "")),
-                  parse = TRUE) +
+                  parse = TRUE, size = 3.2) +
   labs(y=expression(Landings~CPUE~year^{-1}),
        x=expression(Creek~Trawl~immature~male~CPUE~"(1-yr lag)"~year^{-1}))
 
@@ -552,6 +553,61 @@ T38CPUELAGPlot = ggplot(aes(LandingsCPUEMean, lag(T38_ImmatureMaleCPUE, 2)), dat
 SingleRegressPlot <- plot_grid(B90CPUELagPlot, T38CPUELAGPlot, ncol = 1, align = 'hv', labels = c("A", "B")) 
 SingleRegressPlot
 
+```
+
+```{r Figure 5, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Objective 3 - This plot shows no model improvement if Total CPUEs are added together into a multiple regression model.  The adj R^2 is not an improvement over the R^2 of the individual variables  (See Table 4)", fig.width=5,fig.height=3}
+
+MultiCPUELAG_lm1 <- lm(LandPlotcrab$LandingsCPUEMean ~ lag(LandPlotcrab$B90_CPUE, 1)+lag(LandPlotcrab$T38_CPUE, 1))
+
+MultiLagPlot = ggplot(aes(LandingsCPUEMean, lag(LandPlotcrab$B90_CPUE, 1)+lag(LandPlotcrab$T38_CPUE, 1)), data = LandPlotcrab) +
+  #ggtitle("Commercial Landings ~ Select Survey Variables") +
+  geom_point() +
+  stat_fit_glance(method = "lm", method.args = list(formula = MultiCPUELAG_lm1),
+                  label.x = "left",
+                  label.y = 0.83,
+                  aes(label = paste("italic(P)*\"-value = \"*", 
+                                    signif(..p.value.., digits = 3), sep = "")),
+                  parse = TRUE, size = 3.2) +
+  stat_poly_eq(aes(label = paste(..adj.rr.label..)), 
+               label.x.npc = "left", 
+               label.y.npc = "top",
+               formula = MultiCPUELAG_lm1, rr.digits = 4,  parse = TRUE, size = 3.2) +
+  geom_smooth(method = 'lm', se=FALSE, color="black") +
+  labs(y=expression(Landings~CPUE~year^{-1}),
+       x=expression(Creek~Trawl~CPUE~"(1-yr lag)"~+~Harbor~Trawl~CPUE~"(1-yr lag)"~year^{-1}))
+
+MultiLagPlot
+
+```
+
+\newpage
+
+**Table 5:** Objective 3 - This table shows the results of a dredge function run on the highest correlated variables (Figure 4), the total CPUEs (1-yr. lag) for the Harbor and Creek Trawl surveys (univariate corrs found Table 4).  The multivariate model's Radj^2 was lower than the univariate models.  The multivariate was not compared to univariate models.  A delta <2.0 from another model's delta means the dredge sees no staistical difference outside of chance between the compared models.  Population structure variables (Harbor Trawl mature males 1-yr lag, Creek Trawl immature males 1-yr lag) are statistically better models according to the dredge.
+```{r Table 5 Landings Dredge, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.cap="Objective 3 - This table shows the results of a dredge function run on the highest correlated variables (Figure 4), the total CPUEs (1-yr. lag) for the Harbor and Creek Trawl surveys (univariate corrs found Table 4).  The multivariate model's Radj^2 was lower than the univariate models.  The multivariate was not compared to univariate models.  A delta <2.0 from another model's delta means the dredge sees no staistical difference outside of chance between the compared models.  Population structure variables (Harbor Trawl mature males 1-yr lag, Creek Trawl immature males 1-yr lag) are statistically better models according to the dredge."}
+LandDredgeData = read.csv("Ch1data_dredgeLand.csv", header = TRUE) 
+LandDredge_lm = lm(Landings ~ ., data = LandDredgeData, na.action = "na.fail") 
+LandDredge = dredge(LandDredge_lm)
+LandDredgeTable <- subset(LandDredge, delta < 5.01)
+
+LandDredgeKable = kable(LandDredgeTable, "latex", booktabs = T, 
+                        col.names = c("Intercept",
+                                      "Harbor Trawl",
+                                      "Harbor Trawl mature male",
+                                      "Creek Trawl",
+                                      "Creek Trawl immature male",
+                                      "df", 
+                                      "logLik",
+                                      "AICc",
+                                      "delta",
+                                      "weight"), digits = 4) %>%
+  kable_styling(bootstrap_options = "scale_down", font_size = 8) %>%
+  add_header_above(c(" " = 2, "lagged 1-yr." = 4)) %>%
+  column_spec(2:6, width = "5em") %>%
+  pack_rows("delta Group 1", 1, 2) %>%
+  pack_rows("delta Group 2", 3, 10)
+
+
+LandDredgeKable
 ```
 
 \newpage
