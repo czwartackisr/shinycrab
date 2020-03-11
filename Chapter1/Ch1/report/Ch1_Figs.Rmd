@@ -7,8 +7,8 @@ author:
 abstract: |
   Marked high fluctuations in blue crab (*Callinectes sapidus*) seasonal and annual abundance, and commercial landings are typical, but data from both fisheries independent and dependent surveys have shown declines in populations in recent years in South Carolina. Despite several long-term fisheries independent surveys encountering blue crab, predictive models have not recently been developed in South Carolina to quantify variation in abundance and commercial landings.   The goal of this study is to assess the current status of blue crab in SC and explore the potential for developing a more predictive understanding of commercial landings. This goal is me through the following objectives: 1) assess long-term trends in blue crab landings and fisheries-independent abundance, 2) test the applicability of a juvenile index, where juvenile abundance in one year predicts adult abundance in a following year, 3) explore predictive relationships between fisheries-independent abundance and commercial landings. Data from several long-term South Carolina Department of Natural Resources (SCDNR) fisheries independent blue crab surveys were standardized for each of six surveys and commercial landings data were compiled.  Analyses testing the application of a juvenile index of abundance show that no juveniles collected in surveys explain variation in annual survey abundances.  The Creek Trawl survey was the only survey with significant, but weak, correlative relationships between multiple lagged population structure variables and its own annual abundance.  Significant relationships were found with effort-corrected commercial landings predicted by the previous year’s abundance of male crabs. This relationship was significant for immature crabs collected in the Harbor Trawl survey, and for mature crabs collected in the Creek Trawl survey. These results suggest effective population sampling, but a potential influence on abundance of blue crab from outside factors such as fishing, habitat or environmental variables.   
 output:
-  pdf_document: default
   word_document: default
+  pdf_document: default
 editor_options: 
   chunk_output_type: inline
 ---
@@ -61,7 +61,7 @@ depend <- read.csv("MonthlyDependent.csv")
 
 ```{r Data Wrangling, include=FALSE, warning=FALSE, message=FALSE}
 B90T38 = crabdata %>% #Formerly crab1
-  select(1:4, 7:16) %>%
+  dplyr::select(1:4, 7:16) %>%
   filter(ProjID %in% c("B90", "T38")) %>%
   rename(Total = CPUE,
          Juvenile = JuvCPUE,
@@ -76,39 +76,39 @@ B90T38 = crabdata %>% #Formerly crab1
   gather("Lifestage", "CPUE", 5:14) %>%
   mutate(Year = year(StartTime)) %>%
   mutate(Month = month(StartTime)) %>%
-  select(1,2,4,3,7,8,5,6) 
+  dplyr::select(1,2,4,3,7,8,5,6) 
 
 T06 = crabdata %>% #Formerly crab1
-  select(1:4, 7:16) %>%
+  dplyr::select(1:4, 7:16) %>%
   filter(ProjID %in% "T06") %>%
   rename(Total = CPUE) %>%
-  select(1:5) %>%
+  dplyr::select(1:5) %>%
   gather("Lifestage", "CPUE", 5) %>%
   mutate(Year = year(StartTime)) %>%
   mutate(Month = month(StartTime)) %>%
-  select(1,2,4,3,7,8,5,6) 
+  dplyr::select(1,2,4,3,7,8,5,6) 
 
 
 P88 = crabdata %>% #Formerly crab1
-  select(1:4, 7:16) %>%
+  dplyr::select(1:4, 7:16) %>%
   filter(ProjID %in% "P88") %>%
   rename(Total = CPUE,
          Sublegal = SublegalCPUE,
          Legal = LegalCPUE) %>%
   distinct(Coll, .keep_all = TRUE) %>%
-  select(1:5, 13, 14) %>%
+  dplyr::select(1:5, 13, 14) %>%
   gather("Lifestage", "CPUE", 5:7) %>%
   mutate(Year = year(StartTime)) %>%
   mutate(Month = month(StartTime)) %>%
-  select(1,2,4,3,7,8,5,6) 
+  dplyr::select(1,2,4,3,7,8,5,6) 
 
 p88Crab = crabdata %>% #Formerly crab1
-  select(1:4, 7:16) %>%
+  dplyr::select(1:4, 7:16) %>%
   filter(ProjID %in% "P88") 
 
 
 SCECAP = crabdata %>% #Formerly crab1
-  select(1:4, 7:16) %>%
+  dplyr::select(1:4, 7:16) %>%
   filter(ProjID %in% c("E98", "E99")) %>%
   rename(Total = CPUE,
          Sublegal = SublegalCPUE,
@@ -116,11 +116,11 @@ SCECAP = crabdata %>% #Formerly crab1
          Juvenile = JuvCPUE,
          Subadult = SubadultCPUE,
          Adult = AdultCPUE) %>%
-  select(1:8, 13, 14) %>%
+  dplyr::select(1:8, 13, 14) %>%
   gather("Lifestage", "CPUE", 5:10) %>%
   mutate(Year = year(StartTime)) %>%
   mutate(Month = month(StartTime)) %>%
-  select(1,2,4,3,7,8,5,6) 
+  dplyr::select(1,2,4,3,7,8,5,6) 
 
 crab1 = rbind(B90T38, P88) %>%
   rbind(., T06) %>%
@@ -439,7 +439,7 @@ AbunRegressTable = read.csv("SingleAbundanceRegress.csv") %>%
 
 ```
 
-**Table 3:** Objective 2 - These are all relevant explanatory variables.  Only one survey has explanatory relationships.  No juveniles from any survey predict abundances in later years.  Maybe the subadults with a 2-yr. lag show that juveniles in this survey could be used with a 3-yr lag, or that the survey simply does not catch juveinles effectively, or juveniles are not populating sampled micro-habitats. I do not think regression tables are needed for the mulitple OLS models as they do not improve the model or the relationship above an R^2 of 0.299.
+**Table 3:** Objective 2 - These are all relevant explanatory variables.  Only one survey has explanatory relationships with its own lagged abundances.  No juveniles from any survey predict abundances in later years.  The realtionship between total CPUE and subadults with a 2-yr. may suggest that 1) the survey does not catch juveinles effectively or juveniles are not populating sampled micro-habitats. 
 ```{r T38, include=TRUE, echo=FALSE, warning=FALSE, include=TRUE, dpi=600, fig.cap="Table 3: OLS regression of total Creek Trawl CPUE by all lifestages from all surveys."}
 
 Abun_Table =  kable(AbunRegressTable, "latex", booktabs = T, align = "llcccc") %>%
@@ -453,7 +453,7 @@ Abun_Table
 
 \newpage
 
-**Table 4:** Objective 2 - This table shows the results of a dredge function run on the highest correlated variables (Figure 4), the total CPUEs (1-yr. lag) for the Harbor and Creek Trawl surveys (univariate corrs found Table 4).  The multivariate model's Radj^2 was lower than the univariate models.  The multivariate was not compared to univariate models.  A delta <2.0 from another model's delta means the dredge sees no staistical difference outside of chance between the compared models.  Population structure variables (Harbor Trawl mature males 1-yr lag, Creek Trawl immature males 1-yr lag) are statistically better models according to the dredge.
+**Table 4:** Objective 2 - This table shows the results of a dredge function run on the highest correlated variables (Figure 4), the total CPUEs (1-yr. lag) for the Harbor and Creek Trawl surveys (univariate corrs found Table 3).  The multivariate model's Radj^2 was lower than the univariate models.  The multivariate was not compared to univariate models.  A delta <2.0 from another model's delta means the dredge sees no staistical difference outside of chance between the compared models.  Population structure variables (Harbor Trawl mature males 1-yr lag, Creek Trawl immature males 1-yr lag) are statistically better models according to the dredge.  Since the top scoring model is ranked highest, this summary indicates that none of the predictors improve model fit.
 ```{r Table 4 Abundance Dredge, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.cap="Objective 2 - This table shows the results of a dredge function run on the highest correlated variables (Figure 4), the total CPUEs (1-yr. lag) for the Harbor and Creek Trawl surveys (univariate corrs found Table 4).  The multivariate model's Radj^2 was lower than the univariate models.  The multivariate was not compared to univariate models.  A delta <2.0 from another model's delta means the dredge sees no staistical difference outside of chance between the compared models.  Population structure variables (Harbor Trawl mature males 1-yr lag, Creek Trawl immature males 1-yr lag) are statistically better models according to the dredge."}
 AbunDredgeData = read.csv("Ch1data_dredgeAbun.csv", header = TRUE) 
 AbunDredge_lm = lm(CPUE ~ ., data = AbunDredgeData, na.action = "na.fail") 
