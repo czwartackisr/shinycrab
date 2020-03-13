@@ -245,7 +245,7 @@ LandingsCPUE = ggplot(aes(Year, CPUE), data = subset(LandingsCrab,
   stat_summary(fun.data = "mean_se", size = .7) +
   #stat_poly_eq(aes(label = ..eq.label..), formula = formula1, parse = TRUE) +
   geom_smooth(method = 'loess', se=FALSE, color="black") +
-  labs(y=expression(Blue~crab~~per~pot~fished^{-1})) +
+  labs(y=expression(Blue~crab~pot~fished^{-1})) +
   expand_limits(x=c(1980, 2022)) 
 
 
@@ -262,7 +262,7 @@ Landings = ggplot(aes(Year, CPUE), data = subset(LandingsCrab,
   stat_summary(fun.data = "mean_se", size = .7) +
   #stat_poly_eq(aes(label = ..eq.label..), formula = formula2, parse = TRUE) +
   geom_smooth(method = 'loess', se=FALSE, color="black") +
-  labs(y=expression(Blue~crab~lbs.~per~year^{-1}), x=expression(" ")) +
+  labs(y=expression(Blue~crab~lbs.~year^{-1}), x=expression(" ")) +
   expand_limits(x=c(1980, 2022)) 
 
 
@@ -424,26 +424,135 @@ Plot1
 
 ### Discussion
 
-Time series of mean annual commercial landings (fig. 1) and adult abundances from SCDNR fisheries independent surveys (fig. 2) show the high annual variablility of blue crab populations.  These figures both show crab >126mm, which is the minimum legal limit of blue crab in South Carolina.  
+Time series of mean annual commercial landings (Fig. 1) and adult abundances from SCDNR fisheries independent surveys (fig. 2) show the high inter-annual variablility of legal-sized "adult" blue crab (>126mm).  These figures both show crab >126mm, which is the minimum legal limit of blue crab in South Carolina.  
 
 The total pounds landed in the combined Charleston Harbor watersheds shows a trending decline from 2003 - 2010, but when these same landings data are corrected for effort in terms of number of pots pulled that trend is not observed.  The year 2003 marks the first year of "trip ticket" reporting, in which all commercial blue crab license holders are required to report their catch.  This is the same time (>2003) landings data have incorporated data from the Ashley River and Cooper River reporting areas.  This could be due to not being actively fished for blue crab, underreported for these reporting areas or included in another reporting area (e.g. a line of crab pots beginning in the Ashley River and continuing into Charleston Harbor where landings are eventually reported). Adult abundances from some surveys (B Creek Trawl, C Ashley Potting and D SCECAP Open-Water) show a slight decline in adult abundance shortly after 2000.  
 
 \newpage
 # Objective 2 
-Test the ability of a juvenile index, where juvenile abundance in one year predicts adult abundance in a following year
+Test the ability of a juvenile index of adult abundance, where juvenile abundance in one year predicts adult abundance in a following year
+
+ Creek Trawl (1-yr lag, r^2^ = 0.02, *p* = 0.43; 2-yr lag, r^2^ = 0.02, *p* = 0.35) or the Harbor Trawl (1-yr lag, r^2^ = 0.06, *p* = 0.15; 2-yr lag, r^2^ = 0.00, *p* = 0.86) survey. 
+
+**Table 3:** Objective 2 - Mean annual juvenile CPUE was not significantly related to mean annual adult CPUE in subsequent years for any survey
+```{r Table 3, include=TRUE, echo=FALSE, warning=FALSE, include=TRUE, dpi=600, fig.cap="Table 4: OLS regression of total Creek Trawl CPUE by all lifestages from all surveys."}
+IndexRegressTable = read.csv("IndexRegress.csv") %>%
+  rename("Explanatory Variable" = Explanatory.Variable,
+         "Dpendent Variable" = Dependent.Variable,
+         "p-value" = p.value,
+         "r2" = r2,
+         "Degrees of Freedom" = Degrees.of.Freedom) %>%
+  dplyr::select(1, 3:6)
+
+
+Index_Table =  kable(IndexRegressTable, "latex", booktabs = T, align = "llccc") %>%
+  kable_styling(font_size = 8) %>%
+  add_header_above(c(" " = 2, "Summary Statistics" = 3)) %>%
+  column_spec(3:4, width = "4em") %>%
+  column_spec(5, width = "6em") %>%
+  pack_rows("Harbor Trawl", 1,2) %>%
+  pack_rows("Creek Trawl", 3, 4) %>%
+  pack_rows("SCECAP Open Water", 5, 6) %>%
+  pack_rows("SCECAP Tidal Creek", 7, 8) %>%
+  pack_rows("Ashley Potting", 9, 10)
+
+Index_Table
+
+```
+
+```{r, Figure 3a Wrangle, echo=FALSE, message=FALSE, warning=FALSE, include=TRUE}
+#This is just in case I have to produce regression plots of these failed relationships
+
+
+
+AbunPlotcrab <- read.csv("CH1data.csv", stringsAsFactors = FALSE)
+
+B90JuvLag_lm1 = lm(AbunPlotcrab$B90_AdultCPUE ~ lag(AbunPlotcrab$B90_JuvCPUE, 1))
+B90JuvLagPlot = ggplot(aes(B90_AdultCPUE, lag(AbunPlotcrab$B90_JuvCPUE, 1)), data = AbunPlotcrab) +
+  ggtitle("Harbor Trawl") +
+  geom_point() +
+  stat_fit_glance(method = "lm", method.args = list(formula = B90JuvLag_lm1),
+                  label.x = "right",
+                  label.y = "top",
+                  aes(label = paste("italic(P)*\"-value = \"*", 
+                                    signif(..p.value.., digits = 2), sep = "")),
+                  parse = TRUE, size = 3.2) +
+  #stat_poly_eq(aes(label = paste(..rr.label..)), 
+               #label.x.npc = "right", label.y.npc = 0.12,
+               #formula = B90JuvLag_lm1,rr.digits = 2,  parse = TRUE, size = 3.2) +
+  #geom_smooth(method = 'lm', se=FALSE, color="black") +
+  labs(y=expression(Adult~CPUE~year^{-1}),
+       x=expression(Juvenile~CPUE~year^{-1}~"(1-yr. lag)"))
+
+B90JuvLead_lm1 = lm(AbunPlotcrab$B90_AdultCPUE ~ lag(AbunPlotcrab$B90_JuvCPUE, 2))
+B90JuvLeadPlot = ggplot(aes(B90_AdultCPUE, lag(AbunPlotcrab$B90_JuvCPUE, 2)), data = AbunPlotcrab) +
+  #ggtitle("Index of Abundance Relationship") +
+  geom_point() +
+  stat_fit_glance(method = "lm", method.args = list(formula = B90JuvLead_lm1),
+                  label.x = "right",
+                  label.y = "top",
+                  aes(label = paste("italic(P)*\"-value = \"*", 
+                                    signif(..p.value.., digits = 2), sep = "")),
+                  parse = TRUE, size = 3.2) +
+  #stat_poly_eq(aes(label = paste(..rr.label..)), 
+               #label.x.npc = "right", label.y.npc = 0.12,
+               #formula = B90JuvLag_lm1,rr.digits = 2,  parse = TRUE, size = 3.2) +
+  #geom_smooth(method = 'lm', se=FALSE, color="black") +
+  labs(y=expression(Adult~CPUE~year^{-1}),
+       x=expression(Juvenile~CPUE~year^{-1}~"(2-yr. lag)"))
+
+T38JuvLag_lm1 = lm(AbunPlotcrab$T38_AdultCPUE ~ lag(AbunPlotcrab$T38_JuvCPUE, 1))
+T38JuvLagPlot = ggplot(aes(T38_AdultCPUE, lag(AbunPlotcrab$T38_JuvCPUE, 1)), data = AbunPlotcrab) +
+  ggtitle("Creek Trawl") +
+  geom_point() +
+  stat_fit_glance(method = "lm", method.args = list(formula = T38JuvLag_lm1),
+                  label.x = "right",
+                  label.y = "top",
+                  aes(label = paste("italic(P)*\"-value = \"*", 
+                                    signif(..p.value.., digits = 2), sep = "")),
+                  parse = TRUE, size = 3.2) +
+  #stat_poly_eq(aes(label = paste(..rr.label..)), 
+               #label.x.npc = "right", label.y.npc = 0.12,
+               #formula = T38JuvLag_lm1,rr.digits = 2,  parse = TRUE, size = 3.2) +
+  #geom_smooth(method = 'lm', se=FALSE, color="black") +
+  labs(y=expression(Adult~CPUE~year^{-1}),
+       x=expression(Juvenile~CPUE~year^{-1}~"(1-yr. lag)"))
+
+T38JuvLead_lm1 = lm(AbunPlotcrab$T38_AdultCPUE ~ lag(AbunPlotcrab$T38_JuvCPUE, 2))
+T38JuvLeadPlot = ggplot(aes(T38_AdultCPUE, lag(AbunPlotcrab$T38_JuvCPUE, 2)), data = AbunPlotcrab) +
+  #ggtitle("Index of Abundance Relationship") +
+  geom_point() +
+  stat_fit_glance(method = "lm", method.args = list(formula = T38JuvLead_lm1),
+                  label.x = "right",
+                  label.y = "top",
+                  aes(label = paste("italic(P)*\"-value = \"*", 
+                                    signif(..p.value.., digits = 2), sep = "")),
+                  parse = TRUE, size = 3.2) +
+  #stat_poly_eq(aes(label = paste(..rr.label..)), 
+               #label.x.npc = "right", label.y.npc = 0.12,
+               #formula = T38JuvLag_lm1,rr.digits = 2,  parse = TRUE, size = 3.2) +
+  #geom_smooth(method = 'lm', se=FALSE, color="black") +
+  labs(y=expression(Adult~CPUE~year^{-1}),
+       x=expression(Juvenile~CPUE~year^{-1}~"(2-yr. lag)"))
+
+```
+
+
+\newpage
+# Objective 3
+Explore predictive relationships between fisheries-independent abundance and commercial landings
 
 ```{r, echo=FALSE, warning=FALSE, include=FALSE}
 AbunRegressTable = read.csv("SingleAbundanceRegress.csv") %>%
   rename("Degrees of Freedom" = Degrees.of.Freedom,
          "Explanatory Variable" = Explanatory.Variable,
          "Dependent Variable" = Dependent.Variable,
-         "p-value" = p.value,
-         "F-statistic" = F.statistic) %>%
+         "p-value" = p.value) %>%
   dplyr::select(2, 4:6, 8)
 
 ```
 
-**Table 3:** Objective 2 - These are all relevant explanatory variables.  Only one survey has explanatory relationships with its own lagged abundances.  No juveniles from any survey predict abundances in later years.  The realtionship between total CPUE and subadults with a 2-yr. may suggest that 1) the survey does not catch juveinles effectively or juveniles are not populating sampled micro-habitats. 
+**Table 4:** Objective 3 - These are all relevant explanatory variables.  Only one survey has explanatory relationships with its own lagged abundances.  No juveniles from any survey predict abundances in later years.  The realtionship between total CPUE and subadults with a 2-yr. may suggest that 1) the survey does not catch juveinles effectively or juveniles are not populating sampled micro-habitats. 
 ```{r T38, include=TRUE, echo=FALSE, warning=FALSE, include=TRUE, dpi=600, fig.cap="Table 3: OLS regression of total Creek Trawl CPUE by all lifestages from all surveys."}
 
 Abun_Table =  kable(AbunRegressTable, "latex", booktabs = T, align = "llcccc") %>%
@@ -457,9 +566,7 @@ Abun_Table
 
 \newpage
 
-```{r Figure 3 (Sub Plot), echo=FALSE, message=FALSE, warning=FALSE, include=TRUE, fig.cap="Objective 2 - Plot showing the regression relationship of total Creek Trawl CPUE by Creek Trawl subadult CPUE from 2 years prior.  This the highest correlated relationship of total or adult CPUE by lagged lifestage variable.", fig.width=5,fig.height=3}
-AbunPlotcrab <- read.csv("CH1data.csv", stringsAsFactors = FALSE)
-
+```{r Figure 4 (Sub Plot), echo=FALSE, message=FALSE, warning=FALSE, include=TRUE, fig.cap="Objective 2 - Plot showing the regression relationship of total Creek Trawl CPUE by Creek Trawl subadult CPUE from 2 years prior.  This the highest correlated relationship of total or adult CPUE by lagged lifestage variable.", fig.width=5,fig.height=3}
 T38AbunLead_lm2 = lm(AbunPlotcrab$T38_CPUE ~ lag(AbunPlotcrab$T38_SubadultCPUE, 2))
 T38AbunLeadPlot = ggplot(aes(T38_CPUE, lag(AbunPlotcrab$T38_SubadultCPUE, 2)), data = AbunPlotcrab) +
   #ggtitle("Index of Abundance Relationship") +
@@ -468,11 +575,11 @@ T38AbunLeadPlot = ggplot(aes(T38_CPUE, lag(AbunPlotcrab$T38_SubadultCPUE, 2)), d
                   label.x = "right",
                   label.y = "bottom",
                   aes(label = paste("italic(P)*\"-value = \"*", 
-                                    signif(..p.value.., digits = 4), sep = "")),
+                                    signif(..p.value.., digits = 2), sep = "")),
                   parse = TRUE, size = 3.2) +
   stat_poly_eq(aes(label = paste(..rr.label..)), 
                label.x.npc = "right", label.y.npc = 0.12,
-               formula = T38AbunLead_lm2,rr.digits = 4,  parse = TRUE, size = 3.2) +
+               formula = T38AbunLead_lm2,rr.digits = 2,  parse = TRUE, size = 3.2) +
   geom_smooth(method = 'lm', se=FALSE, color="black") +
   labs(y=expression(CPUE~year^{-1}),
        x=expression(Subadult~CPUE~"(2-yr. lag)"~year^{-1}))
@@ -490,7 +597,7 @@ Although there were several significant regression models constructed using fish
 # Objective 3
 Explore predictive relationships between fisheries-independent abundance and commercial landings. 
 
-**Table 4:** Objective 3 - All significant relatioships of effort corrected Charleston Harbor watershed (Ashley, Cooper and Wando Rivers and Charlesotn Harbor) commercial Landings by lifestage variables from all surveys using OLS regression. Only variables from the Harbor and Creek Trawl surveys were related to these corrected landings.  Multiple variables with consistent correlations through both surveys seem to suggest the surveys are effectively measuring the population, but there may be some other driver (habitat, environmental, fishing) outside of stock/population (proper term?) variables that affect blue crab abundance.
+**Table 5:** Objective 3 - All significant relatioships of effort corrected Charleston Harbor watershed (Ashley, Cooper and Wando Rivers and Charlesotn Harbor) commercial Landings by lifestage variables from all surveys using OLS regression. Only variables from the Harbor and Creek Trawl surveys were related to these corrected landings.  Multiple variables with consistent correlations through both surveys seem to suggest the surveys are effectively measuring the population, but there may be some other driver (habitat, environmental, fishing) outside of stock/population (proper term?) variables that affect blue crab abundance.
 ```{r Table 5, include=TRUE, echo=FALSE, warning=FALSE, include=TRUE, dpi=600, fig.cap="Table 4: OLS regression of total Creek Trawl CPUE by all lifestages from all surveys."}
 LandRegressTable = read.csv("SingleLandingsCPUERegress.csv") %>%
   rename("Degrees of Freedom" = Degrees.of.Freedom,
@@ -512,7 +619,7 @@ Land_Table
 
 ```
 
-```{r Figure 4, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Ordinary Least Squares regression plots of select significant explanatory relatioships using lagged variables to Charleston Harbor watershed Landings CPUEs.  Mean annual landings CPUE by Harbor Trawl mature males with a 1-yr lag (A), and mean annual landings CPUE by Creek Trawl immature males CPUE with a 1-yr. lag (B).  Because the multiple regression relationships do not have as strong a correlation as some of the single, and are more illogical, I don't think the table with multiple regression models is needed since their is no improvement in correlation.", fig.width=5,fig.height=6}
+```{r Figure 5, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Ordinary Least Squares regression plots of select significant explanatory relatioships using lagged variables to Charleston Harbor watershed Landings CPUEs.  Mean annual landings CPUE by Harbor Trawl mature males with a 1-yr lag (A), and mean annual landings CPUE by Creek Trawl immature males CPUE with a 1-yr. lag (B).  Because the multiple regression relationships do not have as strong a correlation as some of the single, and are more illogical, I don't think the table with multiple regression models is needed since their is no improvement in correlation.", fig.width=5,fig.height=6}
 
 LandPlotcrab <- read.csv("CH1data.csv", stringsAsFactors = FALSE)
 
@@ -560,7 +667,7 @@ SingleRegressPlot
 
 ```
 
-```{r Figure 5, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Objective 3 - This plot shows no model improvement if Total CPUEs are added together into a multiple regression model.  The adj R^2 is not an improvement over the R^2 of the individual variables  (See Table 4)", fig.width=5,fig.height=3}
+```{r Figure 6, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Objective 3 - This plot shows no model improvement if Total CPUEs are added together into a multiple regression model.  The adj R^2 is not an improvement over the R^2 of the individual variables  (See Table 4)", fig.width=5,fig.height=3}
 
 MultiCPUELAG_lm1 <- lm(LandPlotcrab$LandingsCPUEMean ~ lag(LandPlotcrab$B90_CPUE, 1)+lag(LandPlotcrab$T38_CPUE, 1))
 
@@ -587,7 +694,7 @@ MultiLagPlot
 
 \newpage
 
-**Table 5:** Objective 3 - This table shows the results of a dredge function run on the highest correlated variables (Figure 4), the total CPUEs (1-yr. lag) for the Harbor and Creek Trawl surveys (univariate corrs found Table 4).  The multivariate model's Radj^2 was lower than the univariate models.  The multivariate and univariate models were scored using AICc for small samples.  A delta <2.0 from another model's delta means the dredge sees no staistical difference outside of chance between the compared models.  Mean annual population structure variables (Harbor Trawl mature males 1-yr lag, Creek Trawl immature males 1-yr lag) are statistically better models than mean annual total CPUE according to the dredge.
+**Table 6:** Objective 3 - This table shows the results of a dredge function run on the highest correlated variables (Figure 4), the total CPUEs (1-yr. lag) for the Harbor and Creek Trawl surveys (univariate corrs found Table 4).  The multivariate model's Radj^2 was lower than the univariate models.  The multivariate and univariate models were scored using AICc for small samples.  A delta <2.0 from another model's delta means the dredge sees no staistical difference outside of chance between the compared models.  Mean annual population structure variables (Harbor Trawl mature males 1-yr lag, Creek Trawl immature males 1-yr lag) are statistically better models than mean annual total CPUE according to the dredge.
 ```{r Table 6 Landings Dredge, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.cap="Objective 3 - This table shows the results of a dredge function run on the highest correlated variables (Figure 4), the total CPUEs (1-yr. lag) for the Harbor and Creek Trawl surveys (univariate corrs found Table 4).  The multivariate model's Radj^2 was lower than the univariate models.  The multivariate was not compared to univariate models.  A delta <2.0 from another model's delta means the dredge sees no staistical difference outside of chance between the compared models.  Population structure variables (Harbor Trawl mature males 1-yr lag, Creek Trawl immature males 1-yr lag) are statistically better models according to the dredge."}
 LandDredgeData = read.csv("Ch1data_dredgeLand.csv", header = TRUE) 
 LandDredge_lm = lm(Landings ~ ., data = LandDredgeData, na.action = "na.fail") 
