@@ -1,10 +1,10 @@
 Dep Survey,Dependent Variable ,Ind Survey,Explanatory Variable,p-value,r2,F-statistic,Degrees of Freedom
-LandingsCPUE,Mean Landings CPUE,B90,Mature Male (1-yr. lag),0.007659,0.433,9.928,13
-LandingsCPUE,Mean Landings CPUE,B90,Subadult (1-yr. lag),0.01668,0.367,7.538,13
-LandingsCPUE,Mean Landings CPUE,B90,Total CPUE (1-yr. lag),0.02771,0.3208,6.14,13
-LandingsCPUE,Mean Landings CPUE,T38,Immature Male (1-yr. lag),0.01042,0.4076,8.946,13
-LandingsCPUE,Mean Landings CPUE,T38,Sublegal (1-yr. lag),0.01485,0.3772,7.875,13
-LandingsCPUE,Mean Landings CPUE,T38,Subadult (1-yr. lag),0.01947,0.3532,7.1,13
-LandingsCPUE,Mean Landings CPUE,T38,Total CPUE (1-yr. lag),0.02388,0.3346,6.538,13
-LandingsCPUE,Mean Landings CPUE,T38,Juvenile (1-yr. lag),0.03014,0.3129,5.921,13
-LandingsCPUE,Mean Landings CPUE,T38,Immature Female (1-yr. lag),0.03321,0.3038,5.672,13
+LandingsCPUE,Mean Landings (effort corrected),B90,Mature Male (1-yr. lag),<0.01,0.43,9.928,13
+LandingsCPUE,Mean Landings (effort corrected),B90,Subadult (1-yr. lag),<0.05,0.37,7.538,13
+LandingsCPUE,Mean Landings (effort corrected),B90,Total CPUE (1-yr. lag),<0.05,0.32,6.14,13
+LandingsCPUE,Mean Landings (effort corrected),T38,Immature Male (1-yr. lag),<0.01,0.41,8.946,13
+LandingsCPUE,Mean Landings (effort corrected),T38,Sublegal (1-yr. lag),<0.05,0.38,7.875,13
+LandingsCPUE,Mean Landings (effort corrected),T38,Subadult (1-yr. lag),<0.05,0.35,7.1,13
+LandingsCPUE,Mean Landings (effort corrected),T38,Total CPUE (1-yr. lag),<0.05,0.33,6.538,13
+LandingsCPUE,Mean Landings (effort corrected),T38,Juvenile (1-yr. lag),<0.05,0.31,5.921,13
+LandingsCPUE,Mean Landings (effort corrected),T38,Immature Female (1-yr. lag),<0.05,0.3,5.672,13
