@@ -1,0 +1,18 @@
+Dep Survey,Dependent Variable ,Ind Survey,Explanatory Variable,p-value,r2,F-statistic,Degrees of Freedom
+T38,Total CPUE,T38,Subadult (2-yr. lag),<0.01,0.24,11.25,35
+T38,Total CPUE,T38,Mature Male (1-yr. lag),<0.01,0.23,10.88,36
+T38,Total CPUE,T38,Immature Male (2-yr. lag),<0.01,0.21,9.481,35
+T38,Total CPUE,T38,Sublegal (1-yr. lag),<0.01,0.21,9.316,35
+T38,Total CPUE,T38,Total CPUE (2-yr lag),<0.01,0.21,9.024,35
+T38,Total CPUE,T38,Subadult (1-yr. lag),<0.01,0.18,7.949,36
+T38,Total CPUE,T38,Immature Female (2-yr. lag),<0.01,0.17,7.337,35
+T38,Total CPUE,T38,Mature Female (2-yr lag),<0.05,0.15,6.048,35
+T38,Total CPUE,T38,Total CPUE (1-yr lag),<0.05,0.14,6.027,36
+T38,Total CPUE,T38,Sublegal (1-yr. lag),<0.05,0.13,5.448,36
+T38,Total CPUE,T38,Mature Male (2-yr. lag),<0.05,0.13,5.067,35
+T38,Total CPUE,T38,Adult (1-yr. lag),<0.05,0.12,5.028,36
+T38,Total CPUE,T38,Legal (1-yr. lag),<0.05,0.12,5.028,36
+T38,Total CPUE,T38,Immature Male (1-yr. lag),<0.05,0.10,4.169,36
+T38,Total CPUE,T38,Immature Female (1-yr. lag),<0.05,0.10,4.111,36
+T38,Adult CPUE,T38,Mature Male (1-yr. lag),<0.01,0.16,6.646,36
+T38,Adult CPUE,T38,Mature Female (2-yr lag),<0.05,0.12,4.715,35
