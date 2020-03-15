@@ -1,0 +1,10 @@
+Dep Survey,Dependent Variable ,Ind Survey,Explanatory Variable,p-value,r2,F-statistic,Degrees of Freedom
+E98,Total CPUE,E98,Subadult (2-yr. lag),<0.001,0.93,,10
+E98,Total CPUE,E98,Sublegal (2-yr. lag),<0.001,0.92,,10
+E98,Total CPUE,E98,Total CPUE (2-yr lag),<0.001,0.88,,10
+E98,Total CPUE,E98,Adult (2-yr. lag),<0.01,0.54,,10
+E98,Adult CPUE,E98,Subadult (2-yr. lag),<0.001,0.91,,10
+E98,Adult CPUE,E98,Sublegal (2-yr. lag),<0.001,0.9,,10
+E98,Adult CPUE,E98,Total CPUE (2-yr lag),<0.001,0.85,,10
+E98,Adult CPUE,E98,Adult (2-yr. lag),<0.01,0.51,,10
+E99,Adult CPUE,E99,Adult (1-yr lag),<0.05,0.24,,10
