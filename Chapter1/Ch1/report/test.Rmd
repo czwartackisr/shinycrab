@@ -5,7 +5,7 @@ author:
   - Stephen R. Czwartacki
   - Michael R. Kendrick
 abstract: |
-  Marked high fluctuations in blue crab (*Callinectes sapidus*) seasonal and annual abundance, and commercial landings are typical, but data from both fisheries independent and dependent surveys have shown declines in populations in recent years in South Carolina. Despite several long-term fisheries independent surveys encountering blue crab, predictive models have not recently been developed in South Carolina to quantify variation in abundance and commercial landings.   The goal of this study is to assess the current status of blue crab in SC and explore the potential for developing a more predictive understanding of commercial landings. This goal is met through the following objectives: 1) assess long-term trends in blue crab landings and fisheries-independent abundance, 2) test the applicability of a juvenile index, where juvenile abundance in one year predicts adult abundance in a following year, 3) explore predictive relationships between fisheries-independent abundance and commercial landings. Data from several long-term South Carolina Department of Natural Resources (SCDNR) fisheries independent blue crab surveys were standardized for each of six surveys and commercial landings data were compiled.  Analyses testing the application of a juvenile index of abundance show that no juveniles collected in surveys explain variation in annual survey abundances.  The Creek Trawl survey was the only survey with significant, but weak, correlative relationships between multiple lagged population structure variables and its own annual abundance.  Significant relationships were found with effort-corrected commercial landings predicted by the previous year’s abundance of male crabs. This relationship was significant for immature crabs collected in the Harbor Trawl survey, and for mature crabs collected in the Creek Trawl survey. These results suggest effective population sampling, but a potential influence on abundance of blue crab from outside factors such as fishing, habitat or environmental variables.   
+  Marked high fluctuations in blue crab (*Callinectes sapidus*) seasonal and annual abundance, and commercial landings are typical, but data from both fisheries independent and dependent surveys have shown declines in populations in recent years in South Carolina. Despite several long-term fisheries independent surveys encountering blue crab, predictive models have not recently been developed in South Carolina to quantify variation in abundance and commercial landings.   
 output:
   pdf_document: default
   word_document: default
@@ -47,24 +47,30 @@ update_geom_defaults("line",   list(colour = "black"))
 theme_update(plot.title = element_text(hjust = 0.5))
 ```
 
-```{r Table 5, include=TRUE, echo=FALSE, warning=FALSE, include=TRUE, dpi=600, fig.cap="Table 4: OLS regression of total Creek Trawl CPUE by all lifestages from all surveys."}
-LandRegressTable = read.csv("SingleLandingsCPUERegress.csv") %>%
-  rename("Degrees of Freedom" = Degrees.of.Freedom,
-         "Explanatory Variable" = Explanatory.Variable,
-         "Dependent Variable" = Dependent.Variable,
-         "p-value" = p.value) %>%
-  dplyr::select(2, 4:6, 8)
+```{r Wrangle Table 1, echo=FALSE, warning=FALSE, include=FALSE}
+SurveyTable = read.csv("SurveyTable2.csv") %>%
+  rename("Gear" = Gear.Type,
+         "Sample Area" = Sample.Area,
+         "Sample Interval" = Sample.Interval,
+         "Sample Method" = Sample.Method,
+         "N(events)" = N.events.,
+         "CPUE Standardization" = CPUE.Standardization) 
 
+```
 
-Land_Table =  kable(LandRegressTable, "latex", booktabs = T, align = "llcccc") %>%
-  kable_styling(latex_options = "scale_down" , font_size = 8) %>%
-  add_header_above(c(" " = 2, "Summary Statistics" = 3)) %>%
-  column_spec(3:4, width = "4em") %>%
-  column_spec(5, width = "6em") %>%
-  pack_rows("Harbor Trawl (explanatory variable)", 1,3) %>%
-  pack_rows("Creek Trawl (explanatory variable)", 4, 9) 
+\newpage
+**Table 1:** SCDNR fisheries independent survey methodology.    
+```{r Table 1 Survey Background, include=TRUE, echo=FALSE, warning=FALSE, include=TRUE, fig.cap="Table 1: SCDNR fisheries independent survey methodology"}
+Ch1_Table = kable(SurveyTable, "latex", booktabs = T, align = "lllllclc") %>%
+  kable_styling(latex_options = "scale_down" , font_size = 10) %>%
+  row_spec(0, align = "c") %>%
+  add_header_above(c(" " = 1, "Sampling" = 4, "Data" = 3)) %>%
+  pack_rows("CRMS", 1,3) %>%
+  pack_rows("ERS", 4,5) %>%
+  pack_rows("IFRS", 6,6) %>%
+  column_spec(2:7, width = "6em") 
 
-Land_Table
+Ch1_Table
 
 ```
 

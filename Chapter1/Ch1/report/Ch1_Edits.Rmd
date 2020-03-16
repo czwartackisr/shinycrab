@@ -1,0 +1,759 @@
+---
+title: "Using long-term survey data to predict blue crab (*Callinectes sapidus*) abundance and commercial landings in Charleston Harbor, South Carolina"
+subtitle: "14Mar2020 edit: 2"
+author:
+  - Stephen R. Czwartacki
+  - Michael R. Kendrick
+abstract: |
+  Marked high fluctuations in blue crab (*Callinectes sapidus*) seasonal and annual abundance, and commercial landings are typical, but data from both fisheries independent and dependent surveys have shown declines in populations in recent years in South Carolina. Despite several long-term fisheries independent surveys encountering blue crab, predictive models have not recently been developed in South Carolina to quantify variation in abundance and commercial landings.   The goal of this study is to assess the current status of blue crab in SC and explore the potential for developing a more predictive understanding of commercial landings. This goal is met through the following objectives: 1) assess long-term trends in blue crab landings and fisheries-independent abundance, 2) test the applicability of a juvenile index, where juvenile abundance in one year predicts adult abundance in a subsequent years (e.g. 1-yr and 2-yr lag), 3) explore other indices of abundance for size class and sexual maturity categories as they relate to  total or adult blue crab abundance in subsequent years (e.g. 1-yr and 2-yr lag), and 4) explore predictive relationships between fisheries-independent size class and sexual maturity abundance categories and commercial landings. Data from several long-term South Carolina Department of Natural Resources (SCDNR) fisheries independent blue crab surveys were standardized for each of six surveys and commercial landings data were compiled.  Analyses testing the application of a juvenile index of abundance show that no juveniles collected in surveys explain variation in annual survey abundances.  The Creek Trawl survey was the only survey with significant, but weak, correlative relationships between multiple lagged population structure variables and its own annual adult or total abundance.  Significant relationships were found with effort-corrected commercial landings predicted by the previous year’s abundance of male crabs. This relationship was most correlated for immature crabs collected in the Harbor Trawl survey, and for mature crabs collected in the Creek Trawl survey. These results suggest a larger influence on abundance of blue crab from fishing effort than population dynamics, and a potential influence from other external factors such as habitat or environmental variables.   
+output:
+  pdf_document: default
+  word_document: default
+editor_options: 
+  chunk_output_type: inline
+---
+
+
+```{r knitr setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r setup, include=FALSE, echo=FALSE}
+library(ggplot2)
+library(lubridate)
+library(tidyr)
+library(dplyr)
+library(Hmisc)
+library(nlme)
+library(cowplot)
+library(MuMIn)
+library(grid)
+library(gridExtra)
+library(ggpmisc)
+library(knitr)
+library(tinytex)
+library(kableExtra)
+
+theme_set(theme_classic(base_size = 11)+
+            theme(panel.grid.major = element_blank(), 
+                  panel.grid.minor = element_blank(),
+                  panel.background = element_rect(colour = "black", size=0.5))+
+            theme(text=element_text(size=11,  family="serif", colour = "black"))+
+            theme(axis.text = element_text(colour = "black"))+
+            theme(axis.ticks = element_line(colour = "black"))
+)
+update_geom_defaults("point",   list(colour = "black"))
+update_geom_defaults("line",   list(colour = "black"))
+theme_update(plot.title = element_text(hjust = 0.5))
+```
+
+
+
+```{r Data Read-In, include=FALSE, warning=FALSE, message=FALSE}
+
+crabdata <- read.csv("ClassSizeAbunDistinct_201912.csv", stringsAsFactors = FALSE) 
+
+
+#Source - Eric Hiltz OFM Fisheries Statistics
+#Wrangled in Excel due to confidentiality
+depend <- read.csv("MonthlyDependent.csv") 
+```
+
+```{r Data Wrangling, include=FALSE, warning=FALSE, message=FALSE}
+B90T38 = crabdata %>% #Formerly crab1
+  dplyr::select(1:4, 7:16) %>%
+  filter(ProjID %in% c("B90", "T38")) %>%
+  rename(Total = CPUE,
+         Juvenile = JuvCPUE,
+         Subadult = SubadultCPUE,
+         Adult = AdultCPUE,
+         "Immature Female" = ImmatureFemaleCPUE,
+         "Mature Female" = MatureFemaleCPUE,
+         "Immature Male" = ImmatureMaleCPUE,
+         "Mature Male" = MatureMaleCPUE,
+         Sublegal = SublegalCPUE,
+         Legal = LegalCPUE) %>%
+  gather("Lifestage", "CPUE", 5:14) %>%
+  mutate(Year = year(StartTime)) %>%
+  mutate(Month = month(StartTime)) %>%
+  dplyr::select(1,2,4,3,7,8,5,6) 
+
+T06 = crabdata %>% #Formerly crab1
+  dplyr::select(1:4, 7:16) %>%
+  filter(ProjID %in% "T06") %>%
+  rename(Total = CPUE) %>%
+  dplyr::select(1:5) %>%
+  gather("Lifestage", "CPUE", 5) %>%
+  mutate(Year = year(StartTime)) %>%
+  mutate(Month = month(StartTime)) %>%
+  dplyr::select(1,2,4,3,7,8,5,6) 
+
+
+P88 = crabdata %>% #Formerly crab1
+  dplyr::select(1:4, 7:16) %>%
+  filter(ProjID %in% "P88") %>%
+  rename(Total = CPUE,
+         Sublegal = SublegalCPUE,
+         Legal = LegalCPUE) %>%
+  distinct(Coll, .keep_all = TRUE) %>%
+  dplyr::select(1:5, 13, 14) %>%
+  gather("Lifestage", "CPUE", 5:7) %>%
+  mutate(Year = year(StartTime)) %>%
+  mutate(Month = month(StartTime)) %>%
+  dplyr::select(1,2,4,3,7,8,5,6) 
+
+p88Crab = crabdata %>% #Formerly crab1
+  dplyr::select(1:4, 7:16) %>%
+  filter(ProjID %in% "P88") 
+
+
+SCECAP = crabdata %>% #Formerly crab1
+  dplyr::select(1:4, 7:16) %>%
+  filter(ProjID %in% c("E98", "E99")) %>%
+  rename(Total = CPUE,
+         Sublegal = SublegalCPUE,
+         Legal = LegalCPUE,
+         Juvenile = JuvCPUE,
+         Subadult = SubadultCPUE,
+         Adult = AdultCPUE) %>%
+  dplyr::select(1:8, 13, 14) %>%
+  gather("Lifestage", "CPUE", 5:10) %>%
+  mutate(Year = year(StartTime)) %>%
+  mutate(Month = month(StartTime)) %>%
+  dplyr::select(1,2,4,3,7,8,5,6) 
+
+crab1 = rbind(B90T38, P88) %>%
+  rbind(., T06) %>%
+  rbind(., SCECAP)
+
+
+
+#Source - Eric Hiltz OFM Fisheries Statistics
+#Wrangled in Excel due to confidentiality
+depend <- read.csv("MonthlyDependent.csv")
+
+
+#Joining Independent and Dependent 
+crab3 = full_join(crab1, depend,
+                  by = c("ProjID", "StationCode", "Year", 
+                         "Month", "Lifestage", "CPUE")) %>%
+  mutate(ProjID = as.factor(ProjID)) %>%
+  mutate(Coll = as.factor(Coll)) %>%
+  mutate(StationCode = as.factor(StationCode)) %>%
+  mutate(StartTime = ymd_hms(StartTime)) %>%
+  mutate(Year = as.numeric(Year)) %>%
+  mutate(Month = as.factor(Month)) %>%
+  mutate(Lifestage = as.factor(Lifestage)) %>%
+  group_by(ProjID, StationCode, Lifestage, Month) %>%
+  mutate(Means = mean(CPUE, na.rm=TRUE),
+         SDs = sd(CPUE, na.rm=TRUE),
+         Zs = (CPUE-Means)/ifelse(SDs>0,SDs, 0.00000001)) %>%
+  ungroup() 
+
+#StartTime will not operate in posix due to missing values from depend
+
+crab = crab3 %>%
+  mutate(ProjID = recode(ProjID, 'B90' = "Harbor Trawl",
+                         'T38' = "Creek Trawl",
+                         'T06' = "Trammel Net",
+                         'P88' = "Ashley Potting",
+                         'E98' = "SCECAP Creek Trawl",
+                         'E99' = "SCECAP Harbor Trawl")) %>%
+  filter(Year > 1979)
+
+
+```
+\newpage
+## Background
+The blue crab (Callinectes sapidus) is a highly ranked commercial and recreational fishery in South Carolina with 3.9 million lbs landed and a value of $5.1 million in 2018.  To support management, it is important to understand recruitment dynamics of juvenile blue crab into the adult stage – the stage that is available to commercial and recreational fishers.  Models can be developed to assess recruitment dynamics, including testing of crab abundance in any given year and its relationship to crab abundance in preceding years.  If adult abundance in a year is predicted by juvenile abundance in the prior year (e.g., 1-yr lag), this may provide a more predictive understanding of the blue crab fishery.  The South Carolina Department of Natural Resources (SCDNR) monitors the status of juvenile and adult blue crab across a range of habitat types using multiple fisheriesindependent surveys.  
+
+\newpage
+## Methods
+
+### Survey Methods
+A suite of fisheries independent monitoring surveys employed by the South Carolina Department of Natural Resources (SCDNR) encounter the blue crab using varying gear types in varying habitats with varying sampling regimes (Table 1).  
+
+Biotic data recorded as part of both surveys (size, sex, maturity).  Size is determined by measurement of the carapace width.  Sex and maturity are determined by presence of morphological characteristics of the abdomen.  
+
+### Analytical Mehods
+Data were put through a rigorous data wrangling process to standardize each survey relative to its own methods.  Fisheries dependent commercial landings and fisheries independent survey abundances were truncated from statewide data to Charleston Harbor watershed data.  Individual crabs were assigned to the following size and sexual maturity categories (Table 2): Size Classes - juvenile (>59mm), subadult (61mm - 126mm), sublegal (<127mm) and adult (>126mm); Sexual maturity classes: mature female, immature female, mature male, and immature male.  Monthly means across all stations were used to calculate mean annual abundances as catch-per-unit-effort (CPUE).  Adult CPUEs were compared to juvenile CPUEs 1 and 2 years prior to test the applicability of a juvenile index.  Additional indices of adult CPUE and total CPUE were developed using single regression models (n=) for each life-stage specific category at 1-yr and 2-yr lags.  Significant ($\alpha$ = 0.05) models were ranked by explanatory power (i.e., r^2^)
+
+
+```{r Wrangle Table 1, echo=FALSE, warning=FALSE, include=FALSE}
+SurveyTable = read.csv("SurveyTable.csv") %>%
+  rename("Gear Method" = Gear.Method,
+         "Gear Type" = Gear.Type,
+         "Sample Area" = Sample.Area,
+         "Sample Interval" = Sample.Interval,
+         "Sample Method" = Sample.Method,
+         "N(events)" = N.events.,
+         "CPUE Standardization" = CPUE.Standardization) 
+
+SurveyClass = read.csv("SurveyClass.csv") %>%
+  rename("Total CPUE" = Total.CPUE,
+         "Immature Female" = Immature.Female,
+         "Mature Female" = Mature.Female,
+         "Immature Male" = Immature.Male,
+         "Mature Male" = Mature.Male) %>%
+  dplyr::select(1:4, 7, 5, 8:11)
+
+```
+
+\newpage
+**Table 1:** SCDNR fisheries independent survey methodology.    
+```{r Table 1 Survey Background, include=TRUE, echo=FALSE, warning=FALSE, include=TRUE, fig.cap="Table 1: SCDNR fisheries independent survey methodology"}
+Ch1_Table = kable(SurveyTable, "latex", booktabs = T) %>%
+  kable_styling(latex_options = "scale_down" , font_size = 8) %>%
+  add_header_above(c(" " = 1, "Gear" = 2, "Sample" = 3, "Data" = 2)) %>%
+  pack_rows("CRMS", 1,3) %>%
+  pack_rows("ERS", 4,5) %>%
+  pack_rows("IFRS", 6,6) %>%
+  column_spec(7, width = "5em") %>%
+  column_spec(3:6, width = "6em") %>%
+  column_spec(8, width = "7em")
+
+Ch1_Table
+
+```
+
+**Table 2:** Blue crab size class and sexual maturity data found in SCDNR fisheries independent surveys    
+```{r Table 2 Survey Data, include=TRUE, echo=FALSE, warning=FALSE, include=TRUE, fig.cap="Table 2: Lifestage data for blue crab by SCDNR fisheries independent survey"}
+
+SurveyClass2 <- SurveyClass
+Ch1_SurveyLifestageTable = kable(SurveyClass, "latex", booktabs = T, align = "lcccccccccc") %>%
+  kable_styling(latex_options = "scale_down" , font_size = 8) %>%
+  add_header_above(c(" " = 2, "Size" = 4, "Class (Sex/Maturity)" = 4)) %>%
+  pack_rows("CRMS", 1,3) %>%
+  pack_rows("ERS", 4,5) %>%
+  pack_rows("IFRS", 6,6) 
+Ch1_SurveyLifestageTable
+```
+
+\newpage
+# Restults
+
+## Objective 1
+*Assess long-term trends in blue crab landings and fisheries-independent abundance*
+
+Time series of mean annual commercial landings (Fig. 1) and adult abundances from SCDNR fisheries independent surveys (fig. 2) show the high inter-annual variablility of legal-sized "adult" blue crab (>126mm).  These figures both show crab >126mm, which is the minimum legal limit of blue crab in South Carolina.  
+
+The total pounds landed in the combined Charleston Harbor watersheds shows a trending decline from 2003 - 2010, but when these same landings data are corrected for effort in terms of number of pots pulled that trend is not observed.  The year 2003 marks the first year of "trip ticket" reporting, in which all commercial blue crab license holders are required to report their catch.  This is the same time (>2003) landings data have incorporated data from the Ashley River and Cooper River reporting areas.  This could be due to not being actively fished for blue crab, underreported for these reporting areas or included in another reporting area (e.g. a line of crab pots beginning in the Ashley River and continuing into Charleston Harbor where landings are eventually reported). Adult abundances from some surveys (B-Creek Trawl, C-Ashley Potting and D-SCECAP Open-Water) show a slight decline in adult abundance shortly after 2000.  
+
+
+```{r Figure 1, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Plot represents mean annual time series of (A) total landings in total lbs./yr and (B) mean annual effort-corrected landings (total lbs./pot pulled/yr) for the combined reporting areas of the Charleston Harbor watershed", out.width = '75%'}
+LandingsCPUEFormTotal = subset(crab,
+                           ProjID == "LandingsCPUEMean")
+
+formula1 <- lm(LandingsCPUEFormTotal$CPUE ~ LandingsCPUEFormTotal$Year)
+
+LandingsCrab = crab %>%
+  filter(ProjID == c("LandingsSum", "LandingsCPUEMean")) %>%
+  group_by(ProjID) %>%
+  mutate(Means = mean(CPUE, na.rm=TRUE),
+         SDs = sd(CPUE, na.rm=TRUE),
+         Zs = (CPUE-Means)/ifelse(SDs>0,SDs, 0.00000001)) %>%
+  ungroup() 
+
+
+LandingsCPUE = ggplot(aes(Year, CPUE), data = subset(LandingsCrab,
+                                                     ProjID == "LandingsCPUEMean")) +
+  #ggtitle("Commercial Landings CPUE\nCharleston Harbor (Combined Watersheds)") +
+  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
+  stat_summary(fun.data = "mean_se", size = .7) +
+  #stat_poly_eq(aes(label = ..eq.label..), formula = formula1, parse = TRUE) +
+  geom_smooth(method = 'loess', se=FALSE, color="black") +
+  labs(y=expression(Blue~crab~pot~fished^{-1})) +
+  expand_limits(x=c(1980, 2022)) 
+
+
+
+
+
+LandingsFormTotal = subset(crab,
+                      ProjID == "LandingsSum") 
+formula2 <- lm(LandingsFormTotal$CPUE ~ LandingsFormTotal$Year)
+Landings = ggplot(aes(Year, CPUE), data = subset(LandingsCrab,
+                                                 ProjID == "LandingsSum")) +
+  ggtitle("Commercial Landings\nCharleston Harbor (Combined Watersheds)") +
+  geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
+  stat_summary(fun.data = "mean_se", size = .7) +
+  #stat_poly_eq(aes(label = ..eq.label..), formula = formula2, parse = TRUE) +
+  geom_smooth(method = 'loess', se=FALSE, color="black") +
+  labs(y=expression(Blue~crab~lbs.~year^{-1}), x=expression(" ")) +
+  expand_limits(x=c(1980, 2022)) 
+
+
+LandingsTimeSeries <- plot_grid(Landings, LandingsCPUE, ncol = 1, align = 'v', labels = c("A", "B"))
+
+LandingsTimeSeries
+
+```
+
+```{r B90 Size Wrangle, include=FALSE, warning=FALSE, message=FALSE}
+LegalCrab = crab %>%
+  filter(Lifestage == "Legal")
+LegalCrab$ProjID <- factor(LegalCrab$ProjID, levels = c("Harbor Trawl",
+                                                        "SCECAP Harbor Trawl",
+                                                        "Creek Trawl",
+                                                        "SCECAP Creek Trawl",
+                                                        "Trammel Net",
+                                                        "Ashley Potting"))
+
+B90FormLegal = subset(LegalCrab,
+                     ProjID == "Harbor Trawl")
+formula3 <- lm(B90FormLegal$CPUE ~ B90FormLegal$Year)
+B90LegalCPUE = ggplot(aes(Year, CPUE), data = subset(LegalCrab,
+                                                     ProjID == "Harbor Trawl")) +
+  ggtitle(" ") +
+  #ggtitle("Harbor Trawl") + 
+  stat_summary(fun.data = "mean_se", size = .7) +
+  #stat_poly_eq(aes(label = ..eq.label..), formula = formula3, parse = TRUE) +
+  geom_smooth(method = 'loess', se=FALSE, color="black") +
+  geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
+  labs(y=expression(Adult~CPUE^{-1}), x=expression(" ")) +
+  #labs(y=expression(Blue~crab~per~tow^{-1})) +
+  expand_limits(x=2020)
+#B90LegalCPUE
+
+T38FormLegal = subset(LegalCrab,
+                     ProjID == "Creek Trawl")
+formula4 <- lm(T38FormLegal$CPUE ~ T38FormLegal$Year)
+T38LegalCPUE = ggplot(aes(Year, CPUE), data = subset(LegalCrab,
+                                                     ProjID == "Creek Trawl")) +
+  ggtitle(" ") +
+    #ggtitle("Creek Trawl") +
+  stat_summary(fun.data = "mean_se", size = .7) +
+  #stat_poly_eq(aes(label = ..eq.label..), formula = formula4, parse = TRUE, label.x = "right") +
+  geom_smooth(method = 'loess', se=FALSE, color="black") +
+  geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
+  labs(y=expression(" "), x=expression(" ")) +
+  #labs(y=expression(Blue~crab~per~tow^{-1})) +
+  expand_limits(x=2020)
+#T38LegalCPUE
+
+E98FormLegal = subset(LegalCrab,
+                     ProjID == "SCECAP Creek Trawl")
+formula6 <- lm(E98FormLegal$CPUE ~ E98FormLegal$Year)
+E98LegalCPUE = ggplot(aes(Year, log(CPUE)), data = subset(LegalCrab,
+                                                          ProjID == "SCECAP Creek Trawl")) +
+  ggtitle(" ") +
+  #ggtitle("SCECAP Tidal Creek Trawl") +
+  stat_summary(fun.data = "mean_se", size = .7) +
+  #stat_poly_eq(aes(label = ..eq.label..), formula = formula6, parse = TRUE) +
+  geom_smooth(method = 'loess', se=FALSE, color="black") +
+  geom_hline(aes(yintercept=(log(mean(Means)))), linetype="dashed") +
+  labs(y=expression(Adult~CPUE^{-1}), x=expression(" ")) +
+  #labs(y=expression((log)~Blue~crab~per~tow^{-1})) +
+  expand_limits(x=c(1980,2020)) +
+  coord_cartesian(ylim = c(0,8))
+
+E99FormLegal = subset(LegalCrab,
+                     ProjID == "SCECAP Harbor Trawl")
+formula7 <- lm(E99FormLegal$CPUE ~ E99FormLegal$Year)
+E99LegalCPUE = ggplot(aes(Year, CPUE), data = subset(LegalCrab,
+                                                     ProjID == "SCECAP Harbor Trawl")) +
+  ggtitle(" ") +
+  #ggtitle("SCECAP Open Water Trawl") +
+  stat_summary(fun.data = "mean_se", size = .7) +
+  #stat_poly_eq(aes(label = ..eq.label..), formula = formula7, parse = TRUE) +
+  geom_smooth(method = 'loess', se=FALSE, color="black") +
+  geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
+  labs(y=expression(" "), x=expression(" ")) +
+  #labs(y=expression(Blue~crab~per~tow^{-1})) +
+  expand_limits(x=c(1980,2020)) 
+
+P88FormLegal = subset(LegalCrab,
+                     ProjID == "Ashley Potting")
+formula8<- lm(P88FormLegal$CPUE ~ P88FormLegal$Year)
+P88FallLegalCPUE = LegalCrab %>%
+  filter(ProjID == "Ashley Potting") %>%
+  filter(Month %in% c("10", "11"))
+P88FallLegalCPUE = ggplot(aes(Year, CPUE), data = subset(LegalCrab,
+                                                         ProjID == "Ashley Potting")) +
+  ggtitle(" ") +
+  #ggtitle("Ashley River Potting Survey (fall)") +
+  stat_summary(fun.data = "mean_se", size = .7) +
+  #stat_poly_eq(aes(label = ..eq.label..), formula = formula8, parse = TRUE) +
+  geom_smooth(method = 'loess', se=FALSE, color="black", na.rm = TRUE) +
+  geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
+  labs(y=expression(Adult~CPUE^{-1}), x=expression("Year")) +
+  #labs(y=expression(Blue~crab~per~soak^{-1})) +
+  expand_limits(x=c(1980,2020))
+
+
+T06TotalCrab = crab %>%
+  filter(Lifestage == "Total",
+         ProjID == "Trammel Net")
+                              
+formula4 <- lm(T06TotalCrab$CPUE ~ T06TotalCrab$Year)
+T06TotalCPUE = ggplot(aes(Year, CPUE), data = T06TotalCrab) +
+  ggtitle(" ") +
+    #ggtitle("Creek Trawl") +
+  stat_summary(fun.data = "mean_se", size = .7) +
+  #stat_poly_eq(aes(label = ..eq.label..), formula = formula4, parse = TRUE, label.x = "right") +
+  geom_smooth(method = 'loess', se=FALSE, color="black") +
+  geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
+  labs(y=expression(Total~CPUE^{-1}), x=expression(" ")) +
+  #labs(y=expression(Blue~crab~per~tow^{-1})) +
+  expand_limits(x=c(1980, 2020))
+#T38LegalCPUE
+
+
+##Only going to use this if we need a year-round look, but only goes to 2003
+P88FormLegal2 = subset(LegalCrab,
+                      ProjID == "Ashley Potting" &
+                        Year > 2002)
+formula9 <- lm(P88FormLegal$CPUE ~ P88FormLegal$Year)
+P88LegalAnnualCPUE = ggplot(aes(Year, CPUE), data = subset(LegalCrab,
+                                                           ProjID == "Ashley Potting" &
+                                                             Year > 2002)) +
+  ggtitle(" ") +
+  #ggtitle("Ashley River Potting Survey (bi-monthly)") +
+  stat_summary(fun.data = "mean_se", size = .7) +
+  #stat_poly_eq(aes(label = ..eq.label..), formula = formula9, parse = TRUE) +
+  geom_smooth(method = 'loess', se=FALSE, color="black", na.rm = TRUE) +
+  geom_hline(aes(yintercept=mean(Means)), linetype="dashed") +
+  labs(y=expression(" "), x=expression("Year")) +
+  #labs(y=expression(Blue~crab~per~soak^{-1})) +
+  expand_limits(x=c(1980,2020))
+```
+
+
+```{r Figure 2 (CRMS Survey Time Series), echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Plot represents mean annual adult survey abundances of the (A) Harbor Trawl, (B) Creek Trawl, (C) Ashley Potting Survey, (D) SCECAP Open-Water and (E) SCECAP Tidal-Creek surveys, with standard error, long-term mean (dashed) and a LOESS smoothing line (solid).  The Tammel Net survey does not have size or sexual maturity data and is represented by total CPUE in this plot.", fig.width=10,fig.height=11}
+
+CRMSLegalTimeSeries <- plot_grid(B90LegalCPUE, T38LegalCPUE, P88FallLegalCPUE, 
+                                E99LegalCPUE, E98LegalCPUE, T06TotalCPUE, 
+                                ncol = 2, align = 'hv',
+                                labels = c("A", "B", "C", "D", "E", "F")) 
+title1 <- ggdraw() + draw_label("Fisheries Independent Survey Abundances\nCharleston Harbor (Combined Watersheds)", fontfamily = "serif")
+
+
+Plot1 <- plot_grid(title1, CRMSLegalTimeSeries, ncol = 1, rel_heights=c(0.1, 1))
+Plot1
+
+
+```
+
+
+\newpage
+## Objective 2
+*Test the applicability of a juvenile index, where juvenile abundance in one year predicts adult abundance in a subsequent years (e.g. 1-yr and 2-yr lag)*
+
+
+Mean annual juvenile CPUE is not significantly related to mean annual adult CPUE in subsequent years for any survey (Table 3).
+
+**Table 3:** Insignificant and poorly correlated relationships of adult CPUEs by juvenile CPUEs
+```{r Table 3 Juv index of adult abun, include=TRUE, echo=FALSE, warning=FALSE, include=TRUE, dpi=600, fig.cap="Table 4: OLS regression of total Creek Trawl CPUE by all lifestages from all surveys."}
+IndexRegressTable = read.csv("IndexRegress.csv") %>%
+  rename("Explanatory Variable" = Explanatory.Variable,
+         "Dpendent Variable" = Dependent.Variable,
+         "p-value" = p.value,
+         "r2" = r2,
+         "Degrees of Freedom" = Degrees.of.Freedom) %>%
+  dplyr::select(1, 3:6)
+
+
+Index_Table =  kable(IndexRegressTable, "latex", booktabs = T, align = "llccc") %>%
+  kable_styling(font_size = 10) %>%
+  add_header_above(c(" " = 2, "Summary Statistics" = 3)) %>%
+  column_spec(3:4, width = "4em") %>%
+  column_spec(5, width = "6em") %>%
+  pack_rows("Harbor Trawl", 1,2) %>%
+  pack_rows("Creek Trawl", 3, 4) %>%
+  pack_rows("SCECAP Open Water", 5, 6) %>%
+  pack_rows("SCECAP Tidal Creek", 7, 8) %>%
+  pack_rows("Ashley Potting", 9, 10)
+
+Index_Table
+
+```
+
+```{r, Figure 3a Wrangle, echo=FALSE, message=FALSE, warning=FALSE, include=TRUE}
+#This is just in case I have to produce regression plots of these failed relationships
+
+
+
+AbunPlotcrab <- read.csv("CH1data.csv", stringsAsFactors = FALSE)
+
+B90JuvLag_lm1 = lm(AbunPlotcrab$B90_AdultCPUE ~ lag(AbunPlotcrab$B90_JuvCPUE, 1))
+B90JuvLagPlot = ggplot(aes(B90_AdultCPUE, lag(AbunPlotcrab$B90_JuvCPUE, 1)), data = AbunPlotcrab) +
+  ggtitle("Harbor Trawl") +
+  geom_point() +
+  stat_fit_glance(method = "lm", method.args = list(formula = B90JuvLag_lm1),
+                  label.x = "right",
+                  label.y = "top",
+                  aes(label = paste("italic(P)*\"-value = \"*", 
+                                    signif(..p.value.., digits = 2), sep = "")),
+                  parse = TRUE, size = 3.2) +
+  #stat_poly_eq(aes(label = paste(..rr.label..)), 
+               #label.x.npc = "right", label.y.npc = 0.12,
+               #formula = B90JuvLag_lm1,rr.digits = 2,  parse = TRUE, size = 3.2) +
+  #geom_smooth(method = 'lm', se=FALSE, color="black") +
+  labs(y=expression(Adult~CPUE~year^{-1}),
+       x=expression(Juvenile~CPUE~year^{-1}~"(1-yr. lag)"))
+
+B90JuvLead_lm1 = lm(AbunPlotcrab$B90_AdultCPUE ~ lag(AbunPlotcrab$B90_JuvCPUE, 2))
+B90JuvLeadPlot = ggplot(aes(B90_AdultCPUE, lag(AbunPlotcrab$B90_JuvCPUE, 2)), data = AbunPlotcrab) +
+  #ggtitle("Index of Abundance Relationship") +
+  geom_point() +
+  stat_fit_glance(method = "lm", method.args = list(formula = B90JuvLead_lm1),
+                  label.x = "right",
+                  label.y = "top",
+                  aes(label = paste("italic(P)*\"-value = \"*", 
+                                    signif(..p.value.., digits = 2), sep = "")),
+                  parse = TRUE, size = 3.2) +
+  #stat_poly_eq(aes(label = paste(..rr.label..)), 
+               #label.x.npc = "right", label.y.npc = 0.12,
+               #formula = B90JuvLag_lm1,rr.digits = 2,  parse = TRUE, size = 3.2) +
+  #geom_smooth(method = 'lm', se=FALSE, color="black") +
+  labs(y=expression(Adult~CPUE~year^{-1}),
+       x=expression(Juvenile~CPUE~year^{-1}~"(2-yr. lag)"))
+
+T38JuvLag_lm1 = lm(AbunPlotcrab$T38_AdultCPUE ~ lag(AbunPlotcrab$T38_JuvCPUE, 1))
+T38JuvLagPlot = ggplot(aes(T38_AdultCPUE, lag(AbunPlotcrab$T38_JuvCPUE, 1)), data = AbunPlotcrab) +
+  ggtitle("Creek Trawl") +
+  geom_point() +
+  stat_fit_glance(method = "lm", method.args = list(formula = T38JuvLag_lm1),
+                  label.x = "right",
+                  label.y = "top",
+                  aes(label = paste("italic(P)*\"-value = \"*", 
+                                    signif(..p.value.., digits = 2), sep = "")),
+                  parse = TRUE, size = 3.2) +
+  #stat_poly_eq(aes(label = paste(..rr.label..)), 
+               #label.x.npc = "right", label.y.npc = 0.12,
+               #formula = T38JuvLag_lm1,rr.digits = 2,  parse = TRUE, size = 3.2) +
+  #geom_smooth(method = 'lm', se=FALSE, color="black") +
+  labs(y=expression(Adult~CPUE~year^{-1}),
+       x=expression(Juvenile~CPUE~year^{-1}~"(1-yr. lag)"))
+
+T38JuvLead_lm1 = lm(AbunPlotcrab$T38_AdultCPUE ~ lag(AbunPlotcrab$T38_JuvCPUE, 2))
+T38JuvLeadPlot = ggplot(aes(T38_AdultCPUE, lag(AbunPlotcrab$T38_JuvCPUE, 2)), data = AbunPlotcrab) +
+  #ggtitle("Index of Abundance Relationship") +
+  geom_point() +
+  stat_fit_glance(method = "lm", method.args = list(formula = T38JuvLead_lm1),
+                  label.x = "right",
+                  label.y = "top",
+                  aes(label = paste("italic(P)*\"-value = \"*", 
+                                    signif(..p.value.., digits = 2), sep = "")),
+                  parse = TRUE, size = 3.2) +
+  #stat_poly_eq(aes(label = paste(..rr.label..)), 
+               #label.x.npc = "right", label.y.npc = 0.12,
+               #formula = T38JuvLag_lm1,rr.digits = 2,  parse = TRUE, size = 3.2) +
+  #geom_smooth(method = 'lm', se=FALSE, color="black") +
+  labs(y=expression(Adult~CPUE~year^{-1}),
+       x=expression(Juvenile~CPUE~year^{-1}~"(2-yr. lag)"))
+
+```
+
+
+\newpage
+## Objective 3
+*Explore other indices of abundance for size class and sexual maturity categories as they relate to total or adult blue crab abundance in subsequent years (e.g. 1-yr and 2-yr lag)*
+
+The CRMS Creek Trawl is the only survey (see notes for Tables 5 & 6) with predictive relationships where size class and sexual maturity categories relate to total or adult abundance in succesive years (Table 4). Fifteen size class and sexual maturity variables with 1- and 2-yr lag explain total CPUE and explain adult CPUE.  The highest ranked model total Creek Trawl CPUE explained by subadult CPUE with a 2-yr lag (*p*-value = <0.01, r^2^ = 0.24; Fig. 3).  
+
+
+```{r Wrangle Table 4-5, echo=FALSE, warning=FALSE, include=FALSE}
+T38AbunRegressTable = read.csv("T38SingleAbundanceRegress.csv") %>%
+  rename("Degrees of Freedom" = Degrees.of.Freedom,
+         "Explanatory Variable" = Explanatory.Variable,
+         "Dependent Variable" = Dependent.Variable,
+         "p-value" = p.value) %>%
+  dplyr::select(2, 4:6, 8)
+
+SCECAPAbunRegressTable = read.csv("SCECAPSingleAbundanceRegress.csv") %>%
+  rename("Degrees of Freedom" = Degrees.of.Freedom,
+         "Explanatory Variable" = Explanatory.Variable,
+         "Dependent Variable" = Dependent.Variable,
+         "p-value" = p.value) %>%
+  dplyr::select(2, 4:6, 8)
+
+
+```
+
+
+**Table 4:** These are all relevant explanatory variables predicting CRMS Creek Trawl Survey total and adult CPUEs
+```{r Table 4, include=TRUE, echo=FALSE, warning=FALSE, include=TRUE, dpi=600, fig.cap="Table 4: OLS regression of total Creek Trawl CPUE by all lifestages from all surveys."}
+
+T38Abun_Table =  kable(T38AbunRegressTable, "latex", booktabs = T, align = "llcccc") %>%
+  kable_styling(font_size = 10) %>%
+  add_header_above(c(" " = 2, "Summary Statistics" = 3)) %>%
+  column_spec(3:5, width = "6em") %>%
+  #row_spec(15, extra_latex_after = "\\cline{1-1}") %>%
+  row_spec(15, hline_after = T)
+
+T38Abun_Table
+
+```
+
+```{r Figure 3 (Sub Plot), echo=FALSE, message=FALSE, warning=FALSE, include=TRUE, fig.cap="Plot showing the regression relationship of total Creek Trawl CPUE by Creek Trawl subadult CPUE from 2 years prior.  This the highest correlated relationship of total or adult CPUE by lagged lifestage variable.", fig.width=5,fig.height=3}
+T38AbunLead_lm2 = lm(AbunPlotcrab$T38_CPUE ~ lag(AbunPlotcrab$T38_SubadultCPUE, 2))
+T38AbunLeadPlot = ggplot(aes(T38_CPUE, lag(AbunPlotcrab$T38_SubadultCPUE, 2)), data = AbunPlotcrab) +
+  #ggtitle("Index of Abundance Relationship") +
+  geom_point() +
+  stat_fit_glance(method = "lm", method.args = list(formula = T38AbunLead_lm2),
+                  label.x = "right",
+                  label.y = "bottom",
+                  aes(label = paste("italic(P)*\"-value = \"*", 
+                                    signif(..p.value.., digits = 2), sep = "")),
+                  parse = TRUE, size = 3.2) +
+  stat_poly_eq(aes(label = paste(..rr.label..)), 
+               label.x.npc = "right", label.y.npc = 0.12,
+               formula = T38AbunLead_lm2,rr.digits = 2,  parse = TRUE, size = 3.2) +
+  geom_smooth(method = 'lm', se=FALSE, color="black") +
+  labs(y=expression(CPUE~year^{-1}),
+       x=expression(Subadult~CPUE~"(2-yr. lag)"~year^{-1}))
+
+T38AbunLeadPlot
+```
+
+\newpage
+### Tables 5 & 6
+The SCECAP Tidal Creek survey has multiple very significant and highly correlative relationships with size and sexual maturity categories predicting total and adult CPUEs, but I would like it removed from the analyses.  Constructing regression models using the same methodology as the other surveys makes SCECAP Tidal Creeks trawl look like a super star at first glance, with ridiculously high r^2^'s (Table 5).  But there are a max of 6 sampling events/year (mean sampling events = 3.1) and never greater than 4 events after 2005 (Table 6).  SCECAP Tidal Creek survey only has a total of 192 crab caught (135 in 2012) over the life of the survey with an inflated CPUEs based-on volumetric standardization of SCECAP's catch. 
+
+**Tables 5**: OLS regression results of SCECAP total and adult CPUE by all lifestages from SCECAP Tidal Creek survey 
+```{r Table 5, include=TRUE, echo=FALSE, warning=FALSE, include=TRUE, dpi=600, fig.cap="Table 5: OLS regression of total SCECAP Trawl CPUE by all lifestages from all surveys."}
+
+SCECAPAbun_Table = kable(SCECAPAbunRegressTable, "latex", booktabs = T, align = "llcccc") %>%
+  kable_styling(font_size = 10) %>%
+  add_header_above(c(" " = 2, "Summary Statistics" = 3)) %>%
+  column_spec(3:5, width = "6em") %>%
+  #row_spec(15, extra_latex_after = "\\cline{1-1}") %>%
+  #row_spec(4, extra_latex_after = "\\cline{1-2}" ) %>%
+  #row_spec(8, hline_after = T) %>%
+  row_spec(4, hline_after = T) %>%
+  pack_rows("SCECAP Tidal Creek", 1,8) %>%
+  pack_rows("SCECAP Open Water", 9, 9) 
+
+SCECAPAbun_Table
+
+```
+
+\newpage
+**Tables 6**: SCECAP Tidal Creek survey data table showing a small annual sample size with small raw abundance numbers, inflated CPUEs and several years with no sampling events
+```{r Table 6 (SCECAP), echo=FALSE, message=FALSE, warning=FALSE, include=TRUE, fig.cap="Objective 2 - Plot E 98showing the regression relationship of total Creek Trawl CPUE by Creek Trawl subadult CPUE from 2 years prior.  This the highest correlated relationship of total or adult CPUE by lagged lifestage variable.", fig.width=5,fig.height=3}
+
+options(knitr.kable.NA = '')
+SCECAPdata = read.csv("E98Table.csv") %>%
+  rename("Sampling Events" = Sampling.Events,
+         "Raw Abundance" = RawAbun,
+         "Total CPUE" = CPUE,
+         "Juvenile CPUE" = Juvenile,
+         "Subadult CPUE" = Subadult,
+         "Adult CPUE" = Adult) 
+
+  
+  
+SCECAPInfoTable = kable(SCECAPdata, "latex", booktabs = T, align = "llcccc") %>%
+  kable_styling(font_size = 10) %>%
+  column_spec(2:3, width = "6em") %>%
+  column_spec(4:7, width = "4em") 
+
+SCECAPInfoTable
+
+```
+
+
+\newpage
+## Objective 4
+*Explore predictive relationships between fisheries-independent size class and sexual maturity abundance categories and commercial landings*
+
+Nine total predictive models using several size class and sexual maturity categories with 1-yr lag to explain effort corrected landings were developed.  No 2-yr lagged size class and sexual maturity categories predict effort corrected landings.  Predictive relationships were only found using the CRMS Harbor Trawl (N = 3) and Creek Trawl (N = 6) surveys.  The strongest relationships ranked by explanatory power (r^2^) use the Harbor Trawl subadults with a 1-yr lag (*p* = <0.01, r^2^ = 0.43) and the Creek Trawl immature males with a 1-yr lag (*p* = <0.01, r^2^ = 0.41; Table 7).  
+
+Total landings (not effort corrected) have only two predictive relationships were size classs and sexual maturity variables from any survey predict total annual lbs landed (Table 8).  These two poorly correlated relationships use mature males with a 1-yr lag from the Harbor Trawl (*p* = <0.05, r^2^ = 0.10) and adults with a 2-yr lag from the Ashley Potting Survey (*p* = <0.05, r^2^ = 0.15) to predict total annual pounds landed.  Total landings data are missing for the Ashley and Cooper Rivers prior to 2004.    
+
+
+
+**Table 7:** Objective 3 - All significant relatioships of effort corrected Charleston Harbor watershed (Ashley, Cooper and Wando Rivers and Charlesotn Harbor) commercial Landings by size classs and sexual maturity variables from all surveys using OLS regression. 
+```{r Table 7, include=TRUE, echo=FALSE, warning=FALSE, include=TRUE, dpi=600, fig.cap="Table 4: OLS regression of total Creek Trawl CPUE by all lifestages from all surveys."}
+LandRegressTable = read.csv("SingleLandingsCPUERegress.csv") %>%
+  rename("Degrees of Freedom" = Degrees.of.Freedom,
+         "Explanatory Variable" = Explanatory.Variable,
+         "Dependent Variable" = Dependent.Variable,
+         "p-value" = p.value) %>%
+  dplyr::select(2, 4:6, 8)
+
+
+Land_Table =  kable(LandRegressTable, "latex", booktabs = T, align = "llcccc") %>%
+  kable_styling(font_size = 8) %>%
+  add_header_above(c(" " = 2, "Summary Statistics" = 3)) %>%
+  column_spec(3:4, width = "4em") %>%
+  pack_rows("Harbor Trawl (explanatory variable)", 1,3) %>%
+  pack_rows("Creek Trawl (explanatory variable)", 4, 9) 
+
+Land_Table
+
+```
+
+**Table 8:** All significant relatioships of total Charleston Harbor watershed (Ashley, Cooper and Wando Rivers and Charlesotn Harbor) commercial lbs landings by size classs and sexual maturity variables from all surveys using OLS regression. 
+```{r Table 8, include=TRUE, echo=FALSE, warning=FALSE, dpi=600}
+TotalLandRegressTable = read.csv("SingleLandingsTotalRegress.csv") %>%
+  rename("Degrees of Freedom" = Degrees.of.Freedom,
+         "Explanatory Variable" = Explanatory.Variable,
+         "Dependent Variable" = Dependent.Variable,
+         "p-value" = p.value) %>%
+  dplyr::select(1, 3:5, 7)
+
+
+TotalLand_Table =  kable(TotalLandRegressTable, "latex", booktabs = T, align = "llccc") %>%
+  kable_styling(latex_options = "basic" , font_size = 8) %>%
+  add_header_above(c(" " = 2, "Summary Statistics" = 3)) %>%
+  column_spec(3:5, width = "6em") %>%
+  pack_rows("Harbor Trawl (explanatory variable)", 1, 1) %>%
+  pack_rows("Ashley Potting (explanatory variable)", 2, 2) 
+
+TotalLand_Table
+
+```
+
+```{r Figure 5, echo=FALSE, message=FALSE, warning=FALSE,dpi=600, fig.cap="Ordinary Least Squares regression plots of select significant explanatory relatioships using lagged variables to Charleston Harbor watershed Landings CPUEs.  Mean annual effort corrected landings by (A) Harbor Trawl mature males with a 1-yr lag, and (B) mean annual landings CPUE by Creek Trawl immature males CPUE with a 1-yr. lag.", fig.width=5,fig.height=6}
+
+LandPlotcrab <- read.csv("CH1data.csv", stringsAsFactors = FALSE)
+
+B90CPUELAG_lm8 <- lm(LandPlotcrab$LandingsCPUEMean ~ lag(LandPlotcrab$B90_MatureMaleCPUE, 1))
+B90CPUELagPlot = ggplot(aes(LandingsCPUEMean, lag(B90_MatureMaleCPUE, 1)), data = LandPlotcrab) +
+  #ggtitle("Commercial Landings ~ Select Survey Variables") +
+  geom_point() +
+  stat_fit_glance(method = "lm", method.args = list(formula = B90CPUELAG_lm8),
+                  label.x = "right",
+                  label.y = 0.865,
+                  aes(label = paste("italic(p)*\"-value = \"*", 
+                                    signif(..p.value.., digits = 1), sep = "")),
+                  parse = TRUE, size = 3.2) +
+  stat_poly_eq(aes(label = paste(..rr.label..)), 
+               label.x.npc = "right", 
+               label.y.npc = "top",
+               formula = B90CPUELAG_lm8,rr.digits = 2,  parse = TRUE, size = 3.2) +
+  geom_smooth(method = 'lm', se=FALSE, color="black") +
+  labs(y=expression(Landings~CPUE~year^{-1}),
+       x=expression(Harbor~Trawl~mature~male~CPUE~"(1-yr lag)"~year^{-1}))
+
+
+T38CPUELAG_lm7 <- lm(LandPlotcrab$LandingsCPUEMean ~ lag(LandPlotcrab$T38_ImmatureMaleCPUE, 1))
+T38CPUELAGPlot = ggplot(aes(LandingsCPUEMean, lag(T38_ImmatureMaleCPUE, 2)), data = LandPlotcrab) +
+  ylim(0, 4) +
+  #ggtitle("Landings CPUE \nby Creek Trawl Immature Male (1-yr. lag)") +
+  geom_point() +
+  stat_poly_eq(aes(label = paste(..rr.label..)), 
+               label.x.npc = "right", label.y = "top",
+               formula = T38CPUELAG_lm7,rr.digits = 2,  parse = TRUE, size = 3.2) +
+  geom_smooth(method = 'lm', se=FALSE, color="black") +
+  stat_fit_glance(method = "lm", method.args = list(formula = T38CPUELAG_lm7),
+                  label.x = "right",
+                  label.y = 0.865,
+                  aes(label = paste("italic(P)*\"-value = \"*", 
+                                    signif(..p.value.., digits = 2), sep = "")),
+                  parse = TRUE, size = 3.2) +
+  labs(y=expression(Landings~CPUE~year^{-1}),
+       x=expression(Creek~Trawl~immature~male~CPUE~"(1-yr lag)"~year^{-1}))
+
+
+
+SingleRegressPlot <- plot_grid(B90CPUELagPlot, T38CPUELAGPlot, ncol = 1, align = 'hv', labels = 
+                                 c("A", "B")) 
+SingleRegressPlot
+
+```
+
+
+
