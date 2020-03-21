@@ -741,7 +741,7 @@ T38CPUELAGPlot = ggplot(aes(LandingsCPUEMean, lag(T38_ImmatureMaleCPUE, 2)), dat
   stat_fit_glance(method = "lm", method.args = list(formula = T38CPUELAG_lm7),
                   label.x = "right",
                   label.y = 0.865,
-                  aes(label = paste("italic(P)*\"-value = \"*", 
+                  aes(label = paste("italic(p)*\"-value = \"*", 
                                     signif(..p.value.., digits = 2), sep = "")),
                   parse = TRUE, size = 3.2) +
   labs(y=expression(Landings~CPUE~year^{-1}),
