@@ -176,57 +176,38 @@ A suite of fisheries independent monitoring surveys employed by the South Caroli
 Biotic data recorded as part of both surveys (size, sex, maturity).  Size is determined by measurement of the carapace width.  Sex and maturity are determined by presence of morphological characteristics of the abdomen.  
 
 ### Analytical Mehods
-Data were put through a rigorous data wrangling process to standardize each survey relative to its own methods.  Fisheries dependent commercial landings and fisheries independent survey abundances were truncated from statewide data to Charleston Harbor watershed data.  Individual crabs were assigned to the following size and sexual maturity categories (Table 2): Size Classes - juvenile (>59mm), subadult (61mm - 126mm), sublegal (<127mm) and adult (>126mm); Sexual maturity classes: mature female, immature female, mature male, and immature male.  Monthly means across all stations were used to calculate mean annual abundances as catch-per-unit-effort (CPUE).  Adult CPUEs were compared to juvenile CPUEs 1 and 2 years prior to test the applicability of a juvenile index.  Additional indices of adult CPUE and total CPUE were developed using single regression models (n=) for each life-stage specific category at 1-yr and 2-yr lags.  Significant ($\alpha$ = 0.05) models were ranked by explanatory power (i.e., r^2^)
+Data were put through a rigorous data wrangling process to standardize each survey relative to its own methods.  Fisheries dependent commercial landings and fisheries independent survey abundances were truncated from statewide data to Charleston Harbor watershed data.  Individual crabs were assigned to the following size and sexual maturity categories (Table 1): Size Classes - juvenile (>59mm), subadult (61mm - 126mm), sublegal (<127mm) and adult (>126mm); Sexual maturity classes: mature female, immature female, mature male, and immature male.  Monthly means across all stations were used to calculate mean annual abundances as catch-per-unit-effort (CPUE).  Adult CPUEs were compared to juvenile CPUEs 1 and 2 years prior to test the applicability of a juvenile index.  Additional indices of adult CPUE and total CPUE were developed using single regression models (n=) for each life-stage specific category at 1-yr and 2-yr lags.  Significant ($\alpha$ = 0.05) models were ranked by explanatory power (i.e., r^2^)
 
 
 ```{r Wrangle Table 1, echo=FALSE, warning=FALSE, include=FALSE}
-SurveyTable = read.csv("SurveyTable.csv") %>%
-  rename("Gear Method" = Gear.Method,
-         "Gear Type" = Gear.Type,
+SurveyTable = read.csv("SurveyTable2.csv") %>%
+  rename("Gear" = Gear.Type,
          "Sample Area" = Sample.Area,
          "Sample Interval" = Sample.Interval,
          "Sample Method" = Sample.Method,
          "N(events)" = N.events.,
-         "CPUE Standardization" = CPUE.Standardization) 
-
-SurveyClass = read.csv("SurveyClass.csv") %>%
-  rename("Total CPUE" = Total.CPUE,
-         "Immature Female" = Immature.Female,
-         "Mature Female" = Mature.Female,
-         "Immature Male" = Immature.Male,
-         "Mature Male" = Mature.Male) %>%
-  dplyr::select(1:4, 7, 5, 8:11)
+         "Standardization" = CPUE.Standardization) 
 
 ```
 
 \newpage
 **Table 1:** SCDNR fisheries independent survey methodology.    
 ```{r Table 1 Survey Background, include=TRUE, echo=FALSE, warning=FALSE, include=TRUE, fig.cap="Table 1: SCDNR fisheries independent survey methodology"}
-Ch1_Table = kable(SurveyTable, "latex", booktabs = T) %>%
-  kable_styling(latex_options = "scale_down" , font_size = 8) %>%
-  add_header_above(c(" " = 1, "Gear" = 2, "Sample" = 3, "Data" = 2)) %>%
+Ch1_Table = kable(SurveyTable, "latex", booktabs = T, align = "lllllcll") %>%
+  kable_styling(latex_options = "scale_down", font_size = 10) %>%
+  #row_spec(0, align = "c") %>%
+  add_header_above(c(" " = 1, "Sampling" = 4, "Data" = 3)) %>%
   pack_rows("CRMS", 1,3) %>%
   pack_rows("ERS", 4,5) %>%
   pack_rows("IFRS", 6,6) %>%
+  column_spec(2:3, width = "6em") %>%
+  column_spec(4:5, width = "5em") %>%
+  column_spec(6, width = "4em") %>%
   column_spec(7, width = "5em") %>%
-  column_spec(3:6, width = "6em") %>%
-  column_spec(8, width = "7em")
+  column_spec(8, width = "6em")
 
 Ch1_Table
 
-```
-
-**Table 2:** Blue crab size class and sexual maturity data found in SCDNR fisheries independent surveys    
-```{r Table 2 Survey Data, include=TRUE, echo=FALSE, warning=FALSE, include=TRUE, fig.cap="Table 2: Lifestage data for blue crab by SCDNR fisheries independent survey"}
-
-SurveyClass2 <- SurveyClass
-Ch1_SurveyLifestageTable = kable(SurveyClass, "latex", booktabs = T, align = "lcccccccccc") %>%
-  kable_styling(latex_options = "scale_down" , font_size = 8) %>%
-  add_header_above(c(" " = 2, "Size" = 4, "Class (Sex/Maturity)" = 4)) %>%
-  pack_rows("CRMS", 1,3) %>%
-  pack_rows("ERS", 4,5) %>%
-  pack_rows("IFRS", 6,6) 
-Ch1_SurveyLifestageTable
 ```
 
 \newpage
@@ -606,53 +587,6 @@ T38AbunLeadPlot = ggplot(aes(T38_CPUE, lag(AbunPlotcrab$T38_SubadultCPUE, 2)), d
 
 T38AbunLeadPlot
 ```
-
-\newpage
-### Tables 5 & 6
-The SCECAP Tidal Creek survey has multiple very significant and highly correlative relationships with size and sexual maturity categories predicting total and adult CPUEs, but I would like it removed from the analyses.  Constructing regression models using the same methodology as the other surveys makes SCECAP Tidal Creeks trawl look like a super star at first glance, with ridiculously high r^2^'s (Table 5).  But there are a max of 6 sampling events/year (mean sampling events = 3.1) and never greater than 4 events after 2005 (Table 6).  SCECAP Tidal Creek survey only has a total of 192 crab caught (135 in 2012) over the life of the survey with an inflated CPUEs based-on volumetric standardization of SCECAP's catch. 
-
-**Tables 5**: OLS regression results of SCECAP total and adult CPUE by all lifestages from SCECAP Tidal Creek survey 
-```{r Table 5, include=TRUE, echo=FALSE, warning=FALSE, include=TRUE, dpi=600, fig.cap="Table 5: OLS regression of total SCECAP Trawl CPUE by all lifestages from all surveys."}
-
-SCECAPAbun_Table = kable(SCECAPAbunRegressTable, "latex", booktabs = T, align = "llcccc") %>%
-  kable_styling(font_size = 10) %>%
-  add_header_above(c(" " = 2, "Summary Statistics" = 3)) %>%
-  column_spec(3:5, width = "6em") %>%
-  #row_spec(15, extra_latex_after = "\\cline{1-1}") %>%
-  #row_spec(4, extra_latex_after = "\\cline{1-2}" ) %>%
-  #row_spec(8, hline_after = T) %>%
-  row_spec(4, hline_after = T) %>%
-  pack_rows("SCECAP Tidal Creek", 1,8) %>%
-  pack_rows("SCECAP Open Water", 9, 9) 
-
-SCECAPAbun_Table
-
-```
-
-\newpage
-**Tables 6**: SCECAP Tidal Creek survey data table showing a small annual sample size with small raw abundance numbers, inflated CPUEs and several years with no sampling events
-```{r Table 6 (SCECAP), echo=FALSE, message=FALSE, warning=FALSE, include=TRUE, fig.cap="Objective 2 - Plot E 98showing the regression relationship of total Creek Trawl CPUE by Creek Trawl subadult CPUE from 2 years prior.  This the highest correlated relationship of total or adult CPUE by lagged lifestage variable.", fig.width=5,fig.height=3}
-
-options(knitr.kable.NA = '')
-SCECAPdata = read.csv("E98Table.csv") %>%
-  rename("Sampling Events" = Sampling.Events,
-         "Raw Abundance" = RawAbun,
-         "Total CPUE" = CPUE,
-         "Juvenile CPUE" = Juvenile,
-         "Subadult CPUE" = Subadult,
-         "Adult CPUE" = Adult) 
-
-  
-  
-SCECAPInfoTable = kable(SCECAPdata, "latex", booktabs = T, align = "llcccc") %>%
-  kable_styling(font_size = 10) %>%
-  column_spec(2:3, width = "6em") %>%
-  column_spec(4:7, width = "4em") 
-
-SCECAPInfoTable
-
-```
-
 
 \newpage
 ## Objective 4
