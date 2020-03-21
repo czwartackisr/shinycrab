@@ -1,7 +1,7 @@
 Survey,Gear Type,Sample Area,Sample Interval,Sample Method,N(events),Biotic,CPUE Standardization
 Creek Trawl,"6m Trawl, 2.54cm stretch mesh","Ashley River, Wando River","Monthly, May-Sep",Fixed Stations,1827,"Abundance, Size, Sexual Maturity",Time
 Harbor Trawl,"4.6m Trawl, 0.6cm D mesh","Ashley River, Charleston Harbor",Monthly,Fixed Stations,2956,"Abundance, Size, Sexual Maturity","Time, Gear"
-Ashley Fall Potting ,"0.6 x 0.6 x 0.46m Pot, 3.8 cm mesh",Ashley River,"Monthly, Oct-Nov",Randomized Block w/in a Fixed Station,128,"Abundance, Size, Sexual Maturity",Time
+Ashley Fall Potting ,"0.6 x 0.6 x 0.46m Pot, 3.8 cm mesh",Ashley River,"Monthly, Oct-Nov",Randomized Block w/in a Fixed Station,128,"Abundance, Size",Time
 SCECAP Tidal Creeks,"5m trawl, 1.9cm bar mesh",Charleston Harbor Systemwide,Jun - Aug,Random Stratified,62,"Abundance, Size ",Volumetric
 SCECAP Open Water,"5m trawl, 1.9cm bar mesh",Charleston Harbor Systemwide,Jun - Aug,Random Stratified,92,"Abundance, Size ",Volumetric
 Trammel Net,183 x 2.1m trammel net,Charleston Harbor Systemwide,Monthly,Random Stratified,4736,Abundance,None (Total)
