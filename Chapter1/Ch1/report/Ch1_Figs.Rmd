@@ -7,15 +7,19 @@ author:
 abstract: |
   Marked high fluctuations in blue crab (*Callinectes sapidus*) seasonal and annual abundance, and commercial landings are typical, but data from both fisheries independent and dependent surveys have shown declines in populations in recent years in South Carolina. Despite several long-term fisheries independent surveys encountering blue crab, predictive models have not recently been developed in South Carolina to quantify variation in abundance and commercial landings.   The goal of this study is to assess the current status of blue crab in SC and explore the potential for developing a more predictive understanding of commercial landings. This goal is met through the following objectives: 1) assess long-term trends in blue crab landings and fisheries-independent abundance, 2) test the applicability of a juvenile index, where juvenile abundance in one year predicts adult abundance in a subsequent years (e.g. 1-yr and 2-yr lag), 3) explore other indices of abundance for size class and sexual maturity categories as they relate to  total or adult blue crab abundance in subsequent years (e.g. 1-yr and 2-yr lag), and 4) explore predictive relationships between fisheries-independent size class and sexual maturity abundance categories and commercial landings. Data from several long-term South Carolina Department of Natural Resources (SCDNR) fisheries independent blue crab surveys were standardized for each of six surveys and commercial landings data were compiled.  Analyses testing the application of a juvenile index of abundance show that no juveniles collected in surveys explain variation in annual survey abundances.  The Creek Trawl survey was the only survey with significant, but weak, correlative relationships between multiple lagged population structure variables and its own annual adult or total abundance.  Significant relationships were found with effort-corrected commercial landings predicted by the previous year’s abundance of male crabs. This relationship was most correlated for immature crabs collected in the Harbor Trawl survey, and for mature crabs collected in the Creek Trawl survey. These results suggest a larger influence on abundance of blue crab from fishing effort than population dynamics, and a potential influence from other external factors such as habitat or environmental variables.   
 output:
-  pdf_document: default
   word_document: default
+  pdf_document: default
 editor_options: 
-  chunk_output_type: inline
+  chunk_output_type: console
+fig_width: 6
+fig_height: 4
+  
 ---
 
 
 ```{r knitr setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
 ```
 
 ```{r setup, include=FALSE, echo=FALSE}
@@ -51,7 +55,7 @@ theme_update(plot.title = element_text(hjust = 0.5))
 
 ```{r Data Read-In, include=FALSE, warning=FALSE, message=FALSE}
 
-crabdata <- read.csv("ClassSizeAbunDistinct_201912.csv", stringsAsFactors = FALSE) 
+crabdata <- read.csv("ClassSizeAbunDistinct_202005.csv", stringsAsFactors = FALSE) 
 
 
 #Source - Eric Hiltz OFM Fisheries Statistics
@@ -257,12 +261,12 @@ LandingsCrab = crab %>%
 
 LandingsCPUE = ggplot(aes(Year, CPUE), data = subset(LandingsCrab,
                                                      ProjID == "LandingsCPUEMean")) +
-  #ggtitle("Commercial Landings CPUE\nCharleston Harbor (Combined Watersheds)") +
+  ggtitle(" \n ") +
   geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
   stat_summary(fun.data = "mean_se", size = .7) +
   #stat_poly_eq(aes(label = ..eq.label..), formula = formula1, parse = TRUE) +
   geom_smooth(method = 'loess', se=FALSE, color="black") +
-  labs(y=expression(Blue~crab~pot~fished^{-1})) +
+  labs(y=expression(lbs.~pot^{-1}~year^{-1})) +
   expand_limits(x=c(1980, 2022)) 
 
 
@@ -274,12 +278,12 @@ LandingsFormTotal = subset(crab,
 formula2 <- lm(LandingsFormTotal$CPUE ~ LandingsFormTotal$Year)
 Landings = ggplot(aes(Year, CPUE), data = subset(LandingsCrab,
                                                  ProjID == "LandingsSum")) +
-  ggtitle("Commercial Landings\nCharleston Harbor (Combined Watersheds)") +
+  ggtitle(" ") +
   geom_hline(aes(yintercept=mean(CPUE)), linetype="dashed") +
   stat_summary(fun.data = "mean_se", size = .7) +
   #stat_poly_eq(aes(label = ..eq.label..), formula = formula2, parse = TRUE) +
   geom_smooth(method = 'loess', se=FALSE, color="black") +
-  labs(y=expression(Blue~crab~lbs.~year^{-1}), x=expression(" ")) +
+  labs(y=expression(lbs.~year^{-1}), x=expression(" ")) +
   expand_limits(x=c(1980, 2022)) 
 
 
@@ -425,7 +429,7 @@ CRMSLegalTimeSeries <- plot_grid(B90LegalCPUE, T38LegalCPUE, P88FallLegalCPUE,
                                 E99LegalCPUE, E98LegalCPUE, T06TotalCPUE, 
                                 ncol = 2, align = 'hv',
                                 labels = c("A", "B", "C", "D", "E", "F")) 
-title1 <- ggdraw() + draw_label("Fisheries Independent Survey Abundances\nCharleston Harbor (Combined Watersheds)", fontfamily = "serif")
+title1 <- ggdraw() + draw_label(" ")#Fisheries Independent Survey Abundances\nCharleston Harbor (Combined Watersheds)", fontfamily = "serif")
 
 
 Plot1 <- plot_grid(title1, CRMSLegalTimeSeries, ncol = 1, rel_heights=c(0.1, 1))

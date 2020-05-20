@@ -41,9 +41,9 @@ summary(P88AbunLead_lm10)
 P88Abun_lm8 <- lm(crab$P88_LegalCPUE ~ lag(crab$P88_SublegalCPUE))
 summary(P88Abun_lm8) 
 P88Abun_lm9 <- lm(crab$P88_LegalCPUE ~ lag(crab$P88_LegalCPUE))
-summary(P88Abun_lm9) 
+summary(P88Abun_lm9) #0.01343, 0.1992
 P88Abun_lm10 <- lm(crab$P88_LegalCPUE ~ lag(crab$P88_CPUE))
-summary(P88Abun_lm10) 
+summary(P88Abun_lm10) # 0.02275, 0.1718
 
 
 # 2yr.
@@ -51,9 +51,9 @@ summary(P88Abun_lm10)
 P88AbunLead_lm8 <- lm(lead(crab$P88_LegalCPUE) ~ lag(crab$P88_SublegalCPUE))
 summary(P88AbunLead_lm8) 
 P88AbunLead_lm9 <- lm(lead(crab$P88_LegalCPUE) ~ lag(crab$P88_LegalCPUE))
-summary(P88AbunLead_lm9) 
+summary(P88AbunLead_lm9) #0.01785, 0.1907
 P88AbunLead_lm10 <- lm(lead(crab$P88_LegalCPUE) ~ lag(crab$P88_CPUE))
-summary(P88AbunLead_lm10)
+summary(P88AbunLead_lm10) #0.04991, 0.135
 
 
 

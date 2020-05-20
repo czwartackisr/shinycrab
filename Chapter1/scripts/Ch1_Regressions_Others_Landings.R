@@ -7,7 +7,18 @@ library(MASS)
 
 # Read in data ------------------------------------------------------------
 
-crab <- read.csv("./Chapter1/data/CH1data.csv", stringsAsFactors = FALSE)
+crab <- read.csv("./Chapter1/data/CH1data.csv", stringsAsFactors = FALSE) %>%
+  mutate(E98_CPUE = log(E98_CPUE)) %>%
+  mutate(E98_CPUE = if_else(is.infinite(E98_CPUE), 0.00000001, E98_CPUE)) %>%
+  mutate(E98_JuvCPUE = log(E98_JuvCPUE)) %>%
+  mutate(E98_JuvCPUE = if_else(is.infinite(E98_JuvCPUE), 0.00000001, E98_JuvCPUE)) %>%
+  mutate(E98_SubadultCPUE = log(E98_SubadultCPUE)) %>%
+  mutate(E98_SubadultCPUE = if_else(is.infinite(E98_SubadultCPUE), 0.00000001, E98_SubadultCPUE)) %>%
+  mutate(E98_AdultCPUE = log(E98_AdultCPUE)) %>%
+  mutate(E98_AdultCPUE = if_else(is.infinite(E98_AdultCPUE), 0.00000001, E98_AdultCPUE)) %>%
+  mutate(E98_SublegalCPUE = log(E98_SublegalCPUE)) %>%
+  mutate(E98_SublegalCPUE = if_else(is.infinite(E98_SublegalCPUE), 0.00000001, E98_SublegalCPUE))
+
 
 P88crab <- filter(crab, Year > 1987) %>%
   dplyr::select(17:33, 50:52)

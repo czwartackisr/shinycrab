@@ -7,7 +7,18 @@ library(MASS)
 
 # Read in data ------------------------------------------------------------
 
-crab <- read.csv("./Chapter1/data/CH1data.csv", stringsAsFactors = FALSE)
+crab <- read.csv("./Chapter1/data/CH1data.csv", stringsAsFactors = FALSE) %>%
+  mutate(E98_CPUE = log(E98_CPUE)) %>%
+  mutate(E98_CPUE = if_else(is.infinite(E98_CPUE), 0.00000001, E98_CPUE)) %>%
+  mutate(E98_JuvCPUE = log(E98_JuvCPUE)) %>%
+  mutate(E98_JuvCPUE = if_else(is.infinite(E98_JuvCPUE), 0.00000001, E98_JuvCPUE)) %>%
+  mutate(E98_SubadultCPUE = log(E98_SubadultCPUE)) %>%
+  mutate(E98_SubadultCPUE = if_else(is.infinite(E98_SubadultCPUE), 0.00000001, E98_SubadultCPUE)) %>%
+  mutate(E98_AdultCPUE = log(E98_AdultCPUE)) %>%
+  mutate(E98_AdultCPUE = if_else(is.infinite(E98_AdultCPUE), 0.00000001, E98_AdultCPUE)) %>%
+  mutate(E98_SublegalCPUE = log(E98_SublegalCPUE)) %>%
+  mutate(E98_SublegalCPUE = if_else(is.infinite(E98_SublegalCPUE), 0.00000001, E98_SublegalCPUE))
+names(crab)
 
 
 ###E98_CPUE~All
@@ -31,15 +42,15 @@ summary(E98Abun_lm10)
 E98AbunLead_lm1 <- lm(lead(crab$E98_CPUE) ~ lag(crab$E98_JuvCPUE))
 summary(E98AbunLead_lm1) 
 E98AbunLead_lm2 <- lm(lead(crab$E98_CPUE) ~ lag(crab$E98_SubadultCPUE))
-summary(E98AbunLead_lm2) # p-value: 4.207e-07 - Multiple R-squared:  0.9302
+summary(E98AbunLead_lm2) # p-value: 0.040; 0.3567
 E98AbunLead_lm3 <- lm(lead(crab$E98_CPUE) ~ lag(crab$E98_AdultCPUE))
-summary(E98AbunLead_lm3) # p-value: 0.006421 - Multiple R-squared:  0.5408
+summary(E98AbunLead_lm3) 
 E98AbunLead_lm8 <- lm(lead(crab$E98_CPUE) ~ lag(crab$E98_SublegalCPUE))
-summary(E98AbunLead_lm8) # p-value: 7.502e-07 - Multiple R-squared:  0.9217
+summary(E98AbunLead_lm8) # p-value: 0.0234 - 0.4166
 E98AbunLead_lm9 <- lm(lead(crab$E98_CPUE) ~ lag(crab$E98_LegalCPUE))
-summary(E98AbunLead_lm9) # p-value: 0.006421 - Multiple R-squared:  0.5408
+summary(E98AbunLead_lm9) 
 E98AbunLead_lm10 <- lm(lead(crab$E98_CPUE) ~ lag(crab$E98_CPUE))
-summary(E98AbunLead_lm10) # p-value: 6.252e-06 - Multiple R-squared:  0.8808
+summary(E98AbunLead_lm10) 
 
 
 
@@ -65,15 +76,15 @@ summary(E98Abun_lm10)
 E98AbunLead_lm1 <- lm(lead(crab$E98_AdultCPUE) ~ lag(crab$E98_JuvCPUE))
 summary(E98AbunLead_lm1)
 E98AbunLead_lm2 <- lm(lead(crab$E98_AdultCPUE) ~ lag(crab$E98_SubadultCPUE))
-summary(E98AbunLead_lm2) # - p-value: 1.829e-06 - Multiple R-squared:  0.9065
+summary(E98AbunLead_lm2) # p-value: 0.03083 - 0.3868
 E98AbunLead_lm3 <- lm(lead(crab$E98_AdultCPUE) ~ lag(crab$E98_AdultCPUE))
-summary(E98AbunLead_lm3) # - p-value: 0.008725 - Multiple R-squared:  0.5136
+summary(E98AbunLead_lm3) 
 E98AbunLead_lm8 <- lm(lead(crab$E98_AdultCPUE) ~ lag(crab$E98_SublegalCPUE))
-summary(E98AbunLead_lm8) # p-value: 2.329e-06 - Multiple R-squared:  0.9019
+summary(E98AbunLead_lm8) # p-value: 0.01602 - 0.4557
 E98AbunLead_lm9 <- lm(lead(crab$E98_AdultCPUE) ~ lag(crab$E98_LegalCPUE))
-summary(E98AbunLead_lm9) # - p-value: 0.008725 - Multiple R-squared:  0.5136
+summary(E98AbunLead_lm9) 
 E98AbunLead_lm10 <- lm(lead(crab$E98_AdultCPUE) ~ lag(crab$E98_CPUE))
-summary(E98AbunLead_lm10) # p-value: 2.075e-05 - Multiple R-squared:  0.8489
+summary(E98AbunLead_lm10) 
 
 
 
