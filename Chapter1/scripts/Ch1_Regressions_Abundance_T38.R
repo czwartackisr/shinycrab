@@ -16,46 +16,46 @@ crab <- read.csv("./Chapter1/data/CH1data.csv", stringsAsFactors = FALSE)
 T38Abun_lm1 <- lm(crab$T38_CPUE ~ lag(crab$T38_JuvCPUE))
 summary(T38Abun_lm1) 
 T38Abun_lm2 <- lm(crab$T38_CPUE ~ lag(crab$T38_SubadultCPUE))
-summary(T38Abun_lm2) # 0.007774 - 0.1809
+summary(T38Abun_lm2) 
 T38Abun_lm3 <- lm(crab$T38_CPUE ~ lag(crab$T38_AdultCPUE))
-summary(T38Abun_lm3) # 0.0312 - 0.1225
+summary(T38Abun_lm3) 
 T38Abun_lm4 <- lm(crab$T38_CPUE ~ lag(crab$T38_ImmatureFemaleCPUE))
-summary(T38Abun_lm4) # 0.05007 - 0.1025
+summary(T38Abun_lm4) 
 T38Abun_lm5 <- lm(crab$T38_CPUE ~ lag(crab$T38_ImmatureMaleCPUE))
-summary(T38Abun_lm5) # 0.04854 - 0.1038
+summary(T38Abun_lm5) 
 T38Abun_lm6 <- lm(crab$T38_CPUE ~ lag(crab$T38_MatureFemaleCPUE))
 summary(T38Abun_lm6)
 T38Abun_lm7 <- lm(crab$T38_CPUE ~ lag(crab$T38_MatureMaleCPUE))
-summary(T38Abun_lm7) # 0.002197 - 0.2321
+summary(T38Abun_lm7) # 0.005966 - 0.1918
 T38Abun_lm8 <- lm(crab$T38_CPUE ~ lag(crab$T38_SublegalCPUE))
-summary(T38Abun_lm8) # 0.0252 - 0.1314
+summary(T38Abun_lm8) 
 T38Abun_lm9 <- lm(crab$T38_CPUE ~ lag(crab$T38_LegalCPUE))
-summary(T38Abun_lm9) # 0.0312 - 0.1225
+summary(T38Abun_lm9) 
 T38Abun_lm10 <- lm(crab$T38_CPUE ~ lag(crab$T38_CPUE))
-summary(T38Abun_lm10) # 0.01906 - 0.1434
+summary(T38Abun_lm10) 
 
 
 # 2yr.
 T38AbunLead_lm1 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_JuvCPUE))
-summary(T38AbunLead_lm1) #  0.03282 - 0.1237
+summary(T38AbunLead_lm1) 
 T38AbunLead_lm2 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_SubadultCPUE))
-summary(T38AbunLead_lm2) # 0.001926 - 0.2432
+summary(T38AbunLead_lm2) # 0.0004261 - 0.3021
 T38AbunLead_lm3 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_AdultCPUE))
 summary(T38AbunLead_lm3) 
 T38AbunLead_lm4 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_ImmatureFemaleCPUE))
-summary(T38AbunLead_lm4) # 0.01038 - 0.1733
+summary(T38AbunLead_lm4) 
 T38AbunLead_lm5 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_ImmatureMaleCPUE))
-summary(T38AbunLead_lm5) # 0.004023 - 0.2131
+summary(T38AbunLead_lm5) # 0.0003695 - 0.3074
 T38AbunLead_lm6 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_MatureFemaleCPUE))
-summary(T38AbunLead_lm6) # 0.019 - 0.1473
+summary(T38AbunLead_lm6) 
 T38AbunLead_lm7 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_MatureMaleCPUE))
-summary(T38AbunLead_lm7) # 0.03076 - 0.1265
+summary(T38AbunLead_lm7) 
 T38AbunLead_lm8 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_SublegalCPUE))
-summary(T38AbunLead_lm8) # 0.004317 - 0.2102
+summary(T38AbunLead_lm8) # 0.001162 - 0.2634
 T38AbunLead_lm9 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_LegalCPUE))
 summary(T38AbunLead_lm9) 
 T38AbunLead_lm10 <- lm(lead(crab$T38_CPUE) ~ lag(crab$T38_CPUE))
-summary(T38AbunLead_lm10) # 0.004898 - 0.205
+summary(T38AbunLead_lm10) # 0.001152 - 0.2637
 
 
 
@@ -76,7 +76,7 @@ summary(T38Abun_lm5)
 T38Abun_lm6 <- lm(crab$T38_AdultCPUE ~ lag(crab$T38_MatureFemaleCPUE))
 summary(T38Abun_lm6)
 T38Abun_lm7 <- lm(crab$T38_AdultCPUE ~ lag(crab$T38_MatureMaleCPUE))
-summary(T38Abun_lm7) #  p-value: 0.01417; Multiple R-squared:  0.1558
+summary(T38Abun_lm7) 
 T38Abun_lm8 <- lm(crab$T38_AdultCPUE ~ lag(crab$T38_SublegalCPUE))
 summary(T38Abun_lm8) 
 T38Abun_lm9 <- lm(crab$T38_AdultCPUE ~ lag(crab$T38_LegalCPUE))
@@ -97,7 +97,7 @@ summary(T38AbunLead_lm4)
 T38AbunLead_lm5 <- lm(lead(crab$T38_AdultCPUE) ~ lag(crab$T38_ImmatureMaleCPUE))
 summary(T38AbunLead_lm5) 
 T38AbunLead_lm6 <- lm(lead(crab$T38_AdultCPUE) ~ lag(crab$T38_MatureFemaleCPUE))
-summary(T38AbunLead_lm6) #p-value: 0.03677l; Multiple R-squared:  0.1187
+summary(T38AbunLead_lm6) 
 T38AbunLead_lm7 <- lm(lead(crab$T38_AdultCPUE) ~ lag(crab$T38_MatureMaleCPUE))
 summary(T38AbunLead_lm7) 
 T38AbunLead_lm8 <- lm(lead(crab$T38_AdultCPUE) ~ lag(crab$T38_SublegalCPUE))
